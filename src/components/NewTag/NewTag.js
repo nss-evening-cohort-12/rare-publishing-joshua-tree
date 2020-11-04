@@ -20,7 +20,7 @@ class NewTag extends React.Component {
         const newTag = {
           name,
         };
-    await fetch("http://localhost:8088/tags", {
+    await fetch("http://localhost:8088/new-tag", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
