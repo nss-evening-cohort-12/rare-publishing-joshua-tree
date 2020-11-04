@@ -1,6 +1,9 @@
 import React from "react"
 import { Route, Redirect } from "react-router-dom"
+import { ApplicationViews } from "./ApplicationViews"
 import { CategoryList } from "./categories/CategoryList"
+import { CategoryProvider } from "./categories/CategoryProvider"
+
 
 /* import { ApplicationViews } from "./ApplicationViews"
 import { NavBar } from "./nav/NavBar"
@@ -34,6 +37,7 @@ export const Rare = () => (
                 return <Register />
             }
         }} /> */}
+        <CategoryProvider>
         <Route path="/categories" render={() => {
             if (localStorage.getItem("rare_user_id")) {
                 return <Redirect to="/" />
@@ -41,5 +45,6 @@ export const Rare = () => (
                 return <CategoryList />
             }
         }} />
+        </CategoryProvider>
     </>
 )
