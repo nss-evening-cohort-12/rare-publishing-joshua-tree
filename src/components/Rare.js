@@ -1,6 +1,6 @@
 import React from "react"
 import { Route, Redirect } from "react-router-dom"
-import CategoryList from './categories/CategoryList'
+import { CategoryList } from "./categories/CategoryList"
 
 /* import { ApplicationViews } from "./ApplicationViews"
 import { NavBar } from "./nav/NavBar"
