@@ -7,7 +7,8 @@ export const Login = () => {
     const email = useRef()
     const password = useRef()
     const invalidDialog = useRef()
-    const history = useHistory()
+    const history = useHistory() 
+
 
     const handleLogin = (e) => {
         e.preventDefault()
@@ -34,7 +35,7 @@ export const Login = () => {
                 }
             })
     }
-
+//
     return (
         <main className="container--login">
             <dialog className="dialog dialog--auth" ref={invalidDialog}>
