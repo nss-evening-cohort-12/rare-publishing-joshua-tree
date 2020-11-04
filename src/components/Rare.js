@@ -4,12 +4,13 @@ import { ApplicationViews } from "./ApplicationViews"
 import { NavBar } from "./nav/NavBar"
 import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
+import NewPost from "./NewPost/NewPost"
 /* import Tags from "./Tags/Tags"
 import NewTag from "./NewTag/NewTag" */
 
 export const Rare = () => (
     <>
-         <Route render={() => {
+         {/* <Route render={() => {
             if (localStorage.getItem("rare_user_id")) {
                 return <>
                     <NavBar />
@@ -18,7 +19,7 @@ export const Rare = () => (
             } else {
                 return <Redirect to="/login" />
             }
-        }} />
+        }} /> */}
 
         <Route path="/login" render={() => {
             if (localStorage.getItem("rare_user_id")) {
@@ -33,6 +34,14 @@ export const Rare = () => (
                 return <Redirect to="/" />
             } else {
                 return <Register />
+            }
+        }} />
+
+        <Route path="/new-post" render={() => {
+            if (localStorage.getItem("rare_user_id")) {
+                return <Redirect to="/" />
+            } else {
+                return <NewPost />
             }
         }} />
 
