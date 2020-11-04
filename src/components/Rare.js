@@ -8,12 +8,16 @@ import { CategoryProvider } from "./categories/CategoryProvider"
 /* import { ApplicationViews } from "./ApplicationViews"
 import { NavBar } from "./nav/NavBar"
 import { Login } from "./auth/Login"
-import { Register } from "./auth/Register" */
+import { Register } from "./auth/Register"
+/* import Tags from "./Tags/Tags"
+import NewTag from "./NewTag/NewTag" */
 
 // import NewTag from "./NewTag/NewTag"
 export const Rare = () => (
     <>
+
 {/*         <Route render={() => {
+
             if (localStorage.getItem("rare_user_id")) {
                 return <>
                     <NavBar />
@@ -46,5 +50,22 @@ export const Rare = () => (
             }
         }} />
         </CategoryProvider>
+        {/* Below is for Ryan's Tags */}
+
+        {/* <Route path="/tags" render={() => {
+            if (localStorage.getItem("rare_user_id")) {
+                return <Redirect to="/" />
+            } else {
+                return <Tags />
+            }
+        }} />
+
+        <Route path="/new-tag" render={() => {
+            if (localStorage.getItem("rare_user_id")) {
+                return <Redirect to="/" />
+            } else {
+                return <NewTag />
+            }
+        }} /> */}
     </>
 )
