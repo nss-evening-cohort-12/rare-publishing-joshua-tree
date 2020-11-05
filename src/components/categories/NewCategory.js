@@ -1,96 +1,113 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from "react"
+import { CategoryContext } from "./CategoryProvider"
 
 
-class NewCategory extends React.Component {
-  state = {
-    category_name: '',
-  }
+export const NewCategory = (props) => {
+   
+    const { addCategory, getCategories } = useContext(CategoryContext)
+    const [category, setCategory] = useState({})
 
-  changeCategoryNameEvent = (e) => {
-    e.preventDefault();
-    this.setState({ category_name: e.target.value });
-  }
+    const handleControlledInputChange = (event) => {
+
+        const newCategory = Object.assign({}, category)   
+        newCategory[event.target.name] = event.target.value    
+        setCategory(newCategory)                                 
+    }
 
 
-  saveCategories = (e) => {
-    e.preventDefault();
+    useEffect(() => {
+        getCategories()
+    }, [])
 
-    const keysIWant = ['color', 'type', 'weight', 'isOwned', 'material', 'notes'];
-    const newYarns = _.pick(this.state, keysIWant);
-    newYarns.uid = authData.getUid();
 
-    yarnsData.createYarns(newYarns)
-      .then((res) => {
-        this.props.history.push('/inventory');
-      })
-      .catch((err) => console.error('new yarns not happening', err));
-  }
 
-  render() {
-    const {
-      color,
-      type,
-      weight,
-      material,
-      notes,
-    } = this.state;
+    const constructNewCategory = () => {
+          addCategory({
+              category_name: category.category_name,
+          })
+              .then(() => props.history.push("/categories"))
+        }
+    
 
     return (
-      <div className="NewYarn">
-        <h1>Woohoo! New Yarn!</h1>
-        <form className="col-6 offset-3">
-          <div className="form-group">
-            <label htmlFor="">Color</label>
-              <input
-                type="text"
-                className="form-control"
-                id="yarnColor"
-                placeholder="blue"
-                value={color}
-                onChange={this.changeColorEvent}
-                />
-            <label htmlFor="">Type</label>
-              <input
-                type="text"
-                className="form-control"
-                id="yarnType"
-                placeholder="bulky"
-                value={type}
-                onChange={this.changeTypeEvent}
-                />
-            <label htmlFor="">Weight (in grams)</label>
-              <input
-                type="text"
-                className="form-control"
-                id="yarnWeight"
-                placeholder="200"
-                value={weight}
-                onChange={this.changeWeightEvent}
-                />
-            <label htmlFor="">Material</label>
-              <input
-                type="text"
-                className="form-control"
-                id="yarnMaterial"
-                placeholder="wool"
-                value={material}
-                onChange={this.changeMaterialEvent}
-                />
-            <label htmlFor="">Notes</label>
-              <input
-                type="text"
-                className="form-control"
-                id="yarnNotes"
-                placeholder="My favorite yarn!"
-                value={notes}
-                onChange={this.changeNotesEvent}
-                />
-            </div>
-          <button className="btn btn-secondary" onClick={this.saveYarns}>Save Yarn</button>
+        <form className="categoryForm">
+            <h2>Add A New Category</h2>
+            <fieldset>
+                <div className="form-group">
+                    <label htmlFor="name">Category name: </label>
+                    <input type="text" name="name" required autoFocus className="form-control"
+                        // defaultValue={animal.name}
+                        onChange={handleControlledInputChange}
+                    />
+                </div>
+            </fieldset>
+            
+            <button type="submit"
+                onClick={evt => {
+                    evt.preventDefault()
+                    constructNewCategory()
+                }}
+                className="btn btn-primary">
+                {"Save Changes"}
+            </button>
         </form>
-      </div>
-    );
-  }
+    )
 }
 
-export default NewCategory;
+// import React from 'react';
+// import { CategoryProvider } from './CategoryProvider';
+
+
+// class NewCategory extends React.Component {
+//   state = {
+//     category_name: '',
+//   }
+
+//   changeCategoryNameEvent = (e) => {
+//     e.preventDefault();
+//     this.setState({ category_name: e.target.value });
+//   }
+
+
+//   saveCategories = (e) => {
+//     e.preventDefault();
+
+//     const { newCategory } = this.state;
+
+//     const category = { newCategory, };
+
+//       return fetch("http://localhost:8088/categories", {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json"
+//         },
+//         body: JSON.stringify(category)
+//     })
+//         .then(CategoryProvider.getCategories)
+//   }
+
+//   render() {
+//     const { category_name } = this.state;
+
+//     return (
+//       <div className="NewCat">
+//         <h1>Add a New Category</h1>
+//         <form className="col-6 offset-3">
+//           <div className="form-group">
+//             <label htmlFor="">Category Name</label>
+//               <input
+//                 type="text"
+//                 className="form-control"
+//                 id="catName"
+//                 value={category_name}
+//                 onChange={this.changeCategoryNameEvent}
+//                 />
+//             </div>
+//           <button className="btn btn-secondary" onClick={this.saveCategories}>Save Category</button>
+//         </form>
+//       </div>
+//     );
+//   }
+// }
+
+// export default NewCategory;
