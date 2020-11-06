@@ -1,11 +1,10 @@
 import React from "react"
 import { Route, Redirect } from "react-router-dom"
 import { ApplicationViews } from "./ApplicationViews"
-import { CategoryList } from "./categories/CategoryList"
-import { CategoryProvider } from "./categories/CategoryProvider"
 
+// import { CategoryProvider } from "./categories/CategoryProvider"
 
-/* import { ApplicationViews } from "./ApplicationViews"
+// import { ApplicationViews } from "./ApplicationViews"
 import { NavBar } from "./nav/NavBar"
 import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
@@ -16,7 +15,7 @@ import NewTag from "./NewTag/NewTag" */
 export const Rare = () => (
     <>
 
-{/*         <Route render={() => {
+        <Route render={() => {
 
             if (localStorage.getItem("rare_user_id")) {
                 return <>
@@ -40,8 +39,9 @@ export const Rare = () => (
             } else {
                 return <Register />
             }
-        }} /> */}
-        <CategoryProvider>
+        }} />
+        {/* Jeanine's Category code below */}
+        {/* <CategoryProvider>
         <Route path="/categories" render={() => {
             if (localStorage.getItem("rare_user_id")) {
                 return <Redirect to="/" />
@@ -49,7 +49,7 @@ export const Rare = () => (
                 return <ApplicationViews />
             }
         }} />
-        </CategoryProvider>
+        </CategoryProvider> */}
         {/* Below is for Ryan's Tags */}
 
         {/* <Route path="/tags" render={() => {
