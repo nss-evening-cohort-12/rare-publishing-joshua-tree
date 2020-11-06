@@ -5,7 +5,7 @@ import "./Categories.css"
 // import CategoryCards from "./CategoryCards"
 
 export const CategoryList = props => {
-    const { categories, getCategories } = useContext(CategoryContext)
+    const { categories, getCategories, deleteCategory } = useContext(CategoryContext)
 
     useEffect(() => {
         getCategories()
@@ -18,6 +18,10 @@ export const CategoryList = props => {
             <button onClick={() => props.history.push("/categories/create")}>
                 Add Category
             </button>
+
+            {/* <button onClick={() => deleteCategory(categories.id).then(() => props.history.push("/categories"))}>
+                Delete Category
+            </button> */}
 
             <article className="categories">
                 {
