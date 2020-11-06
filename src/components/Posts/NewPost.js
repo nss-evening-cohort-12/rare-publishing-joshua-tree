@@ -1,4 +1,5 @@
 import React from "react"
+import './Posts.css'
 
 class NewPost extends React.Component {
   state = {
@@ -22,6 +23,14 @@ class NewPost extends React.Component {
     .then((res) => this.setState({ categories: res }))
   }
 
+  componentDidUpdate() {
+    if (this.state.selectedCategory !== '') {
+      const value = this.state.selectedCategory;
+      const newNum = parseInt(value)
+      document.getElementById(newNum).style.backgroundColor = '#3498db';
+    }
+  }
+
   changeTitleEvent = (e) => {
     e.preventDefault();
     this.setState({ title: e.target.value });
@@ -38,20 +47,30 @@ class NewPost extends React.Component {
   }
 
   onValueChange = (e) => {
-    this.setState({
-      selectedCategory: e.target.value
-    });
+    const value = e.target.id;
+    this.setState({ selectedCategory: value });
+    const boxes = document.getElementsByClassName('category-box');
+
+    for (let i = 0; i < boxes.length; i++) {
+      if (value === this.state.selectedCategory) {
+        document.getElementById(value).style.backgroundColor = '#3498db';
+      } else {
+        boxes[i].style.backgroundColor = '#fff';
+      }
+    }
   }
 
   savePost = async (e) => {
     e.preventDefault();
-    const { title, content, image_url } = this.state;
+    const { title, content, image_url, selectedCategory } = this.state;
+    const category = parseInt(selectedCategory);
+    const user = localStorage.getItem("rare_user_id");
 
     const newPost = {
-      user_id: 0,
+      user_id: user,
       title,
       content,
-      category_id: 0,
+      category_id: category,
       image_url
     };
 
@@ -70,15 +89,12 @@ class NewPost extends React.Component {
     const { title, content, image_url, categories } = this.state;
 
     const categoryCards = categories.map((category) => 
-      <div key={category.id}>
-        <label>
-        <input
-          type="radio"
-          value={category.id}
-          checked={this.state.selectedOption === category.id}
-          onChange={this.onValueChange}
-        /> {category.category_name}
-        </label>
+      <div
+        className="category-box boxes"
+        id={category.id}
+        key={category.id}
+        onClick={this.onValueChange}
+      >{category.category_name}
       </div>
     );
 
@@ -95,6 +111,7 @@ class NewPost extends React.Component {
               <label htmlFor="postContent">Content</label>
               <textarea style={{height: '200px'}} name="message" rows="200" cols="20" value={content} onChange={this.changeContentEvent} type="text" id="postContent" className="form-control" placeholder="Today I went to the store..." required autoFocus />
             </fieldset>
+              <label>Choose a category</label>
               {categoryCards}
             <fieldset>
               <label htmlFor="postImage">Image URL (Optional)</label>
