@@ -6,18 +6,14 @@ import { ApplicationViews } from "./ApplicationViews"
 import { NavBar } from "./nav/NavBar"
 import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
-// import { ApplicationViews } from "./ApplicationViews"
-// import { NavBar } from "./nav/NavBar"
 import Tags from "./Tags/Tags"
 import NewTag from "./Tags/NewTag"
 import Posts from "./Posts/Posts"
 import NewPost from "./Posts/NewPost"
 
-// import NewTag from "./NewTag/NewTag"
 export const Rare = () => (
     <>
         <Route render={() => {
-
             if (localStorage.getItem("rare_user_id")) {
                 return <>
                     <NavBar />
@@ -44,33 +40,33 @@ export const Rare = () => (
 
         <Route exact path="/posts" render={(props) => {
             if (localStorage.getItem("rare_user_id")) {
-                return <Redirect to="/" />
-            } else {
                 return <Posts {...props} />
+            } else {
+                return <Redirect to="/" />
             }
         }} />
 
         <Route exact path="/posts/new" render={(props) => {
             if (localStorage.getItem("rare_user_id")) {
-                return <Redirect to="/" />
-            } else {
                 return <NewPost {...props} />
+            } else {
+                return <Redirect to="/" />
             }
         }} />
 
         <Route exact path="/tags" render={(props) => {
             if (localStorage.getItem("rare_user_id")) {
-                return <Redirect to="/" />
-            } else {
                 return <Tags {...props} />
+            } else {
+                return <Redirect to="/" />
             }
         }} />
 
         <Route exact path="/tags/new" render={(props) => {
             if (localStorage.getItem("rare_user_id")) {
-                return <Redirect to="/" />
-            } else {
                 return <NewTag {...props} />
+            } else {
+                return <Redirect to="/" />
             }
         }} />
 
@@ -84,22 +80,5 @@ export const Rare = () => (
             }
         }} />
         </CategoryProvider> */}
-        {/* Below is for Ryan's Tags */}
-
-        {/* <Route path="/tags" render={() => {
-            if (localStorage.getItem("rare_user_id")) {
-                return <Redirect to="/" />
-            } else {
-                return <Tags />
-            }
-        }} />
-
-        <Route path="/new-tag" render={() => {
-            if (localStorage.getItem("rare_user_id")) {
-                return <Redirect to="/" />
-            } else {
-                return <NewTag />
-            }
-        }} /> */}
     </>
 )
