@@ -20,15 +20,15 @@ class NewTag extends React.Component {
         const newTag = {
           name,
         };
-    await fetch("http://localhost:8088/new-tag", {
+    await fetch("http://localhost:8088/tags", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(newTag)
       });
-      console.warn('Adding a new tag worked! Needs a redirect still though :/');
-      this.setState({ name: '' })
+      console.warn('Adding a new tag worked!');
+      this.props.history.push('/tags');
     }
   }
 
