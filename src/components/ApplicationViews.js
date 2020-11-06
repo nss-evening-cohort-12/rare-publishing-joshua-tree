@@ -2,7 +2,8 @@ import React from "react"
 import { Route } from "react-router-dom"
 import { CategoryList } from "./categories/CategoryList"
 import { CategoryProvider } from "./categories/CategoryProvider"
-import { NewCategory } from "./categories/NewCategory"
+import NewCategory from "./categories/NewCategory"
+
 
 
 
