@@ -6,7 +6,7 @@ class Tags extends React.Component {
     return (
       <>
         <h1>Tags</h1>
-        <Link to="/new-tag">New Tag</Link>
+        <Link to="/tags/new">New Tag</Link>
       </>
     )
   }
