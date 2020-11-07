@@ -84,5 +84,15 @@ export const Rare = () => (
             }
         }} />
 
+        {/* Jeanine's Category code below */}
+        <CategoryProvider>
+        <Route path="/categories" render={() => {
+            if (localStorage.getItem("rare_user_id")) {
+                return <Redirect to="/" />
+            } else {
+                return <ApplicationViews />
+            }
+        }} />
+        </CategoryProvider>
     </>
 )
