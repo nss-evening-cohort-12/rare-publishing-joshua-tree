@@ -6,7 +6,7 @@ class Posts extends React.Component {
     return (
       <>
         <h1>Posts</h1>
-        <Link to="/posts/new">New Post</Link>
+        <Link to="new-post">New Post</Link>
       </>
     )
   }
