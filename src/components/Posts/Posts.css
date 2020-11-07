@@ -1,3 +1,7 @@
+.postContainer {
+  margin: 0 5rem;
+}
+
 .boxes {
   border: 1px solid rgb(199, 199, 199);
   border-radius: .1em;
