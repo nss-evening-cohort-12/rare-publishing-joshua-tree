@@ -13,6 +13,7 @@ import Tags from "./Tags/Tags"
 import NewTag from "./Tags/NewTag"
 import Posts from "./Posts/Posts"
 import NewPost from "./Posts/NewPost"
+import SinglePost from "./Posts/SinglePost"
 
 export const Rare = () => (
     <>
@@ -60,7 +61,7 @@ export const Rare = () => (
             }
         }} />
 
-        <Route exact path="/posts/new" render={(props) => {
+        <Route exact path="/new-post" render={(props) => {
             if (localStorage.getItem("rare_user_id")) {
                 return <NewPost {...props} />
             } else {
@@ -76,9 +77,17 @@ export const Rare = () => (
             }
         }} />
 
-        <Route exact path="/tags/new" render={(props) => {
+        <Route exact path="/new-tag" render={(props) => {
             if (localStorage.getItem("rare_user_id")) {
                 return <NewTag {...props} />
+            } else {
+                return <Redirect to="/" />
+            }
+        }} />
+
+        <Route exact path="/posts/:postId" render={(props) => {
+            if (localStorage.getItem("rare_user_id")) {
+                return <SinglePost {...props} />
             } else {
                 return <Redirect to="/" />
             }

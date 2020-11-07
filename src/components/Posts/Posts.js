@@ -28,7 +28,7 @@ class Posts extends React.Component {
         <div className="boxes">
           {post}
         </div>
-        <Link to="/posts/new">New Post</Link>
+        <Link to="new-post">New Post</Link>
       </div>
     )
   }
