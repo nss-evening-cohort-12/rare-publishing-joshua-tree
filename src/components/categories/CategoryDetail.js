@@ -13,23 +13,6 @@ export const CategoryDetails = (props) => {
             .then(setCategory)
     }, [])
 
-    // const options = {
-    //     title: 'Title',
-    //     message: 'Message',
-    //     buttons: [
-    //       {
-    //         label: 'Yes',
-    //         onClick: () => alert('Click Yes')
-    //       },
-    //       {
-    //         label: 'No',
-    //         onClick: () => alert('Click No')
-    //       }
-    //     ],
-    //   };
-       
-    //   confirmAlert(options);
-
 
     return (
         <section className="category">
@@ -39,11 +22,9 @@ export const CategoryDetails = (props) => {
             deleteCategory(categories.id).then(() => props.history.push("/categories"))
             }>Delete</button>
 
-
-
-            {/* <button onClick={() => {
-                props.history.push(`/animals/edit/${animal.id}`)
-            }}>Edit</button> */}
+            <button onClick={() => {
+                props.history.push(`/categories/edit/${categories.id}`)
+            }}>Edit</button>
         </section>
     )
 }

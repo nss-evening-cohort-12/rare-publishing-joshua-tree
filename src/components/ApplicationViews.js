@@ -36,10 +36,10 @@ export const ApplicationViews = () => {
             <Route path="/categories/:categoryId" render={
                 props =>  <CategoryDetails {...props} />
             } />
-{/* 
-            <Route path="/animals/edit/:animalId(\d+)" render={
-                props => <AnimalForm {...props} />
-            } />  */}
+
+            <Route path="/categories/edit/:categoryId" render={
+                props => <UpdateCategory {...props} />
+            } /> 
             </CategoryProvider>
     </>
     
