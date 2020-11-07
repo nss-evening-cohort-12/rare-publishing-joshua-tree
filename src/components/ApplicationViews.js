@@ -29,12 +29,12 @@ export const ApplicationViews = () => {
                 </>
             }} />
 
-            <Route exact path="/categories/create" render={(props) => {
+            <Route exact path="/createCategory" render={(props) => {
                 return <NewCategory {...props} />
             }} />
 
             <Route path="/categories/:categoryId" render={
-                props => <CategoryDetails {...props} />
+                props =>  <CategoryDetails {...props} />
             } />
 {/* 
             <Route path="/animals/edit/:animalId(\d+)" render={

@@ -2,10 +2,9 @@ import React, { useContext, useEffect } from "react"
 import { CategoryContext } from "./CategoryProvider"
 import { Link } from "react-router-dom"
 import "./Categories.css"
-// import CategoryCards from "./CategoryCards"
 
 export const CategoryList = props => {
-    const { categories, getCategories, deleteCategory } = useContext(CategoryContext)
+    const { categories, getCategories } = useContext(CategoryContext)
 
     useEffect(() => {
         getCategories()
@@ -15,13 +14,10 @@ export const CategoryList = props => {
         <div style={{ margin: "0rem 3rem"}}>
             <h1>Categories</h1>
 
-            <button onClick={() => props.history.push("/categories/create")}>
+            <button onClick={() => props.history.push("/createCategory")}>
                 Add Category
             </button>
 
-            {/* <button onClick={() => deleteCategory(categories.id).then(() => props.history.push("/categories"))}>
-                Delete Category
-            </button> */}
 
             <article className="categories">
                 {
