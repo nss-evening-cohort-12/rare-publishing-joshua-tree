@@ -1,26 +1,33 @@
 import React from "react";
 import './Posts.css';
 
+import PostProvider from './PostProvider';
+
 class SinglePost extends React.Component {
   state = {
     post: {},
+    tags: [],
+    current_user: '',
   }
 
   componentDidMount() {
+    this.setState({ current_user: localStorage.getItem("rare_user_id") })
     const { postId } = this.props.match.params;
     
-    fetch(`http://localhost:8088/posts/${postId}`, {
-      method: "GET",
-      headers: {
-          "Content-Type": "application/json"
-      }
-    })
-    .then((post_response) => post_response.json())
-    .then((post_res) => this.setState({ post: post_res }))
+    PostProvider.getPostsById(postId)
+      .then((response) => this.setState({ post: response, tags: response.tags }))
   }
 
   render() {
-    const { post } = this.state;
+    const { post, current_user, tags } = this.state;
+
+    const allTags = tags.map((tag) => 
+      <div
+        className="tags"
+        key={tag.id}
+      >{tag.name}
+      </div>
+    );
 
     return (
       <div className="SinglePost">
@@ -35,8 +42,15 @@ class SinglePost extends React.Component {
           <h1>| {post.title} |</h1>
           <h4>{post.publication_date}</h4>
         </div>
-        <p>{post.content}</p>
-        <div className="user_icon">Written by <span style={{textDecoration: 'underline'}}>{post.author}</span></div>
+        <p className="post_content">{post.content}</p>
+        <div className="user_icon">Written by <span style={{fontWeight: 'bold'}}>{post.author}</span></div>
+        <div className="tag_container">
+          {allTags}
+          {post.user_id === parseInt(current_user)
+            ? <p className="manage_tags">Manage Tags</p>
+            : ''
+          }
+        </div>
       </div>
     )
   }

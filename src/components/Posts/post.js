@@ -20,7 +20,7 @@ class Post extends React.Component {
           <Link to={view_post}><h5 className="card-title">{post.title}</h5></Link>
           <p className="card-text">{post.full_name} .. {filterDate}</p>
           <p className="card-text">{post.category_name}</p>
-          <Link className="btn btn-primary" to="/posts/new">Comment</Link>
+          <Link className="btn btn-primary" to="new-post">Comment</Link>
         </div>
       </div>
     );

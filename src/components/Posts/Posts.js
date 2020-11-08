@@ -1,6 +1,8 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import Post from './post';
+
+import Post from './Post';
+import PostProvider from "./PostProvider";
 
 import './Posts.css'
 
@@ -9,13 +11,7 @@ class Posts extends React.Component {
     posts: [],
   }
   componentDidMount() {
-    fetch("http://localhost:8088/posts", {
-      method: "GET",
-      headers: {
-          "Content-Type": "application/json"
-      }
-    })
-    .then((response) => response.json())
+    PostProvider.getPosts()
     .then((res) => this.setState({ posts: res }))
   }
     

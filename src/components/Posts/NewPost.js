@@ -1,5 +1,7 @@
-import React from "react"
-import './Posts.css'
+import React from "react";
+import './Posts.css';
+
+import PostProvider from "./PostProvider";
 
 class NewPost extends React.Component {
   state = {
@@ -74,15 +76,9 @@ class NewPost extends React.Component {
       image_url
     };
 
-    await fetch("http://localhost:8088/posts", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(newPost)
-      });
-      console.warn('Adding a new post worked!');
-      this.props.history.push('/posts');
+    await PostProvider.createPost(newPost)
+      PostProvider.getPosts()
+      .then((response) => this.props.history.push(`/posts/${response.pop().id}`))
   }
 
   render() {
