@@ -28,7 +28,7 @@ const createPost = (newPost) => {
     },
     body: JSON.stringify(newPost)
   })
-  .then((response) => response.json())
+  .then((response) => response.json());
 };
 
 export default { getPostsById, getPosts, createPost }

@@ -2,12 +2,16 @@ import React from "react";
 import './Posts.css';
 
 import PostProvider from './PostProvider';
+import TagProvider from '../Tags/TagProvider';
 
 class SinglePost extends React.Component {
   state = {
     post: {},
-    tags: [],
+    current_tags: [],
+    all_tags: [],
     current_user: '',
+    manage_tags: false,
+    readyToSave: [],
   }
 
   componentDidMount() {
@@ -15,16 +19,84 @@ class SinglePost extends React.Component {
     const { postId } = this.props.match.params;
     
     PostProvider.getPostsById(postId)
-      .then((response) => this.setState({ post: response, tags: response.tags }))
+      .then((response) => this.setState({ post: response, current_tags: response.tags }))
+    
+    TagProvider.getTags()
+      .then((response) => this.setState({ all_tags: response }))
+  }
+
+  manageTags = (e) => {
+    e.preventDefault();
+    const { manage_tags, current_tags } = this.state;
+
+    if (manage_tags) {
+      this.setState({ manage_tags: false })
+    } else {
+      this.setState({ manage_tags: true })
+    }
+  }
+
+  selectNewTag = (e) => {
+    e.preventDefault();
+    const newId = e.target.id;
+    const { current_tags } = this.state;
+
+    TagProvider.getTagById(newId)
+      .then((response) => {
+        let existing = current_tags.filter(tag => {
+          return tag.id === response.id;
+        })
+        if (existing.length < 1) {
+          return [this.setState(prevState => ({
+            readyToSave: [...prevState.readyToSave, response],
+            current_tags: [...prevState.current_tags, response]
+          })),
+          document.getElementById(newId).style.backgroundColor = '#404040',
+          document.getElementById(newId).style.color = '#fff'];
+        } else {
+          console.warn('Already in use!')
+        }
+      })
+  }
+
+  saveNewTags = (e) => {
+    e.preventDefault();
+    const { readyToSave } = this.state;
+    const { postId } = this.props.match.params;
+    
+    readyToSave.forEach((item) => {
+      TagProvider.getTagById(item.id)
+        .then((response) => {
+          const newPostTag = {
+            post_id: postId,
+            tag_id: response.id 
+          }
+          TagProvider.addTagToPost(newPostTag)
+        })
+        .then(() => {
+          PostProvider.getPostsById(postId)
+            .then((response) => this.setState({ post: response, current_tags: response.tags, manage_tags: false, readyToSave: [] }))
+        })
+    })
   }
 
   render() {
-    const { post, current_user, tags } = this.state;
+    const { post, current_user, current_tags, all_tags, manage_tags } = this.state;
 
-    const allTags = tags.map((tag) => 
+    const currentTags = current_tags.map((tag) => 
       <div
         className="tags"
         key={tag.id}
+      >{tag.name}
+      </div>
+    );
+
+    const allManageTags = all_tags.map((tag) =>
+      <div
+        className={current_tags.some(curr => curr.id === tag.id) ? 'current_manage_tags' : 'all_manage_tags'}
+        key={tag.id}
+        id={tag.id}
+        onClick={this.selectNewTag}
       >{tag.name}
       </div>
     );
@@ -45,12 +117,22 @@ class SinglePost extends React.Component {
         <p className="post_content">{post.content}</p>
         <div className="user_icon">Written by <span style={{fontWeight: 'bold'}}>{post.author}</span></div>
         <div className="tag_container">
-          {allTags}
-          {post.user_id === parseInt(current_user)
-            ? <p className="manage_tags">Manage Tags</p>
-            : ''
-          }
+          {currentTags}
         </div>
+        {post.user_id === parseInt(current_user) && manage_tags === false
+          ? <p className="manage_tags" onClick={this.manageTags}>Manage Tags</p>
+          : ''
+        }
+        {manage_tags === true
+          ? <>
+              <p className="exit_tags" onClick={this.manageTags}>Exit</p>
+              <div className="manage_container">
+                  {allManageTags}
+              </div>
+              <button className="save_tags btn btn-1" onClick={this.saveNewTags}>Save</button>
+            </>
+          : ''
+        }
       </div>
     )
   }
