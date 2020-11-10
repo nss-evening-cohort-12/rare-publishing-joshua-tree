@@ -1,85 +1,3 @@
-// import React, { useContext, useState, useEffect } from "react"
-// import { CategoryContext } from "./CategoryProvider"
-
-
-// export const UpdateCategory = (props) => {
-//     const { categories, updateCategory, getCategories } = useContext(CategoryContext)
-
-//     // Component state
-//     const [category, setCategory] = useState({})
-
-//     const editMode = props.match.params.hasOwnProperty("categoryId")  // true or false
-
-//     const handleControlledInputChange = (event) => {
-
-//         const newCategory = Object.assign({}, category)          // Create copy
-//         newCategory[event.target.name] = event.target.value    // Modify copy
-//         setCategory(newCategory)                                 // Set copy as new state
-//     }
-
-//     /*
-//         If there is a URL parameter, then the user has chosen to
-//         edit an animal.
-//             1. Get the value of the URL parameter.
-//             2. Use that `id` to find the animal.
-//             3. Update component state variable.
-//     */
-//     const getCategoryInEditMode = () => {
-//         if (editMode) {
-//             const categoryId = parseInt(props.match.params.categoryId)
-//             const selectedCategory = categories.find(c => c.id === categoryId) || {}
-//             setCategory(selectedCategory)
-//         }
-//     }
-
-//     // Get animals from API when component initializes
-//     useEffect(() => {
-//         getCategories()
-//     }, [])
-
-//     // Once provider state is updated, determine the animal (if edit)
-//     useEffect(() => {
-//         getCategoryInEditMode()
-//     }, [categories])
-
-
-//     const constructNewCategory = () => {
-
-//             if (editMode) {
-//                 // PUT
-//                 updateCategory({
-//                     id: category.id,
-//                     category_name: category.category_name
-//                 })
-//                     .then(() => props.history.push("/categories"))
-//             }
-//         }
-
-
-//     return (
-//         <form className="editForm">
-//             <h2 className="editForm__title">Edit Category</h2>
-//             <fieldset>
-//                 <div className="form-group">
-//                     <label htmlFor="name">Category name: </label>
-//                     <input type="text" name="name" required autoFocus className="form-control"
-//                         defaultValue={category.category_name}
-//                         onChange={handleControlledInputChange}
-//                     />
-//                 </div>
-//             </fieldset>
-//             <button type="submit"
-//                 onClick={evt => {
-//                     evt.preventDefault()
-//                     constructNewCategory()
-//                 }}
-//                 className="btn btn-primary">
-//                 Save changes
-//             </button>
-//         </form>
-//     )
-// }
-
 import React from 'react';
 
 class UpdateCategory extends React.Component {
@@ -135,7 +53,10 @@ class UpdateCategory extends React.Component {
                 onChange={this.changeNameEvent}
                 />
             </div>
-          <button className="btn btn-secondary" onClick={this.updateCategory}>Save Changes</button>
+          <button onClick={this.updateCategory}>Save Changes</button>
+          <button onClick={() => {
+                this.props.history.push(`/categories`)
+            }}>Cancel</button>
         </form>
       </div>
     );
