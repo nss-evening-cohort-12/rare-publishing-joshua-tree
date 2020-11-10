@@ -1,0 +1,36 @@
+.Tags h1 {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.new-tag {
+  text-decoration: none;
+  text-align: center;
+  margin-top: 30px !important;
+}
+
+.header-container {
+  justify-content: center;
+  display: flex;
+}
+
+.tag-container {
+  display: flex;
+  justify-content: center;
+  margin: 45px 200px;
+  background-color: #dadada;
+  padding: 100px;
+  border-radius: .2em;
+}
+
+.tag {
+  border: 2px solid #404040;
+  background-color: #404040;
+  color: #fff;
+  border-radius: .2em;
+  padding: 5px 10px;
+  margin: 0px 15px 15px 0px;
+  align-self: flex-start;
+  text-align: center;
+}
