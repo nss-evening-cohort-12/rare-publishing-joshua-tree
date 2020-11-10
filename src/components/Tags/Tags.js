@@ -2,6 +2,14 @@ import React from "react"
 import { Link } from "react-router-dom"
 
 class Tags extends React.Component {
+  state = {
+    allTags: [],
+  }
+
+  componentDidMount() {
+    
+  }
+
   render() {
     return (
       <>
