@@ -1,4 +1,6 @@
-import React from "react"
+import React from "react";
+
+import TagProvider from './TagProvider';
 
 class NewTag extends React.Component {
   state = {
@@ -20,15 +22,9 @@ class NewTag extends React.Component {
         const newTag = {
           name,
         };
-    await fetch("http://localhost:8088/tags", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(newTag)
-      });
-      console.warn('Adding a new tag worked!');
-      this.props.history.push('/tags');
+    
+    await TagProvider.addTag(newTag);
+    this.props.history.push('/tags');
     }
   }
 
