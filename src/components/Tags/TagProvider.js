@@ -42,4 +42,12 @@ const addTagToPost = (newPostTag) => {
   .then((response) => response.json());
 }
   
-  export default { getTags, getTagById, addTag, addTagToPost }
+const deleteTag = (tagId) => new Promise((resolve, reject) => {
+  fetch(`http://localhost:8088/tags/${tagId}`, {
+    method: "DELETE"
+  })
+  .then(() => resolve())
+  .catch((err) => reject(err))
+})
+
+export default { getTags, getTagById, addTag, addTagToPost, deleteTag }

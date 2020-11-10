@@ -18,9 +18,8 @@
 .tag-container {
   display: flex;
   justify-content: center;
-  margin: 45px 200px;
-  background-color: #dadada;
-  padding: 100px;
+  flex-wrap: wrap;
+  margin: 75px 200px;
   border-radius: .2em;
 }
 
@@ -30,7 +29,25 @@
   color: #fff;
   border-radius: .2em;
   padding: 5px 10px;
-  margin: 0px 15px 15px 0px;
+  margin: 0px 12.5px 25px 12.5px;
   align-self: flex-start;
   text-align: center;
+}
+
+.hide-delete {
+  display: none !important;
+}
+
+.tag:hover .hide-delete {
+  display: block !important;
+  position: absolute !important;
+  margin-left: -28px;
+  margin-top: -18px;
+
+  color: #404040 !important;
+  background-color: #fff;
+  padding: 0px 9px 2px 9px;
+  border: 1px solid #404040;
+  border-radius: 2em;
+  cursor: pointer;
 }
