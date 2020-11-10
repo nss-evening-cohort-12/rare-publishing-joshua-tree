@@ -12,6 +12,7 @@ import { Register } from "./auth/Register"
 import Tags from "./Tags/Tags"
 import NewTag from "./Tags/NewTag"
 import Posts from "./Posts/Posts"
+import MyPosts from "./Posts/MyPosts"
 import NewPost from "./Posts/NewPost"
 import SinglePost from "./Posts/SinglePost"
 
@@ -56,6 +57,14 @@ export const Rare = () => (
         <Route exact path="/posts" render={(props) => {
             if (localStorage.getItem("rare_user_id")) {
                 return <Posts {...props} />
+            } else {
+                return <Redirect to="/" />
+            }
+        }} />
+
+        <Route exact path="/my_posts" render={(props) => {
+            if (localStorage.getItem("rare_user_id")) {
+                return <MyPosts {...props} />
             } else {
                 return <Redirect to="/" />
             }
