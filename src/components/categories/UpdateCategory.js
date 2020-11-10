@@ -1,140 +1,145 @@
-import React, { useContext, useState, useEffect } from "react"
-import { CategoryContext } from "./CategoryProvider"
+// import React, { useContext, useState, useEffect } from "react"
+// import { CategoryContext } from "./CategoryProvider"
 
 
-export const UpdateCategory = (props) => {
-    const { categories, updateCategory, getCategories } = useContext(CategoryContext)
+// export const UpdateCategory = (props) => {
+//     const { categories, updateCategory, getCategories } = useContext(CategoryContext)
 
-    // Component state
-    const [animal, setAnimal] = useState({})
+//     // Component state
+//     const [category, setCategory] = useState({})
 
-    // Is there a a URL parameter??
-    const editMode = props.match.params.hasOwnProperty("animalId")  // true or false
+//     const editMode = props.match.params.hasOwnProperty("categoryId")  // true or false
 
-    const handleControlledInputChange = (event) => {
-        /*
-            When changing a state object or array, always create a new one
-            and change state instead of modifying current one
-        */
-        const newAnimal = Object.assign({}, animal)          // Create copy
-        newAnimal[event.target.name] = event.target.value    // Modify copy
-        setAnimal(newAnimal)                                 // Set copy as new state
-    }
+//     const handleControlledInputChange = (event) => {
 
-    /*
-        If there is a URL parameter, then the user has chosen to
-        edit an animal.
-            1. Get the value of the URL parameter.
-            2. Use that `id` to find the animal.
-            3. Update component state variable.
-    */
-    const getAnimalInEditMode = () => {
-        if (editMode) {
-            const animalId = parseInt(props.match.params.animalId)
-            const selectedAnimal = animals.find(a => a.id === animalId) || {}
-            setAnimal(selectedAnimal)
-        }
-    }
+//         const newCategory = Object.assign({}, category)          // Create copy
+//         newCategory[event.target.name] = event.target.value    // Modify copy
+//         setCategory(newCategory)                                 // Set copy as new state
+//     }
 
-    // Get animals from API when component initializes
-    useEffect(() => {
-        getAnimals()
-        getLocations()
-    }, [])
+//     /*
+//         If there is a URL parameter, then the user has chosen to
+//         edit an animal.
+//             1. Get the value of the URL parameter.
+//             2. Use that `id` to find the animal.
+//             3. Update component state variable.
+//     */
+//     const getCategoryInEditMode = () => {
+//         if (editMode) {
+//             const categoryId = parseInt(props.match.params.categoryId)
+//             const selectedCategory = categories.find(c => c.id === categoryId) || {}
+//             setCategory(selectedCategory)
+//         }
+//     }
 
-    // Once provider state is updated, determine the animal (if edit)
-    useEffect(() => {
-        getAnimalInEditMode()
-    }, [animals])
+//     // Get animals from API when component initializes
+//     useEffect(() => {
+//         getCategories()
+//     }, [])
+
+//     // Once provider state is updated, determine the animal (if edit)
+//     useEffect(() => {
+//         getCategoryInEditMode()
+//     }, [categories])
 
 
-    const constructNewAnimal = () => {
-        const locationId = parseInt(animal.locationId)
+//     const constructNewCategory = () => {
 
-        if (locationId === 0) {
-            window.alert("Please select a location")
-        } else {
-            if (editMode) {
-                // PUT
-                updateAnimal({
-                    id: animal.id,
-                    name: animal.name,
-                    breed: animal.breed,
-                    locationId: locationId,
-                    treatment: animal.treatment,
-                    customerId: parseInt(localStorage.getItem("kennel_customer"))
-                })
-                    .then(() => props.history.push("/animals"))
-            } else {
-                // POST
-                addAnimal({
-                    name: animal.name,
-                    breed: animal.breed,
-                    locationId: locationId,
-                    treatment: animal.treatment,
-                    customerId: parseInt(localStorage.getItem("kennel_customer"))
-                })
-                    .then(() => props.history.push("/animals"))
-            }
-        }
-    }
+//             if (editMode) {
+//                 // PUT
+//                 updateCategory({
+//                     id: category.id,
+//                     category_name: category.category_name
+//                 })
+//                     .then(() => props.history.push("/categories"))
+//             }
+//         }
+
+
+//     return (
+//         <form className="editForm">
+//             <h2 className="editForm__title">Edit Category</h2>
+//             <fieldset>
+//                 <div className="form-group">
+//                     <label htmlFor="name">Category name: </label>
+//                     <input type="text" name="name" required autoFocus className="form-control"
+//                         defaultValue={category.category_name}
+//                         onChange={handleControlledInputChange}
+//                     />
+//                 </div>
+//             </fieldset>
+//             <button type="submit"
+//                 onClick={evt => {
+//                     evt.preventDefault()
+//                     constructNewCategory()
+//                 }}
+//                 className="btn btn-primary">
+//                 Save changes
+//             </button>
+//         </form>
+//     )
+// }
+
+import React from 'react';
+
+class UpdateCategory extends React.Component {
+  state = {
+    category: {
+      category_name: '',
+    },
+  }
+
+  componentDidMount() {
+    return fetch(`http://localhost:8088/categories/${this.props.match.params.categoryId}`)
+        .then((res) => res.json())
+            .then((category) => this.setState({ category }))          
+  }
+
+  changeNameEvent = (e) => {
+    e.preventDefault();
+    const newCategory = Object.assign({}, this.state.category)        
+    newCategory["category_name"] = e.target.value 
+    this.setState({ category: newCategory });
+  }
+
+  updateCategory = (e) => {
+    e.preventDefault();
+
+
+        return fetch(`http://localhost:8088/categories/${this.props.match.params.categoryId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(this.state.category)
+        })
+            .then(() => this.props.history.push("/categories")) 
+  }
+
+  render() {
+    const {
+      category_name,
+    } = this.state.category;
 
     return (
-        <form className="animalForm">
-            <h2 className="animalForm__title">{editMode ? "Update Animal" : "Admit Animal"}</h2>
-            <fieldset>
-                <div className="form-group">
-                    <label htmlFor="name">Animal name: </label>
-                    <input type="text" name="name" required autoFocus className="form-control"
-                        placeholder="Animal name"
-                        defaultValue={animal.name}
-                        onChange={handleControlledInputChange}
-                    />
-                </div>
-            </fieldset>
-            <fieldset>
-                <div className="form-group">
-                    <label htmlFor="breed">Animal breed: </label>
-                    <input type="text" name="breed" required className="form-control"
-                        placeholder="Animal breed"
-                        defaultValue={animal.breed}
-                        onChange={handleControlledInputChange}
-                    />
-                </div>
-            </fieldset>
-            <fieldset>
-                <div className="form-group">
-                    <label htmlFor="locationId">Location: </label>
-                    <select name="locationId" className="form-control"
-                        value={animal.locationId}
-                        onChange={handleControlledInputChange}>
-
-                        <option value="0">Select a location</option>
-                        {locations.map(e => (
-                            <option key={e.id} value={e.id}>
-                                {e.name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-            </fieldset>
-            <fieldset>
-                <div className="form-group">
-                    <label htmlFor="treatment">Treatments: </label>
-                    <textarea type="text" name="treatment" className="form-control"
-                        value={animal.treatment}
-                        onChange={handleControlledInputChange}>
-                    </textarea>
-                </div>
-            </fieldset>
-            <button type="submit"
-                onClick={evt => {
-                    evt.preventDefault()
-                    constructNewAnimal()
-                }}
-                className="btn btn-primary">
-                {editMode ? "Save Updates" : "Make Reservation"}
-            </button>
+      <div className="EditCategory">
+        <h1>Edit Category</h1>
+        <form className="col-6 offset-3">
+          <div className="form-group">
+            <label htmlFor="">Name</label>
+              <input
+                type="text"
+                className="form-control"
+                id="catName"
+                defaultValue={category_name}
+                onChange={this.changeNameEvent}
+                />
+            </div>
+          <button className="btn btn-secondary" onClick={this.updateCategory}>Save Changes</button>
         </form>
-    )
+      </div>
+    );
+  }
 }
+
+export default UpdateCategory;

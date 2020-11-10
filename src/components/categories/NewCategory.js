@@ -55,7 +55,6 @@
 // }
 
 import React from 'react';
-import { CategoryProvider } from './CategoryProvider';
 
 
 class NewCategory extends React.Component {

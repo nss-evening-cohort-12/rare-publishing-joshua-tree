@@ -4,6 +4,8 @@ import { CategoryDetails } from "./categories/CategoryDetail"
 import { CategoryList } from "./categories/CategoryList"
 import { CategoryProvider } from "./categories/CategoryProvider"
 import NewCategory from "./categories/NewCategory"
+import UpdateCategory from "./categories/UpdateCategory"
+
 
 
 
