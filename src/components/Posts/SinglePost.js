@@ -27,7 +27,7 @@ class SinglePost extends React.Component {
 
   manageTags = (e) => {
     e.preventDefault();
-    const { manage_tags, current_tags } = this.state;
+    const { manage_tags } = this.state;
 
     if (manage_tags) {
       this.setState({ manage_tags: false })

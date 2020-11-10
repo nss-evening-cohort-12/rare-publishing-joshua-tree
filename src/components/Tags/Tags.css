@@ -38,6 +38,10 @@
   display: none !important;
 }
 
+.tag:hover {
+  cursor: default;
+}
+
 .tag:hover .hide-delete {
   display: block !important;
   position: absolute !important;
@@ -50,4 +54,13 @@
   border: 1px solid #404040;
   border-radius: 2em;
   cursor: pointer;
+}
+
+.edit-link {
+  text-decoration: none !important;
+  color: #fff !important;
+}
+
+.cancel-edit {
+  background-color: #404040 !important;
 }
