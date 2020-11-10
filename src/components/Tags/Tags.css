@@ -55,3 +55,12 @@
   border-radius: 2em;
   cursor: pointer;
 }
+
+.edit-link {
+  text-decoration: none !important;
+  color: #fff !important;
+}
+
+.cancel-edit {
+  background-color: #404040 !important;
+}
