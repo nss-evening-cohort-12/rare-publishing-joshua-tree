@@ -36,6 +36,9 @@ class SinglePost extends React.Component {
     }
   }
 
+  // Just delete every relationship with post_tags THEN re-post the new selections
+  // This will be an easier way Ryan...
+
   selectNewTag = (e) => {
     e.preventDefault();
     const newId = e.target.id;
