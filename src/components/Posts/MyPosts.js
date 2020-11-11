@@ -24,6 +24,7 @@ class MyPosts extends React.Component {
         <h1>My Posts</h1>
         <div className="boxes">
           {post}
+          
         </div>
         <Link to="new-post">New Post</Link>
       </div>
