@@ -23,8 +23,6 @@ export const ApplicationViews = () => {
                 return <>
                     <main className="categoryContainer">
 
-
-                        {/* <CategorySearch /> */}
                         <CategoryList history={props.history} />
                     </main>
 

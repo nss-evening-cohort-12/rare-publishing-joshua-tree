@@ -14,6 +14,12 @@ class Posts extends React.Component {
     PostProvider.getPosts()
     .then((res) => this.setState({ posts: res }))
   }
+
+  // deletePost = (postId) => {
+  //   PostProvider.deletePost(postId)
+  //     .then(() => PostProvider.getPosts())
+  // }
+  // deletePost={this.deletePost}
     
   render() {
     const { posts } = this.state;

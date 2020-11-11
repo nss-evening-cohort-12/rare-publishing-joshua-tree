@@ -21,7 +21,6 @@ class Post extends React.Component {
           <p className="card-text">{post.full_name} .. {filterDate}</p>
           <p className="card-text">Category: {post.category_name}</p>
           <Link className="btn btn-primary" to="new-post">Comment</Link>
-          <button className="btn btn-primary">Delete Post</button>
         </div>
       </div>
     );

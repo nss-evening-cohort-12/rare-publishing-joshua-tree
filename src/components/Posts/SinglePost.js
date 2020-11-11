@@ -25,6 +25,12 @@ class SinglePost extends React.Component {
       .then((response) => this.setState({ all_tags: response }))
   }
 
+  deletePost = (postId) => {
+    PostProvider.deletePost(postId)
+      .then(() => this.props.history.push("/posts"))
+  }
+
+
   manageTags = (e) => {
     e.preventDefault();
     const { manage_tags } = this.state;
@@ -120,7 +126,7 @@ class SinglePost extends React.Component {
           {currentTags}
         </div>
         {post.user_id === parseInt(current_user) && manage_tags === false
-          ? <p className="manage_tags" onClick={this.manageTags}>Manage Tags</p>
+          ? <p className="manage_tags" onClick={this.manageTags}>Manage Tags</p> 
           : ''
         }
         {manage_tags === true
@@ -131,6 +137,11 @@ class SinglePost extends React.Component {
               </div>
               <button className="save_tags btn btn-1" onClick={this.saveNewTags}>Save</button>
             </>
+          : ''
+        }
+        {post.user_id === parseInt(current_user)
+          ? <div className="delete-container"><button onClick={() => window.confirm('Are you sure?') &&
+          this.deletePost(post.id)}>Delete</button></div>
           : ''
         }
       </div>
