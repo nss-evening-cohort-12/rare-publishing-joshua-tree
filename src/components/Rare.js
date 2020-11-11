@@ -46,11 +46,11 @@ export const Rare = () => (
         {/* Jeanine's Category code below */}
         <CategoryProvider>
         <Route path="/categories" render={() => {
-            // if (localStorage.getItem("rare_user_id")) {
-            //     return <Redirect to="/" />
-            // } else {
-                // return <ApplicationViews />
-            // }
+            if (localStorage.getItem("rare_user_id")) {
+                return <ApplicationViews />
+            } else {
+                return <Redirect to="/" />
+            }
         }} />
         </CategoryProvider>
         {/* Below is for Ryan's Tags */}
