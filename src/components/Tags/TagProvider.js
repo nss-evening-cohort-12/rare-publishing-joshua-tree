@@ -51,7 +51,7 @@ const deleteTag = (tagId) => new Promise((resolve, reject) => {
 });
 
 const updateTag = (tagId, newTag) => new Promise((resolve, reject) => {
-  fetch(`http://localhost:8088/edit-tag/${tagId}`, {
+  fetch(`http://localhost:8088/tags/${tagId}`, {
     method: "PUT",
     headers: {
         "Content-Type": "application/json"
