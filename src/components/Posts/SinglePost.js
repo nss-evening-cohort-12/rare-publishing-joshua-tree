@@ -7,22 +7,25 @@ import TagProvider from '../Tags/TagProvider';
 class SinglePost extends React.Component {
   state = {
     post: {},
-    current_tags: [],
     all_tags: [],
-    current_user: '',
     manage_tags: false,
-    readyToSave: [],
+    current_tags: [],
+    current_user: '',
   }
 
   componentDidMount() {
     this.setState({ current_user: localStorage.getItem("rare_user_id") })
-    const { postId } = this.props.match.params;
-    
-    PostProvider.getPostsById(postId)
-      .then((response) => this.setState({ post: response, current_tags: response.tags }))
-    
+    this.getCurrentTags();
+
     TagProvider.getTags()
       .then((response) => this.setState({ all_tags: response }))
+  }
+
+  getCurrentTags = () => {
+    const { postId } = this.props.match.params;
+
+    PostProvider.getPostsById(postId)
+    .then((response) => this.setState({ post: response, current_tags: response.tags }))
   }
 
   manageTags = (e) => {
@@ -36,51 +39,69 @@ class SinglePost extends React.Component {
     }
   }
 
-  // Just delete every relationship with post_tags THEN re-post the new selections
-  // This will be an easier way Ryan...
-
-  selectNewTag = (e) => {
+  selectNewTag = async (e) => {
     e.preventDefault();
     const newId = e.target.id;
     const { current_tags } = this.state;
 
-    TagProvider.getTagById(newId)
+    await TagProvider.getTagById(newId)
       .then((response) => {
         let existing = current_tags.filter(tag => {
           return tag.id === response.id;
         })
         if (existing.length < 1) {
-          return [this.setState(prevState => ({
-            readyToSave: [...prevState.readyToSave, response],
-            current_tags: [...prevState.current_tags, response]
-          })),
-          document.getElementById(newId).style.backgroundColor = '#404040',
-          document.getElementById(newId).style.color = '#fff'];
+          return [
+            this.setState(prevState => ({
+              current_tags: [...prevState.current_tags, response],
+            }), () => {
+              document.getElementById(newId).style.backgroundColor = '#404040';
+              document.getElementById(newId).style.color = '#fff'
+            }),
+          ];
         } else {
-          console.warn('Already in use!')
+          const indexToDelete = current_tags.indexOf(response);
+          return [
+            current_tags.splice(indexToDelete, 1),
+            this.setState({ current_tags }, () => { 
+              document.getElementById(newId).style.backgroundColor = '#fff';
+              document.getElementById(newId).style.color = '#404040'
+            })
+          ];
         }
       })
   }
 
-  saveNewTags = (e) => {
+  saveNewTags = async (e) => {
     e.preventDefault();
-    const { readyToSave } = this.state;
     const { postId } = this.props.match.params;
+
+    await PostProvider.deletePostTags(postId)
+    this.postNewTags();
+  }
+
+  postNewTags = () => {
+    const { postId } = this.props.match.params;
+    const { current_tags } = this.state;
     
-    readyToSave.forEach((item) => {
-      TagProvider.getTagById(item.id)
-        .then((response) => {
-          const newPostTag = {
-            post_id: postId,
-            tag_id: response.id 
-          }
-          TagProvider.addTagToPost(newPostTag)
+    if (current_tags.length < 1) {
+      PostProvider.getPostsById(postId)
+        .then((response) => this.setState({ post: response, current_tags: response.tags, manage_tags: false }))
+    } else {
+        current_tags.forEach((item) => {
+          TagProvider.getTagById(item.id)
+            .then((response) => {
+              const newPostTag = {
+                post_id: postId,
+                tag_id: response.id 
+              }
+              TagProvider.addTagToPost(newPostTag)
+            })
+            .then(() => {
+              PostProvider.getPostsById(postId)
+                .then((response) => this.setState({ post: response, current_tags: response.tags, manage_tags: false }))
+            })
         })
-        .then(() => {
-          PostProvider.getPostsById(postId)
-            .then((response) => this.setState({ post: response, current_tags: response.tags, manage_tags: false, readyToSave: [] }))
-        })
-    })
+      }
   }
 
   render() {

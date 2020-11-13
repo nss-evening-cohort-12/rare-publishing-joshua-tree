@@ -126,7 +126,7 @@
   align-self: flex-start;
 }
 
-.all_manage_tags:hover {
+.all_manage_tags:hover, .current_manage_tags:hover {
   cursor: pointer;
 }
 
