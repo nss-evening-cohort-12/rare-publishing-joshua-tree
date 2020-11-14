@@ -68,8 +68,8 @@ class SinglePost extends React.Component {
         })
     }
 
-    this.setState({ current_tags: tagsToSave });
     await PostProvider.deletePostTags(postId)
+    this.setState({ current_tags: tagsToSave });
     this.postNewTags();
   }
 
@@ -160,7 +160,8 @@ class SinglePost extends React.Component {
             {post.user_id === parseInt(current_user)
               ? <><div className="delete-container"><button onClick={() => window.confirm('Are you sure?') &&
               this.deletePost(post.id)} className="btn btn-1 delete-post">Delete Post</button></div>
-              <div className="edit-container"><Link to={`/edit-post/${post.id}`}><button>Edit</button></Link></div></>
+              <div className="edit-container"><Link to={`/edit-post/${post.id}`}>
+                <button className="btn btn-1 edit-post">Edit</button></Link></div></>
               : ''
             }
           </div>

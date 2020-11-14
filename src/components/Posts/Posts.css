@@ -80,20 +80,25 @@
   margin: 10px 100px;
 }
 
-.tag_container, .edit-container {
+.tag_container {
   display: flex;
   justify-content: flex-start;
   margin: 0px 0px 10px 150px;
   font-size: .9em;
 }
 
-.delete-container {
+.delete-container, .edit-container {
   margin: 0px 150px 10px 0px !important;
   font-size: .9em;
 }
 
 .delete-post {
   background-color: rgb(221, 82, 82) !important;
+  margin: 0px !important;
+}
+
+.edit-post {
+  background-color: rgb(68, 182, 114) !important;
   margin: 0px !important;
 }
 
