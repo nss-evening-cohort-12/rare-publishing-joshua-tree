@@ -51,4 +51,27 @@ const deletePost = (postId) => new Promise((resolve, reject) => {
   .catch((err) => reject(err))
 });
 
-export default { getPostsById, getPosts, getMyPostsById, createPost, deletePost }
+// const updatePost = (postId, newPost) => new Promise((resolve, reject) => {
+//   fetch(`http://localhost:8088/posts/${postId}`, {
+//     method: "PUT",
+//     headers: {
+//         "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify(newPost)
+//   })
+//   .then(() => resolve())
+//   .catch((err) => reject(err));
+// });
+
+const updatePost = post => {
+  return fetch(`http://localhost:8088/post/${post.id}`, {
+      method: "PUT",
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify(post)
+  })
+      .then(getPosts)     
+}
+
+export default { getPostsById, getPosts, getMyPostsById, createPost, deletePost, updatePost }
