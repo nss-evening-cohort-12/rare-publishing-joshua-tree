@@ -80,7 +80,7 @@
   margin: 10px 100px;
 }
 
-.tag_container {
+.tag_container, .edit-container {
   display: flex;
   justify-content: flex-start;
   margin: 0px 0px 10px 150px;
@@ -155,7 +155,7 @@
   margin: 0px 150px 100px 150px !important;
   font-size: 1em !important;
 }
-
+/*
 .comments_container {
   display: flex;
   justify-content: flex-start;
@@ -164,7 +164,7 @@
   font-size: .9em;
   text-decoration: none;
 }
-
+*/
 .post_comment {
   text-decoration: none;
 }

@@ -100,7 +100,8 @@ class SinglePost extends React.Component {
 
   render() {
     const { post, current_user, current_tags, all_tags, manage_tags, total_comments } = this.state;
-
+    const { postId } = this.props.match.params;
+    const viewComments = `/comments/${postId}`;
     const currentTags = current_tags.map((tag) => 
       <div
         className="tags"
@@ -134,7 +135,7 @@ class SinglePost extends React.Component {
         </div>
         <p className="post_content">{post.content}</p>
         <div className="user_icon">Written by <span style={{fontWeight: 'bold'}}>{post.author}</span></div>
-        <div><Link className="comments_container" to="r">{total_comments} Comments</Link></div>
+        <div><Link className="tag_container post_comment" to={viewComments}>{total_comments} Comments</Link></div>
         <div className="tag_container">
           {currentTags}
         </div>
@@ -157,8 +158,9 @@ class SinglePost extends React.Component {
           </div>
           <div>
             {post.user_id === parseInt(current_user)
-              ? <div className="delete-container"><button onClick={() => window.confirm('Are you sure?') &&
+              ? <><div className="delete-container"><button onClick={() => window.confirm('Are you sure?') &&
               this.deletePost(post.id)} className="btn btn-1 delete-post">Delete Post</button></div>
+              <div className="edit-container"><Link to={`/edit-post/${post.id}`}><button>Edit</button></Link></div></>
               : ''
             }
           </div>
