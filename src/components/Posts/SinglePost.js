@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import './Posts.css';
 
 import PostProvider from './PostProvider';
@@ -11,6 +12,7 @@ class SinglePost extends React.Component {
     manage_tags: false,
     current_tags: [],
     current_user: '',
+    total_comments: 0,
   }
 
   componentDidMount() {
@@ -25,7 +27,12 @@ class SinglePost extends React.Component {
     const { postId } = this.props.match.params;
 
     PostProvider.getPostsById(postId)
-    .then((response) => this.setState({ post: response, current_tags: response.tags }))
+    .then((response) => this.setState({ post: response, current_tags: response.tags, total_comments: response.total_comments }))
+  }
+
+  deletePost = (postId) => {
+    PostProvider.deletePost(postId)
+      .then(() => this.props.history.push("/posts"))
   }
 
   manageTags = (e) => {
@@ -105,7 +112,7 @@ class SinglePost extends React.Component {
   }
 
   render() {
-    const { post, current_user, current_tags, all_tags, manage_tags } = this.state;
+    const { post, current_user, current_tags, all_tags, manage_tags, total_comments } = this.state;
 
     const currentTags = current_tags.map((tag) => 
       <div
@@ -140,11 +147,12 @@ class SinglePost extends React.Component {
         </div>
         <p className="post_content">{post.content}</p>
         <div className="user_icon">Written by <span style={{fontWeight: 'bold'}}>{post.author}</span></div>
+        <div><Link className="comments_container" to="r">{total_comments} Comments</Link></div>
         <div className="tag_container">
           {currentTags}
         </div>
         {post.user_id === parseInt(current_user) && manage_tags === false
-          ? <p className="manage_tags" onClick={this.manageTags}>Manage Tags</p>
+          ? <p className="manage_tags" onClick={this.manageTags}>Manage Tags</p> 
           : ''
         }
         {manage_tags === true
@@ -155,6 +163,11 @@ class SinglePost extends React.Component {
               </div>
               <button className="save_tags btn btn-1" onClick={this.saveNewTags}>Save</button>
             </>
+          : ''
+        }
+        {post.user_id === parseInt(current_user)
+          ? <div className="delete-container"><button onClick={() => window.confirm('Are you sure?') &&
+          this.deletePost(post.id)}>Delete</button></div>
           : ''
         }
       </div>

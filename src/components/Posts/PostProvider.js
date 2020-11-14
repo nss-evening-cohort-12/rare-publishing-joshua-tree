@@ -48,6 +48,14 @@ const deletePostTags = (postId) => new Promise((resolve, reject) => {
   })
   .then(() => resolve())
   .catch((err) => reject(err))
-})
+});
 
-export default { getPostsById, getPosts, getMyPostsById, createPost, deletePostTags }
+const deletePost = (postId) => new Promise((resolve, reject) => {
+  fetch(`http://localhost:8088/posts/${postId}`, {
+    method: "DELETE"
+  })
+  .then(() => resolve())
+  .catch((err) => reject(err))
+});
+
+export default { getPostsById, getPosts, getMyPostsById, createPost, deletePostTags, deletePost }
