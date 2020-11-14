@@ -52,6 +52,13 @@ class UpdatePost extends React.Component {
     this.setState({ post: newPostCategory });
   }
 
+  changeImgUrlEvent = (e) => {
+    e.preventDefault();
+    const newPostImg = Object.assign({}, this.state.post)        
+    newPostImg["image_url"] = e.target.value 
+    this.setState({ post: newPostImg });
+  }
+
   updatePost = (e) => {
     e.preventDefault();
 
@@ -69,7 +76,8 @@ class UpdatePost extends React.Component {
     const {
       title,
       content,
-      category_id
+      category_id,
+      image_url
     } = this.state.post;
     const {
       categories
@@ -95,14 +103,22 @@ class UpdatePost extends React.Component {
               <input
                 type="text"
                 className="form-control"
-                id="catName"
+                id="postContent"
                 defaultValue={content}
                 onChange={this.changeContentEvent}
                 />
-            <label htmlFor="">Category</label>
+            <label htmlFor="">Category</label><br></br>
               <select className="selector" value={category_id} onChange={this.categoryChangeEvent}>
                 {dropdown}
-              </select>
+              </select><br></br>
+              <label htmlFor="">Image URL</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="postImg"
+                  defaultValue={image_url}
+                  onChange={this.changeImgUrlEvent}
+                  />
             </div>
           <button onClick={this.updatePost}>Save Changes</button>
           <button onClick={() => {
