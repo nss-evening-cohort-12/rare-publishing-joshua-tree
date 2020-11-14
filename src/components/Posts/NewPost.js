@@ -62,7 +62,7 @@ class NewPost extends React.Component {
     }
   }
 
-  savePost = (e) => {
+  savePost = async (e) => {
     e.preventDefault();
     const { title, content, image_url, selectedCategory } = this.state;
     const category = parseInt(selectedCategory);
@@ -76,9 +76,11 @@ class NewPost extends React.Component {
       image_url
     };
 
-    PostProvider.createPost(newPost)
-      PostProvider.getPosts()
-      .then((response) => this.props.history.push(`/posts/${response.pop().id}`))
+    await PostProvider.createPost(newPost)
+    PostProvider.getPosts()
+      .then((response) => {
+        this.props.history.push(`/posts/${response[0].id}`)
+      })
   }
 
   render() {

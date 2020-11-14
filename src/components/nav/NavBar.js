@@ -25,7 +25,7 @@ export const NavBar = () => {
             </li>
             {
                 (localStorage.getItem("rare_user_id") !== null) ?
-                    <li className="nav-item">
+                    <li className="navbar__item">
                         <button className="nav-link fakeLink"
                             onClick={() => {
                                 localStorage.removeItem("rare_user_id")
@@ -34,10 +34,10 @@ export const NavBar = () => {
                         >Logout</button>
                     </li> :
                     <>
-                        <li className="nav-item">
+                        <li className="navbar__item">
                             <Link className="nav-link" to="/login">Login</Link>
                         </li>
-                        <li className="nav-item">
+                        <li className="navbar__item">
                             <Link className="nav-link" to="/register">Register</Link>
                         </li>
                     </>

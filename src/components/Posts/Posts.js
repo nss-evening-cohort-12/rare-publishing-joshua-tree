@@ -26,11 +26,13 @@ class Posts extends React.Component {
     const post = posts.map((post) => <Post key={post.id} post={post} />)    
     return (
       <div className="postContainer">
-        <h1>Posts</h1>
+        <div className="header-post">
+          <h1>Posts</h1>
+          <Link to="new-post" className="new-post btn btn-1">New Post</Link>
+        </div>
         <div className="boxes">
           {post}
         </div>
-        <Link to="new-post">New Post</Link>
       </div>
     )
   }

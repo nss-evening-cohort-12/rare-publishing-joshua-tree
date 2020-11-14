@@ -31,7 +31,7 @@ const getMyPostsById = (id) => new Promise((resolve, reject) => {
   .catch((err) => reject(err));
 });
 
-const createPost = (newPost) => {
+const createPost = (newPost) => new Promise((resolve, reject) => {
   fetch('http://localhost:8088/posts', {
     method: "POST",
     header: {
@@ -39,11 +39,12 @@ const createPost = (newPost) => {
     },
     body: JSON.stringify(newPost)
   })
-  .then((response) => response.json());
-};
+  .then((response) => resolve(response.json()))
+  .catch((err) => reject(err));
+});
 
 const deletePostTags = (postId) => new Promise((resolve, reject) => {
-  fetch(`http://localhost:8088/posts/${postId}`, {
+  fetch(`http://localhost:8088/post-tags/${postId}`, {
     method: "DELETE",
   })
   .then(() => resolve())
