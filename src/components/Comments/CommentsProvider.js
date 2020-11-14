@@ -20,4 +20,12 @@ const getCommentsByPostId = (id) => new Promise((resolve, reject) => {
   .catch((err) => reject(err));
 });
 
-export default { addCommentToPost, getCommentsByPostId }
+const deleteComment = (commentId) => new Promise((resolve, reject) => {
+  fetch(`http://localhost:8088/comments/${commentId}`, {
+    method: "DELETE"
+  })
+  .then(() => resolve())
+  .catch((err) => reject(err))
+});
+
+export default { addCommentToPost, getCommentsByPostId, deleteComment }

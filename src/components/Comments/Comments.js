@@ -16,6 +16,8 @@ class Comments extends React.Component {
   }
 
   componentDidMount() {
+    this.getAllComments()
+
     this.setState({ current_user: localStorage.getItem("rare_user_id") })
     const { postId } = this.props.match.params;
     
@@ -28,14 +30,24 @@ class Comments extends React.Component {
     PostProvider.getPostsById(postId)
       .then((response) => this.setState({ post: response }))
       // .then((response) => this.setState({ post: response, current_tags: response.tags, comments: response.comments }))
+  }
 
+  getAllComments = () => {
+    const { postId } = this.props.match.params;
+    CommentsProvider.getCommentsByPostId(postId)
+      .then((response) => this.setState({ comments: response }))
+  }
+
+  deleteComment = (commentId) => {
+    CommentsProvider.deleteComment(commentId)
+      .then(() => this.getAllComments())
   }
 
   render() {
     const { post, comments } = this.state;
 
     console.warn(comments)
-    const comment = comments.map((comment) => <Comment key={comments.id} comment={comment} />)
+    const comment = comments.map((comment) => <Comment key={comments.id} comment={comment} deleteComment={this.deleteComment} />)
     const { postId } = this.props.match.params;    
     const newComment = `/new-comment/${postId}`;
 
