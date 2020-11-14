@@ -10,6 +10,7 @@ class Post extends React.Component {
     const { post } = this.props;
     const filterDate = moment(post.publication_date).format('MMMM Do YYYY');
     const view_post = `posts/${post.id}`
+    const view_comments = `comments/${post.id}`
     // if you want only month.day.year
     // moment().format('MM-DD-YYYY')
     // style="width: 18rem;"
@@ -20,7 +21,7 @@ class Post extends React.Component {
           <Link to={view_post}><h5 className="card-title">{post.title}</h5></Link>
           <p className="card-text">{post.full_name} .. {filterDate}</p>
           <p className="card-text">Category: {post.category_name}</p>
-          <Link className="btn btn-primary" to="new-post">Comment</Link>
+          <Link className="btn btn-primary post_comment" to={view_comments}>{post.total_comments} Comments</Link>
         </div>
       </div>
     );

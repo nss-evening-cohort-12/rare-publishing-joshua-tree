@@ -1,9 +1,9 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import './Posts.css';
 
 import PostProvider from './PostProvider';
 import TagProvider from '../Tags/TagProvider';
-import { Link } from "react-router-dom";
 
 class SinglePost extends React.Component {
   state = {
@@ -13,6 +13,7 @@ class SinglePost extends React.Component {
     current_user: '',
     manage_tags: false,
     readyToSave: [],
+    total_comments: 0,
   }
 
   componentDidMount() {
@@ -20,7 +21,7 @@ class SinglePost extends React.Component {
     const { postId } = this.props.match.params;
     
     PostProvider.getPostsById(postId)
-      .then((response) => this.setState({ post: response, current_tags: response.tags }))
+      .then((response) => this.setState({ post: response, current_tags: response.tags, total_comments: response.total_comments}))
     
     TagProvider.getTags()
       .then((response) => this.setState({ all_tags: response }))
@@ -88,8 +89,9 @@ class SinglePost extends React.Component {
   }
 
   render() {
-    const { post, current_user, current_tags, all_tags, manage_tags } = this.state;
-
+    const { post, current_user, current_tags, all_tags, manage_tags, total_comments } = this.state;
+    const { postId } = this.props.match.params;
+    const viewComments = `/comments/${postId}`;
     const currentTags = current_tags.map((tag) => 
       <div
         className="tags"
@@ -123,6 +125,7 @@ class SinglePost extends React.Component {
         </div>
         <p className="post_content">{post.content}</p>
         <div className="user_icon">Written by <span style={{fontWeight: 'bold'}}>{post.author}</span></div>
+        <div><Link className="tag_container post_comment" to={viewComments}>{total_comments} Comments</Link></div>
         <div className="tag_container">
           {currentTags}
         </div>
