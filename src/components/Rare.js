@@ -12,6 +12,8 @@ import Posts from "./Posts/Posts"
 import MyPosts from "./Posts/MyPosts"
 import NewPost from "./Posts/NewPost"
 import SinglePost from "./Posts/SinglePost"
+import Comments from "./Comments/Comments"
+import NewComment from "./Comments/NewComment"
 
 export const Rare = () => (
     <>
@@ -108,5 +110,22 @@ export const Rare = () => (
             }
         }} />
         </CategoryProvider>
+
+        <Route exact path="/comments/:postId" render={(props) => {
+            if (localStorage.getItem("rare_user_id")) {
+                return <Comments {...props} />
+            } else {
+                return <Redirect to="/" />
+            }
+        }} />
+
+        <Route exact path="/new-comment/:postId" render={(props) => {
+            if (localStorage.getItem("rare_user_id")) {
+                return <NewComment {...props} />
+            } else {
+                return <Redirect to="/" />
+            }
+        }} />        
+
     </>
 )
