@@ -3,6 +3,7 @@ import './Posts.css';
 
 import PostProvider from './PostProvider';
 import TagProvider from '../Tags/TagProvider';
+import { Link } from "react-router-dom";
 
 class SinglePost extends React.Component {
   state = {
@@ -140,8 +141,9 @@ class SinglePost extends React.Component {
           : ''
         }
         {post.user_id === parseInt(current_user)
-          ? <div className="delete-container"><button onClick={() => window.confirm('Are you sure?') &&
+          ? <><div className="delete-container"><button onClick={() => window.confirm('Are you sure?') &&
           this.deletePost(post.id)}>Delete</button></div>
+          <div className="edit-container"><Link to={`/edit-post/${post.id}`}><button>Edit</button></Link></div></>
           : ''
         }
       </div>

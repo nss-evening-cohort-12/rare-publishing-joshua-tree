@@ -69,7 +69,7 @@
   margin: 10px 100px;
 }
 
-.tag_container, .delete-container {
+.tag_container, .delete-container, .edit-container {
   display: flex;
   justify-content: flex-start;
   padding: 5px 50px 25px 50px;

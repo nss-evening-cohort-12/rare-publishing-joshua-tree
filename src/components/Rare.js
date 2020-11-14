@@ -12,6 +12,7 @@ import Posts from "./Posts/Posts"
 import MyPosts from "./Posts/MyPosts"
 import NewPost from "./Posts/NewPost"
 import SinglePost from "./Posts/SinglePost"
+import UpdatePost from './Posts/UpdatePost'
 
 export const Rare = () => (
     <>
@@ -98,7 +99,14 @@ export const Rare = () => (
             }
         }} />
 
-        {/* Jeanine's Category code below */}
+        <Route exact path="/edit-post/:postId" render={(props) => {
+            if (localStorage.getItem("rare_user_id")) {
+                return <UpdatePost {...props} />
+            } else {
+                return <Redirect to="/" />
+            }
+        }} />  
+
         <CategoryProvider>
         <Route path="/categories" render={() => {
             if (localStorage.getItem("rare_user_id")) {
