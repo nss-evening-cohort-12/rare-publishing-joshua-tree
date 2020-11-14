@@ -5,10 +5,12 @@ class UpdatePost extends React.Component {
     post: {
       title: '',
       content: '',
-      category_name: '',
+      category_id: 0,
+      // category_name: '',
       image_url: ''
     },
-    categories: []
+    categories: [],
+    selectedCategory: ''
   }
 
 
@@ -43,8 +45,11 @@ class UpdatePost extends React.Component {
   }
 
   categoryChangeEvent = (e) => {
-    const { post } = this.props;
-    post.category_name = e.target.value;
+    const value = e.target.value
+    console.warn(value)
+    const newPostCategory = Object.assign({}, this.state.post)        
+    newPostCategory["category_id"] = e.target.value
+    this.setState({ post: newPostCategory });
   }
 
   updatePost = (e) => {
@@ -64,15 +69,14 @@ class UpdatePost extends React.Component {
     const {
       title,
       content,
-      category_name,
+      category_id
     } = this.state.post;
     const {
       categories
     } = this.state
     
 
-    // const category_names = ['test']
-    const dropdown = categories.map((category) => <option value={category.category_name} key={category.id}>{category.category_name}</option>);
+    const dropdown = categories.map((category) => <option value={category.id} text={category.category_name} key={category.id}>{category.category_name}</option>);
 
     return (
       <div className="EditTitle">
@@ -96,7 +100,7 @@ class UpdatePost extends React.Component {
                 onChange={this.changeContentEvent}
                 />
             <label htmlFor="">Category</label>
-              <select className="selector" value={category_name} onChange={this.categoryChangeEvent}>
+              <select className="selector" value={category_id} onChange={this.categoryChangeEvent}>
                 {dropdown}
               </select>
             </div>
