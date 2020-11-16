@@ -5,9 +5,8 @@ import { CategoryList } from "./categories/CategoryList"
 import { CategoryProvider } from "./categories/CategoryProvider"
 import NewCategory from "./categories/NewCategory"
 import UpdateCategory from "./categories/UpdateCategory"
-
-
-
+import { UserList } from "./Users/UserList"
+import { UserProvider } from "./Users/UserProvider"
 
 
 export const ApplicationViews = () => {
@@ -41,6 +40,18 @@ export const ApplicationViews = () => {
                 props => <UpdateCategory {...props} />
             } /> 
             </CategoryProvider>
+
+            <UserProvider>
+                <Route exact path="/users" render={(props) => {
+                    return <>
+                        <main className="userContainer">
+
+                            <UserList history={props.history} />
+                        </main>
+
+                    </>
+                }} />
+            </UserProvider>
     </>
     
 }
