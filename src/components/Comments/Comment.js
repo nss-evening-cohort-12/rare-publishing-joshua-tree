@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import './Comments.css';
 
@@ -16,20 +16,22 @@ class Comment extends React.Component {
     } else {
       return;
     }    
-  };
+  };  
 
   render() {
     const { comment } = this.props;
     const filterDate = moment(comment.creation_date).format('MM/DD/YYYY');
     // const filterDate = moment(comment.creation_date).fromNow();
     const userId = localStorage.getItem("rare_user_id")
+    const editComment = `/edit-comment/${comment.id}`;
     return (
       <div className="Comment card">
         <div className="card-body">
           <h2 className="card-title comment_sub">{comment.subject} <span className="text-muted auther_date">
           {comment.user_id === parseInt(userId)
           ? <>
-              <button className="btn btn" onClick={this.deleteComment} id={comment.id}>Delete</button>
+              <button className="btn btn delete-comment" onClick={this.deleteComment} id={comment.id}>Delete</button>
+              <Link className="btn btn-info set_link_to_none edit-comment" to={editComment}>Edit</Link>
             </>
           : ''
           }</span></h2>

@@ -14,3 +14,17 @@
 .comment_sub {
   color: red !important;
 }
+
+.set_link_to_none {
+  text-decoration: none;
+}
+
+.delete-comment {
+  background-color: rgb(221, 82, 82) !important;
+  color: white !important;
+}
+
+.edit-comment {
+  background-color: rgb(221, 207, 82) !important;
+  color: white !important;
+}

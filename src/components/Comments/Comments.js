@@ -64,7 +64,7 @@ class Comments extends React.Component {
           <h4>Comments:</h4>
             {/* <button className="btn btn-1" type="submit" onClick={this.saveNewComment}>Add</button> */}
 
-          <Link className="btn btn-info" to={newComment}>Add Comment</Link>
+          <Link className="btn btn-info set_link_to_none" to={newComment}>Add Comment</Link>
           {comment}
         </div>
       </div>
