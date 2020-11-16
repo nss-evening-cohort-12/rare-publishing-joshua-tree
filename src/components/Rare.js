@@ -15,7 +15,6 @@ import SinglePost from "./Posts/SinglePost"
 import UpdatePost from './Posts/UpdatePost'
 import Comments from "./Comments/Comments"
 import NewComment from "./Comments/NewComment"
-import { UserList } from "./Users/UserList"
 import { UserProvider } from "./Users/UserProvider"
 
 
