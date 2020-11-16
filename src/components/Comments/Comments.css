@@ -1,6 +1,6 @@
 .auther_date {
   color: grey;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .Comment {
@@ -9,4 +9,8 @@
 
 .comments_container {
   margin: 10px 100px;
+}
+
+.comment_sub {
+  color: red !important;
 }
