@@ -15,6 +15,8 @@ import SinglePost from "./Posts/SinglePost"
 import UpdatePost from './Posts/UpdatePost'
 import Comments from "./Comments/Comments"
 import NewComment from "./Comments/NewComment"
+import { UserProvider } from "./Users/UserProvider"
+
 
 export const Rare = () => (
     <>
@@ -118,6 +120,16 @@ export const Rare = () => (
             }
         }} />
         </CategoryProvider>
+
+        <UserProvider>
+            <Route path="/users" render={() => {
+                if (localStorage.getItem("rare_user_id")) {
+                    return <ApplicationViews />
+                } else {
+                    return <Redirect to="/" />
+                }
+            }} />
+        </UserProvider>
 
         <Route exact path="/comments/:postId" render={(props) => {
             if (localStorage.getItem("rare_user_id")) {

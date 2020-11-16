@@ -12,17 +12,6 @@ export const CategoryProvider = (props) => {
             .then(setCategories)
     }
 
-    // const getCategoriesPromise = () => new Promise((resolve, reject) => {
-    //     fetch(`http://localhost:8088/categories`, {
-    //       method: "GET",
-    //       headers: {
-    //         "Content-Type": "application/json"
-    //       }
-    //     })
-    //     .then((response) => resolve(response.json()))
-    //     .catch((err) => reject(err));
-    //   });
-
     const getCategoryById = (id) => {
         return fetch(`http://localhost:8088/categories/${id}`)
         .then(res => res.json())
