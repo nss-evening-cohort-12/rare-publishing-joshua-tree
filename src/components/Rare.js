@@ -15,6 +15,7 @@ import SinglePost from "./Posts/SinglePost"
 import UpdatePost from './Posts/UpdatePost'
 import Comments from "./Comments/Comments"
 import NewComment from "./Comments/NewComment"
+import EditComment from "./Comments/EditComment"
 
 export const Rare = () => (
     <>
@@ -134,6 +135,14 @@ export const Rare = () => (
                 return <Redirect to="/" />
             }
         }} />        
+
+        <Route exact path="/edit-comment/:commentId" render={(props) => {
+            if (localStorage.getItem("rare_user_id")) {
+                return <EditComment {...props} />
+            } else {
+                return <Redirect to="/" />
+            }
+        }} />    
 
     </>
 )
