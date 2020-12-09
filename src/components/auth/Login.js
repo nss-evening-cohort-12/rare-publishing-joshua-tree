@@ -1,14 +1,13 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import "./Auth.css"
 
 
-export const Login = props => {
+export const Login = () => {
     const email = React.createRef()
     const password = React.createRef()
     const invalidDialog = React.createRef()
-    // const history = useHistory() 
-
+    const history = useHistory() 
 
     const handleLogin = (e) => {
         e.preventDefault()
@@ -24,19 +23,18 @@ export const Login = props => {
                 password: password.current.value
             })
         })
-        
             .then(res => res.json())
             .then(res => {
                 if ("valid" in res && res.valid && "token" in res) {
                     localStorage.setItem( "rare_token", res.token )
-                    props.history.push("/")
+                    history.push("/")
                 }
                 else {
                     invalidDialog.current.showModal()
                 }
             })
     }
-//
+
     return (
         <main className="container--login">
             <dialog className="dialog dialog--auth" ref={invalidDialog}>
@@ -45,15 +43,15 @@ export const Login = props => {
             </dialog>
             <section>
                 <form className="form--login" onSubmit={handleLogin}>
-                    <h1>Rare</h1>
+                    <h1>Level Up</h1>
                     <h2>Please sign in</h2>
                     <fieldset>
                         <label htmlFor="inputEmail"> Email address </label>
-                        <input ref={email} type="email" id="email" className="form-control" defaultValue="me@me.com" placeholder="Email address" required autoFocus />
+                        <input ref={email} type="email" id="email" className="form-control"  placeholder="Email address" required autoFocus />
                     </fieldset>
                     <fieldset>
                         <label htmlFor="inputPassword"> Password </label>
-                        <input ref={password} type="password" id="password" className="form-control" defaultValue="me" placeholder="Password" required />
+                        <input ref={password} type="password" id="password" className="form-control"  placeholder="Password" required />
                     </fieldset>
                     <fieldset style={{
                         textAlign:"center"

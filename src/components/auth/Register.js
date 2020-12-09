@@ -2,7 +2,7 @@ import React, { useRef } from "react"
 import { Link, useHistory } from "react-router-dom"
 import "./Auth.css"
 
-export const Register = (props) => {
+export const Register = () => {
     const firstName = useRef()
     const lastName = useRef()
     const email = useRef()
@@ -34,14 +34,13 @@ export const Register = (props) => {
                 },
                 body: JSON.stringify(newUser)
             })
-                .then(res => res.json())
-                .then(res => {
-                    if ("valid" in res && res.valid) {
-                        localStorage.setItem("rare_user_id", res.token)
-                        history.push("/")
-                        // props.history.push("/")
-                    }
-                })
+            .then(res => res.json())
+            .then(res => {
+                if ("token" in res) {
+                    localStorage.setItem("rare_token", res.token)
+                    history.push("/")
+                }
+            })
         } else {
             passwordDialog.current.showModal()
         }
