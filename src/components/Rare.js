@@ -21,7 +21,7 @@ import { UserProvider } from "./Users/UserProvider"
 export const Rare = () => (
     <>
         <Route render={() => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("rare_token")) {
                 return <>
                     <NavBar />
                     {/* <ApplicationViews /> */}
@@ -31,14 +31,14 @@ export const Rare = () => (
             }
         }} />
         <Route path="/login" render={() => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("rare_token")) {
                 return <Redirect to="/" />
             } else {
                 return <Login />
             }
         }} />
         <Route path="/register" render={() => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("rare_token")) {
                 return <Redirect to="/" />
             } else {
                 return <Register />
@@ -48,7 +48,7 @@ export const Rare = () => (
         {/* Below is for Ryan's Tags */}
 
         <Route exact path="/posts" render={(props) => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("rare_token")) {
                 return <Posts {...props} />
             } else {
                 return <Redirect to="/" />
@@ -56,7 +56,7 @@ export const Rare = () => (
         }} />
 
         <Route exact path="/my_posts" render={(props) => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("rare_token")) {
                 return <MyPosts {...props} />
             } else {
                 return <Redirect to="/" />
@@ -64,7 +64,7 @@ export const Rare = () => (
         }} />
 
         <Route exact path="/new-post" render={(props) => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("rare_token")) {
                 return <NewPost {...props} />
             } else {
                 return <Redirect to="/" />
@@ -72,7 +72,7 @@ export const Rare = () => (
         }} />
 
         <Route exact path="/tags" render={(props) => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("rare_token")) {
                 return <Tags {...props} />
             } else {
                 return <Redirect to="/" />
@@ -80,7 +80,7 @@ export const Rare = () => (
         }} />
 
         <Route exact path="/new-tag" render={(props) => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("rare_token")) {
                 return <NewTag {...props} />
             } else {
                 return <Redirect to="/" />
@@ -88,7 +88,7 @@ export const Rare = () => (
         }} />
 
         <Route exact path="/edit-tag/:tagId" render={(props) => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("rare_token")) {
                 return <EditTag {...props} />
             } else {
                 return <Redirect to="/" />
@@ -96,7 +96,7 @@ export const Rare = () => (
         }} />
 
         <Route exact path="/posts/:postId" render={(props) => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("rare_token")) {
                 return <SinglePost {...props} />
             } else {
                 return <Redirect to="/" />
@@ -104,7 +104,7 @@ export const Rare = () => (
         }} />
 
         <Route exact path="/edit-post/:postId" render={(props) => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("rare_token")) {
                 return <UpdatePost {...props} />
             } else {
                 return <Redirect to="/" />
@@ -113,7 +113,7 @@ export const Rare = () => (
 
         <CategoryProvider>
         <Route path="/categories" render={() => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("rare_token")) {
                 return <ApplicationViews />
             } else {
                 return <Redirect to="/" />
@@ -123,7 +123,7 @@ export const Rare = () => (
 
         <UserProvider>
             <Route path="/users" render={() => {
-                if (localStorage.getItem("rare_user_id")) {
+                if (localStorage.getItem("rare_token")) {
                     return <ApplicationViews />
                 } else {
                     return <Redirect to="/" />
@@ -132,7 +132,7 @@ export const Rare = () => (
         </UserProvider>
 
         <Route exact path="/comments/:postId" render={(props) => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("rare_token")) {
                 return <Comments {...props} />
             } else {
                 return <Redirect to="/" />
@@ -140,7 +140,7 @@ export const Rare = () => (
         }} />
 
         <Route exact path="/new-comment/:postId" render={(props) => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("rare_token")) {
                 return <NewComment {...props} />
             } else {
                 return <Redirect to="/" />
@@ -148,7 +148,7 @@ export const Rare = () => (
         }} />        
 
         <Route exact path="/edit-comment/:commentId" render={(props) => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("rare_token")) {
                 return <EditComment {...props} />
             } else {
                 return <Redirect to="/" />
