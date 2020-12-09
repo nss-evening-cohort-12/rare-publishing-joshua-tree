@@ -13,7 +13,7 @@ export const Login = () => {
     const handleLogin = (e) => {
         e.preventDefault()
 
-        return fetch("http://127.0.0.1:8088/login", {
+        return fetch("http://127.0.0.1:8000/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -26,8 +26,9 @@ export const Login = () => {
         })
             .then(res => res.json())
             .then(res => {
-                if ("valid" in res && res.valid) {
-                    localStorage.setItem("rare_user_id", res.token )
+                console.warn(res)
+                if ("token" in res && res.token) {
+                    localStorage.setItem("rare_token", res.token )
                     history.push("/")
                 }
                 else {
@@ -47,8 +48,8 @@ export const Login = () => {
                     <h1>Rare</h1>
                     <h2>Please sign in</h2>
                     <fieldset>
-                        <label htmlFor="inputEmail"> Email address </label>
-                        <input ref={email} type="email" id="email" className="form-control" defaultValue="me@me.com" placeholder="Email address" required autoFocus />
+                        <label htmlFor="email"> Email </label>
+                        <input ref={email} type="email" id="email" className="form-control" defaultValue="rdbeiden@gmail.com" placeholder="Enter you email" required autoFocus />
                     </fieldset>
                     <fieldset>
                         <label htmlFor="inputPassword"> Password </label>
