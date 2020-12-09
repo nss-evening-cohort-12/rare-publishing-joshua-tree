@@ -1,19 +1,19 @@
-import React, { useRef } from "react"
-import { Link, useHistory } from "react-router-dom"
+import React from "react"
+import { Link } from "react-router-dom"
 import "./Auth.css"
 
 
-export const Login = () => {
-    const email = useRef()
-    const password = useRef()
-    const invalidDialog = useRef()
-    const history = useHistory() 
+export const Login = props => {
+    const email = React.createRef()
+    const password = React.createRef()
+    const invalidDialog = React.createRef()
+    // const history = useHistory() 
 
 
     const handleLogin = (e) => {
         e.preventDefault()
 
-        return fetch("http://127.0.0.1:8088/login", {
+        return fetch("http://127.0.0.1:8000/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -24,11 +24,12 @@ export const Login = () => {
                 password: password.current.value
             })
         })
+        
             .then(res => res.json())
             .then(res => {
-                if ("valid" in res && res.valid) {
-                    localStorage.setItem("rare_user_id", res.token )
-                    history.push("/")
+                if ("valid" in res && res.valid && "token" in res) {
+                    localStorage.setItem( "rare_token", res.token )
+                    props.history.push("/")
                 }
                 else {
                     invalidDialog.current.showModal()
