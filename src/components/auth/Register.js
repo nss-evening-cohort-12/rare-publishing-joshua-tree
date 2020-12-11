@@ -10,20 +10,27 @@ export const Register = () => {
     const password = useRef()
     const verifyPassword = useRef()
     const passwordDialog = useRef()
+    const displayName =  useRef()
+    const isStaff = useRef()
+    const profileImageUrl = useRef('')
 
     const history = useHistory()
 
     const handleRegister = (e) => {
         e.preventDefault()
+        const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
-        if (password.current.value === verifyPassword.current.value) {
+        if (password.current.value === verifyPassword.current.value && password.current.value.match(regex)) {
             const newUser = {
-                "username": email.current.value,
                 "first_name": firstName.current.value,
                 "last_name": lastName.current.value,
                 "bio": bio.current.value,
                 "email": email.current.value,
-                "password": password.current.value
+                "password": password.current.value,
+                "username": email.current.value,
+                "is_staff": isStaff.current.checked,
+                "display_name": displayName.current.value,
+                "profile_image_url": profileImageUrl.current.value
             }
 
             return fetch("http://127.0.0.1:8000/register", {
@@ -77,8 +84,20 @@ export const Register = () => {
                     <input ref={verifyPassword} type="password" name="verifyPassword" className="form-control" placeholder="Verify password" required />
                 </fieldset>
                 <fieldset>
+                    <label htmlFor="displayName"> Display Name </label>
+                    <input type="text" ref={displayName} name="displayName" className="form-control" placeholder="Choose a good display name" required />
+                </fieldset>
+                <fieldset>
                     <label htmlFor="bio"> Bio </label>
                     <textarea ref={bio} name="bio" className="form-control" placeholder="Let other gamers know a little bit about you..." />
+                </fieldset>
+                <fieldset>
+                    <label htmlFor="profileImageUrl"> Profile URL (Optional) </label>
+                    <textarea ref={profileImageUrl} name="profileImageUrl" className="form-control" />
+                </fieldset>
+                <fieldset>
+                    <label htmlFor="isStaff"> Admin? </label>
+                    <input type="checkbox" ref={isStaff} name="isStaff" defaultChecked />
                 </fieldset>
                 <fieldset style={{
                     textAlign: "center"
