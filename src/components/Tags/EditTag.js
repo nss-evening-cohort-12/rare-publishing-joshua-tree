@@ -16,13 +16,13 @@ class EditTag extends React.Component {
       .then((response) => this.setState({ tag: response }))
   }
 
-  changeNameEvent = (e) => {
+  changeLabelEvent = (e) => {
     e.preventDefault();
-    const name = e.target.value;
+    const label = e.target.value;
     this.setState(prevState => ({
       tag: {
           ...prevState.tag,
-          name
+          label
       }
     }));
   }
@@ -32,7 +32,7 @@ class EditTag extends React.Component {
     const { tag } = this.state;
 
     const newTag = {
-      name: tag.name,
+      label: tag.label,
     };
     
     TagProvider.updateTag(tag.id, newTag)
@@ -48,8 +48,8 @@ class EditTag extends React.Component {
           <form className="form--login">
             <h1>What would you like to rename the tag?</h1>
             <fieldset>
-              <label htmlFor="inputTag">Name</label>
-              <input value={tag.name} onChange={this.changeNameEvent} type="text" id="tagLabel" className="form-control" required autoFocus />
+              <label htmlFor="inputTag">Label</label>
+              <input value={tag.label} onChange={this.changeLabelEvent} type="text" id="tagLabel" className="form-control" required autoFocus />
             </fieldset>
             <fieldset style={{
               textAlign:"center"
