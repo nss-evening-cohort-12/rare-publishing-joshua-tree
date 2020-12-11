@@ -33,9 +33,11 @@ class Tags extends React.Component {
     return (
       <div className="Tags">
         <h1>Tag Management</h1>
+
         <div className="header-container">
           <Link to="/new-tag" className="btn btn-1 new-tag">New Tag</Link>
         </div>
+        <h3>Click on a tag to edit it</h3>
         <div className="tag-container">
           {tagCards}
         </div>

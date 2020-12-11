@@ -49,7 +49,7 @@ class EditTag extends React.Component {
             <h1>What would you like to rename the tag?</h1>
             <fieldset>
               <label htmlFor="inputTag">Name</label>
-              <input value={tag.name} onChange={this.changeNameEvent} type="text" id="tagName" className="form-control" required autoFocus />
+              <input value={tag.name} onChange={this.changeNameEvent} type="text" id="tagLabel" className="form-control" required autoFocus />
             </fieldset>
             <fieldset style={{
               textAlign:"center"
