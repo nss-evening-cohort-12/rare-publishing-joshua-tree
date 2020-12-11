@@ -1,5 +1,6 @@
 import React, { useRef } from "react"
 import { Link, useHistory } from "react-router-dom"
+
 import "./Auth.css"
 
 export const Register = () => {
@@ -9,7 +10,6 @@ export const Register = () => {
     const bio = useRef()
     const password = useRef()
     const verifyPassword = useRef()
-    const passwordDialog = useRef()
     const displayName =  useRef()
     const isStaff = useRef()
     const profileImageUrl = useRef('')
@@ -18,9 +18,8 @@ export const Register = () => {
 
     const handleRegister = (e) => {
         e.preventDefault()
-        const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
-        if (password.current.value === verifyPassword.current.value && password.current.value.match(regex)) {
+        if (passwordCheck(password, verifyPassword)) {
             const newUser = {
                 "first_name": firstName.current.value,
                 "last_name": lastName.current.value,
@@ -48,18 +47,11 @@ export const Register = () => {
                     history.push("/")
                 }
             })
-        } else {
-            passwordDialog.current.showModal()
         }
     }
 
     return (
         <main style={{ textAlign: "center" }}>
-
-            <dialog className="dialog dialog--password" ref={passwordDialog}>
-                <div>Passwords do not match</div>
-                <button className="button--close" onClick={e => passwordDialog.current.close()}>Close</button>
-            </dialog>
 
             <form className="form--login" onSubmit={handleRegister}>
                 <h1 className="h3 mb-3 font-weight-normal">Register an account</h1>
@@ -110,4 +102,36 @@ export const Register = () => {
             </section>
         </main>
     )
+}
+
+const passwordCheck = (password, verifyPassword) => {
+
+    // Minimum eight characters, at least one uppercase letter, one lowercase letter and one number
+    const completeRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+
+    const noLowerCase = /^(?!.*[a-z])$/;
+    const noUpperCase = /^(?!.*[A-Z])$/;
+    const noNumber = /^(?!.*\d)$/;
+
+    if (password.current.value === verifyPassword.current.value) {
+        if (password.current.value.match(completeRegex)) {
+            return true;
+        }
+        else if (password.current.value.match(noLowerCase)) {
+            return alert("Password must contain a lowercase letter.")
+        }
+        else if (password.current.value.match(noUpperCase)) {
+            return alert("Password must contain an uppercase letter.")
+        }
+        else if (password.current.value.match(noNumber)) {
+            return alert("Password must contain a number.")
+        }
+        else {
+            return alert("Passwords can only (and must) contain at least on lowercase, one uppercase, and one number.")
+        }
+    }
+
+    else {
+        return alert("Passwords do not match.");
+    }
 }
