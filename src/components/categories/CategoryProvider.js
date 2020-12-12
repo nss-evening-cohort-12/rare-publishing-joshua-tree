@@ -7,44 +7,55 @@ export const CategoryProvider = (props) => {
     const [categories, setCategories] = useState([])
 
     const getCategories = () => {
-        return fetch("http://localhost:8088/categories")
+        return fetch("http://localhost:8000/categories", {
+            headers:{
+                "Authorization": `Token ${localStorage.getItem("rare_token")}`
+            }            
+        })
             .then(res => res.json())
             .then(setCategories)
     }
 
-    const getCategoryById = (id) => {
-        return fetch(`http://localhost:8088/categories/${id}`)
-        .then(res => res.json())
-    }
+    const getCategoryById = (id) => new Promise((resolve, reject) => {
+        fetch(`http://localhost:8000/categories/${id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then((response) => resolve(response.json()))
+        .catch((err) => reject(err));
+      });
 
-    const addCategory = category => {
-        return fetch("http://localhost:8088/categories", {
+    const addCategory = newCategory => {
+        return fetch("http://localhost:8000/categories", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(category)
+            body: JSON.stringify(newCategory)
         })
             .then(getCategories)
     }
 
     const deleteCategory = (categoryId) => {
-        return fetch(`http://localhost:8088/categories/${categoryId}`, {
+        return fetch(`http://localhost:8000/categories/${categoryId}`, {
             method: "DELETE"
         })
             .then(getCategories)
     }
 
-    const updateCategory = category => {
-        return fetch(`http://localhost:8088/categories/${category.id}`, {
+    const updateCategory = (categoryId, newCategory) => new Promise((resolve, reject) => {
+        fetch(`http://localhost:8000/categories/${categoryId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(category)
+            body: JSON.stringify(newCategory)
         })
-            .then(getCategories)     
-    }
+        .then(() => resolve())
+        .catch((err) => reject(err));   
+    });
 
     return (
         <CategoryContext.Provider value={{
