@@ -6,6 +6,18 @@ import Logo from "./rare.jpeg"
 export const NavBar = () => {
     const history = useHistory()
 
+    // const handleLogout = () => {
+
+
+    //     return fetch("http://127.0.0.1:8000/logout", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "Accept": "application/json"
+    //         }
+    //     })
+    // }
+
     return (
         <ul className="navbar">
             <li className="navbar__item">
@@ -27,11 +39,12 @@ export const NavBar = () => {
                 <Link className="navbar__link" to="/users">User Profiles</Link>
             </li>
             {
-                (localStorage.getItem("rare_user_id") !== null) ?
+                (localStorage.getItem("rare_token") !== null) ?
                     <li className="navbar__item">
                         <button className="nav-link fakeLink"
                             onClick={() => {
-                                localStorage.removeItem("rare_user_id")
+                                // handleLogout()
+                                localStorage.removeItem("rare_token")
                                 history.push({ pathname: "/" })
                             }}
                         >Logout</button>
