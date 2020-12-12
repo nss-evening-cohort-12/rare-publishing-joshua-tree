@@ -1,5 +1,5 @@
 const getTags = () => new Promise((resolve, reject) => {
-  fetch(`http://localhost:8088/tags`, {
+  fetch(`http://localhost:8000/tags`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json"
@@ -10,7 +10,7 @@ const getTags = () => new Promise((resolve, reject) => {
 });
 
 const getTagById = (tagId) => new Promise((resolve, reject) => {
-  fetch(`http://localhost:8088/tags/${tagId}`, {
+  fetch(`http://localhost:8000/tags/${tagId}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json"
@@ -21,7 +21,7 @@ const getTagById = (tagId) => new Promise((resolve, reject) => {
 });
 
 const addTag = (newTag) => {
-  fetch("http://localhost:8088/tags", {
+  fetch("http://localhost:8000/tags", {
     method: "POST",
     headers: {
         "Content-Type": "application/json"
@@ -32,7 +32,7 @@ const addTag = (newTag) => {
 };
 
 const addTagToPost = (newPostTag) => {
-  fetch("http://localhost:8088/post-tags", {
+  fetch("http://localhost:8000/post-tags", {
     method: "POST",
     headers: {
         "Content-Type": "application/json"
@@ -43,7 +43,7 @@ const addTagToPost = (newPostTag) => {
 };
   
 const deleteTag = (tagId) => new Promise((resolve, reject) => {
-  fetch(`http://localhost:8088/tags/${tagId}`, {
+  fetch(`http://localhost:8000/tags/${tagId}`, {
     method: "DELETE"
   })
   .then(() => resolve())
@@ -51,7 +51,7 @@ const deleteTag = (tagId) => new Promise((resolve, reject) => {
 });
 
 const updateTag = (tagId, newTag) => new Promise((resolve, reject) => {
-  fetch(`http://localhost:8088/tags/${tagId}`, {
+  fetch(`http://localhost:8000/tags/${tagId}`, {
     method: "PUT",
     headers: {
         "Content-Type": "application/json"

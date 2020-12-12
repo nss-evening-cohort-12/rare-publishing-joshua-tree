@@ -4,23 +4,23 @@ import TagProvider from './TagProvider';
 
 class NewTag extends React.Component {
   state = {
-    name: '',
+    label: '',
   }
 
-  changeNameEvent = (e) => {
+  changeLabelEvent = (e) => {
     e.preventDefault();
-    this.setState({ name: e.target.value });
+    this.setState({ label: e.target.value });
   }
 
   saveTag = async (e) => {
     e.preventDefault();
-    const { name } = this.state;
+    const { label } = this.state;
 
-    if (name === '') {
+    if (label === '') {
       this.setState({ validated: false });
     } else {
         const newTag = {
-          name,
+          label,
         };
     
     await TagProvider.addTag(newTag);
@@ -29,16 +29,16 @@ class NewTag extends React.Component {
   }
 
   render() {
-    const { name } = this.state;
+    const { label } = this.state;
 
     return (
       <div className="container--login">
         <section>
           <form className="form--login">
-            <h1>What should we name the tag?</h1>
+            <h1>What should we label the tag?</h1>
             <fieldset>
-              <label htmlFor="inputEmail">Name</label>
-              <input value={name} onChange={this.changeNameEvent} type="text" id="tagName" className="form-control" placeholder="Travel" required autoFocus />
+              <label htmlFor="inputEmail">Label</label>
+              <input value={label} onChange={this.changeLabelEvent} type="text" id="tagLabel" className="form-control" placeholder="Travel" required autoFocus />
             </fieldset>
             <fieldset style={{
               textAlign:"center"
