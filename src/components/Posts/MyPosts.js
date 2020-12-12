@@ -10,10 +10,11 @@ class MyPosts extends React.Component {
   state = {
     posts: [],
   }
+
   componentDidMount() {
-    const id = localStorage.getItem("rare_user_id")
-    PostProvider.getMyPostsById(id)
-    .then((res) => this.setState({ posts: res }))
+    const user_id = localStorage.getItem("rare_user_id")
+    PostProvider.getMyPostsById(user_id)
+      .then((res) => this.setState({ posts: res }))
   }
     
   render() {
@@ -27,7 +28,6 @@ class MyPosts extends React.Component {
         </div>
         <div className="boxes">
           {post}
-          
         </div>
       </div>
     )
