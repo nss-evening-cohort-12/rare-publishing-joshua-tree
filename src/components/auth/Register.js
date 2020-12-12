@@ -69,6 +69,7 @@ export const Register = () => {
                 </fieldset>
                 <fieldset>
                     <label htmlFor="inputPassword"> Password </label>
+                    <p style={{ fontSize: '.8em', fontWeight: 'bold', padding: '0' }}><em> Minimum eight characters, at least one uppercase letter, one lowercase letter and one number </em></p>
                     <input ref={password} type="password" name="password" className="form-control" placeholder="Password" required />
                 </fieldset>
                 <fieldset>
@@ -107,27 +108,14 @@ export const Register = () => {
 const passwordCheck = (password, verifyPassword) => {
 
     // Minimum eight characters, at least one uppercase letter, one lowercase letter and one number
-    const completeRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-
-    const noLowerCase = /^(?!.*[a-z])$/;
-    const noUpperCase = /^(?!.*[A-Z])$/;
-    const noNumber = /^(?!.*\d)$/;
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
     if (password.current.value === verifyPassword.current.value) {
-        if (password.current.value.match(completeRegex)) {
+        if (password.current.value.match(regex)) {
             return true;
         }
-        else if (password.current.value.match(noLowerCase)) {
-            return alert("Password must contain a lowercase letter.")
-        }
-        else if (password.current.value.match(noUpperCase)) {
-            return alert("Password must contain an uppercase letter.")
-        }
-        else if (password.current.value.match(noNumber)) {
-            return alert("Password must contain a number.")
-        }
         else {
-            return alert("Passwords can only (and must) contain at least on lowercase, one uppercase, and one number.")
+            return alert("Password requires a minimum of eight characters, at least one uppercase letter, one lowercase letter and one number")
         }
     }
 
