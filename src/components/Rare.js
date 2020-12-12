@@ -2,6 +2,7 @@ import React from "react"
 import { Route, Redirect } from "react-router-dom"
 import { ApplicationViews } from "./ApplicationViews"
 import { CategoryProvider } from "./categories/CategoryProvider"
+import { ProfileProvider } from "./auth/AuthProvider"
 import { NavBar } from "./nav/NavBar"
 import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
@@ -38,13 +39,15 @@ export const Rare = () => (
                 return <Login />
             }
         }} />
-        <Route path="/register" render={() => {
-            if (localStorage.getItem("rare_token")) {
-                return <Redirect to="/" />
-            } else {
-                return <Register />
-            }
-        }} />
+        <ProfileProvider>
+            <Route path="/register" render={() => {
+                if (localStorage.getItem("rare_token")) {
+                    return <Redirect to="/" />
+                } else {
+                    return <Register/>
+                }
+            }} />
+        </ProfileProvider>
         
         {/* Below is for Ryan's Tags */}
 

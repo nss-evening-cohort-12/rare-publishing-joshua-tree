@@ -1,5 +1,6 @@
 import React, { useRef } from "react"
 import { Link, useHistory } from "react-router-dom"
+
 import "./Auth.css"
 
 export const Register = () => {
@@ -9,7 +10,6 @@ export const Register = () => {
     const bio = useRef()
     const password = useRef()
     const verifyPassword = useRef()
-    const passwordDialog = useRef()
     const displayName =  useRef()
     const isStaff = useRef()
     const profileImageUrl = useRef('')
@@ -18,9 +18,8 @@ export const Register = () => {
 
     const handleRegister = (e) => {
         e.preventDefault()
-        const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
-        if (password.current.value === verifyPassword.current.value && password.current.value.match(regex)) {
+        if (passwordCheck(password, verifyPassword)) {
             const newUser = {
                 "first_name": firstName.current.value,
                 "last_name": lastName.current.value,
@@ -45,21 +44,15 @@ export const Register = () => {
             .then(res => {
                 if ("token" in res) {
                     localStorage.setItem("rare_token", res.token)
+                    localStorage.setItem( "rare_user_id", res.user_id )
                     history.push("/")
                 }
             })
-        } else {
-            passwordDialog.current.showModal()
         }
     }
 
     return (
         <main style={{ textAlign: "center" }}>
-
-            <dialog className="dialog dialog--password" ref={passwordDialog}>
-                <div>Passwords do not match</div>
-                <button className="button--close" onClick={e => passwordDialog.current.close()}>Close</button>
-            </dialog>
 
             <form className="form--login" onSubmit={handleRegister}>
                 <h1 className="h3 mb-3 font-weight-normal">Register an account</h1>
@@ -77,6 +70,7 @@ export const Register = () => {
                 </fieldset>
                 <fieldset>
                     <label htmlFor="inputPassword"> Password </label>
+                    <p style={{ fontSize: '.8em', fontWeight: 'bold', padding: '0' }}><em> Minimum eight characters, at least one uppercase letter, one lowercase letter and one number </em></p>
                     <input ref={password} type="password" name="password" className="form-control" placeholder="Password" required />
                 </fieldset>
                 <fieldset>
@@ -110,4 +104,23 @@ export const Register = () => {
             </section>
         </main>
     )
+}
+
+const passwordCheck = (password, verifyPassword) => {
+
+    // Minimum eight characters, at least one uppercase letter, one lowercase letter and one number
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+
+    if (password.current.value === verifyPassword.current.value) {
+        if (password.current.value.match(regex)) {
+            return true;
+        }
+        else {
+            return alert("Password requires a minimum of eight characters, at least one uppercase letter, one lowercase letter and one number")
+        }
+    }
+
+    else {
+        return alert("Passwords do not match.");
+    }
 }

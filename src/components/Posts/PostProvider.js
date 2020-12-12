@@ -21,10 +21,11 @@ const getPostsById = (id) => new Promise((resolve, reject) => {
 });
 
 const getMyPostsById = (id) => new Promise((resolve, reject) => {
-  fetch(`http://localhost:8088/posts?user_id=${id}`, {
+  fetch(`http://localhost:8000/posts?user_id=${id}`, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": `Token ${localStorage.getItem("rare_token")}`
     }
   })
   .then((response) => resolve(response.json()))
