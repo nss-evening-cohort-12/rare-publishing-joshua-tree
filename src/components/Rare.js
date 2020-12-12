@@ -71,7 +71,7 @@ export const Rare = () => (
             }
         }} />
 
-        <Route exact path="/tags" render={(props) => {
+        <Route path="/tags" render={(props) => {
             if (localStorage.getItem("rare_token")) {
                 return <Tags {...props} />
             } else {
@@ -79,7 +79,7 @@ export const Rare = () => (
             }
         }} />
 
-        <Route exact path="/new-tag" render={(props) => {
+        <Route path="/tags/new" render={(props) => {
             if (localStorage.getItem("rare_token")) {
                 return <NewTag {...props} />
             } else {
