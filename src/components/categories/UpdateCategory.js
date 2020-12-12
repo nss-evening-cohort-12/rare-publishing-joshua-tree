@@ -1,14 +1,15 @@
 import React from 'react';
+// import { CategoryProvider } from './CategoryProvider';
 
 class UpdateCategory extends React.Component {
   state = {
     category: {
-      category_name: '',
+      label: '',
     },
   }
 
   componentDidMount() {
-    return fetch(`http://localhost:8088/categories/${this.props.match.params.categoryId}`)
+    return fetch(`http://localhost:8000/categories/${this.props.match.params.categoryId}`)
         .then((res) => res.json())
             .then((category) => this.setState({ category }))          
   }
@@ -16,27 +17,33 @@ class UpdateCategory extends React.Component {
   changeNameEvent = (e) => {
     e.preventDefault();
     const newCategory = Object.assign({}, this.state.category)        
-    newCategory["category_name"] = e.target.value 
+    newCategory["label"] = e.target.value 
     this.setState({ category: newCategory });
   }
 
   updateCategory = (e) => {
     e.preventDefault();
+    const { category } = this.state;
 
+    const newCategory = {
+      label: category.label,
+    };
+    return fetch(`http://localhost:8000/categories/${category.id}`, {
+      method: "PUT",
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newCategory)
+  })
+      .then(() => this.props.history.push("/categories"))    
 
-        return fetch(`http://localhost:8088/categories/${this.props.match.params.categoryId}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(this.state.category)
-        })
-            .then(() => this.props.history.push("/categories")) 
+    //this.updateCategoryProvider(category.id, newCategory)
+    //  .then(() => this.props.history.push("/categories"));
   }
 
   render() {
     const {
-      category_name,
+      label,
     } = this.state.category;
 
     return (
@@ -49,7 +56,7 @@ class UpdateCategory extends React.Component {
                 type="text"
                 className="form-control"
                 id="catName"
-                defaultValue={category_name}
+                defaultValue={label}
                 onChange={this.changeNameEvent}
                 />
             </div>

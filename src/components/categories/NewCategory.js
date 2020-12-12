@@ -3,23 +3,23 @@ import React from 'react';
 
 class NewCategory extends React.Component {
   state = {
-    category_name: '',
+    label: '',
   }
 
   changeCategoryNameEvent = (e) => {
     e.preventDefault();
-    this.setState({ category_name: e.target.value });
+    this.setState({ label: e.target.value });
   }
 
 
   saveCategories = (e) => {
     e.preventDefault();
 
-    const { category_name } = this.state;
+    const { label } = this.state;
 
-    const category = { category_name };
+    const category = { label };
 
-      return fetch("http://localhost:8088/categories", {
+      return fetch("http://localhost:8000/categories", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -30,7 +30,7 @@ class NewCategory extends React.Component {
   }
 
   render() {
-    const { category_name } = this.state;
+    const { label } = this.state;
 
     return (
       <div className="NewCat">
@@ -42,7 +42,7 @@ class NewCategory extends React.Component {
                 type="text"
                 className="form-control"
                 id="catName"
-                value={category_name}
+                value={label}
                 onChange={this.changeCategoryNameEvent}
                 />
             </div>
