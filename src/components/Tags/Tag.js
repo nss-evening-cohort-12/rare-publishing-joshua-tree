@@ -22,7 +22,7 @@ class Tag extends React.Component {
       <div className="Tags-div">
       <div className="icon-buttons">
           <Link to={editLink}><i className="fas fa-cog"></i></Link>
-          <div onClick={this.deleteTag} id={tag.id}><i className="fas fa-trash-alt"></i></div>
+          <div onClick={this.deleteTag} ><i className="fas fa-trash-alt" id={tag.id}></i></div>
         <div className="tag">
           {tag.label} 
         </div>
