@@ -15,12 +15,30 @@
   display: flex;
 }
 
-.tag-container {
+/* .tag-container {
+  width: 50%;
+} */
+
+.form--tag {
+  /* width: 50%; */
+  float: right;
+}
+
+
+.container--tag {
+  width: 50%;
+  float: right;
+}
+
+.icon-buttons {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
-  margin: 75px 200px;
   border-radius: .2em;
+}
+
+.fas {
+  padding: 5px;
+  cursor: pointer;
 }
 
 .tag {
@@ -29,14 +47,16 @@
   color: #fff;
   border-radius: .2em;
   padding: 5px 10px;
+  width: 200px;
   margin: 0px 12.5px 25px 12.5px;
-  align-self: flex-start;
+  /* align-self: flex-start; */
   text-align: center;
 }
 
 .hide-delete {
   display: none !important;
 }
+
 
 .tag:hover {
   cursor: default;

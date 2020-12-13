@@ -19,12 +19,13 @@ class Tag extends React.Component {
     const editLink = `/edit-tag/${tag.id}`
 
     return (
-      <div>
+      <div className="Tags-div">
+      <div className="icon-buttons">
+          <Link to={editLink}><i className="fas fa-cog"></i></Link>
+          <div onClick={this.deleteTag} id={tag.id}><i className="fas fa-trash-alt"></i></div>
         <div className="tag">
-          <div className="hide-delete" onClick={this.deleteTag} id={tag.id}>x</div>
-          <Link to={editLink} className="edit-link">
-            {tag.label}
-          </Link>
+          {tag.label} 
+        </div>
         </div>
       </div>
     );

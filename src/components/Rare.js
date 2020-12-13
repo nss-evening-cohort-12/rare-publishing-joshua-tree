@@ -18,6 +18,8 @@ import NewComment from "./Comments/NewComment"
 import EditComment from "./Comments/EditComment"
 import { UserProvider } from "./Users/UserProvider"
 
+import './Rare.css'
+
 export const Rare = () => (
     <>
         <Route render={() => {
@@ -73,7 +75,7 @@ export const Rare = () => (
 
         <Route exact path="/tags" render={(props) => {
             if (localStorage.getItem("rare_token")) {
-                return <Tags {...props} />
+                return <div id="tag-halves"> <Tags {...props}/><NewTag {...props}/></div>
             } else {
                 return <Redirect to="/" />
             }
