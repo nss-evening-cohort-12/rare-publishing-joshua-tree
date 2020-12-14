@@ -2,7 +2,8 @@ const getTags = () => new Promise((resolve, reject) => {
   fetch(`http://localhost:8000/tags`, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": `Token ${localStorage.getItem("rare_token")}`
     }
   })
   .then((response) => resolve(response.json()))
@@ -13,7 +14,8 @@ const getTagById = (tagId) => new Promise((resolve, reject) => {
   fetch(`http://localhost:8000/tags/${tagId}`, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": `Token ${localStorage.getItem("rare_token")}`
     }
   })
   .then((response) => resolve(response.json()))
@@ -24,7 +26,8 @@ const addTag = (newTag) => {
   fetch("http://localhost:8000/tags", {
     method: "POST",
     headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Token ${localStorage.getItem("rare_token")}`
     },
     body: JSON.stringify(newTag)
   })
@@ -35,7 +38,8 @@ const addTagToPost = (newPostTag) => {
   fetch("http://localhost:8000/post-tags", {
     method: "POST",
     headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Token ${localStorage.getItem("rare_token")}`
     },
     body: JSON.stringify(newPostTag)
   })
@@ -44,7 +48,11 @@ const addTagToPost = (newPostTag) => {
   
 const deleteTag = (tagId) => new Promise((resolve, reject) => {
   fetch(`http://localhost:8000/tags/${tagId}`, {
-    method: "DELETE"
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Token ${localStorage.getItem("rare_token")}`
+  }
   })
   .then(() => resolve())
   .catch((err) => reject(err))

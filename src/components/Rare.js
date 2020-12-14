@@ -18,7 +18,8 @@ import Comments from "./Comments/Comments"
 import NewComment from "./Comments/NewComment"
 import EditComment from "./Comments/EditComment"
 import { UserProvider } from "./Users/UserProvider"
-import NewCategory from "./categories/NewCategory"
+
+import './Rare.css'
 
 export const Rare = () => (
     <>
@@ -77,13 +78,13 @@ export const Rare = () => (
 
         <Route exact path="/tags" render={(props) => {
             if (localStorage.getItem("rare_token")) {
-                return <Tags {...props} />
+                return <div id="tag-halves"> <Tags {...props}/><NewTag {...props}/></div>
             } else {
                 return <Redirect to="/" />
             }
         }} />
 
-        <Route exact path="/new-tag" render={(props) => {
+        <Route exact path="/tags/new" render={(props) => {
             if (localStorage.getItem("rare_token")) {
                 return <NewTag {...props} />
             } else {
@@ -157,15 +158,7 @@ export const Rare = () => (
             } else {
                 return <Redirect to="/" />
             }
-        }} />
-
-        <Route exact path="/createCategory" render={(props) => {
-            if (localStorage.getItem("rare_token")) {
-                return <NewCategory {...props} />
-            } else {
-                return <Redirect to="/" />
-            }
-        }} />        
+        }} />    
 
     </>
 )

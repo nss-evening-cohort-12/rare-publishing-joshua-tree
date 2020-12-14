@@ -1,6 +1,7 @@
 import React from "react";
 
 import TagProvider from './TagProvider';
+import './Tags.css'
 
 class NewTag extends React.Component {
   state = {
@@ -24,7 +25,7 @@ class NewTag extends React.Component {
         };
     
     await TagProvider.addTag(newTag);
-    this.props.history.push('/tags');
+    window.location.reload()
     }
   }
 
@@ -32,10 +33,10 @@ class NewTag extends React.Component {
     const { label } = this.state;
 
     return (
-      <div className="container--login">
+      <div className="container--tag">
         <section>
-          <form className="form--login">
-            <h1>What should we label the tag?</h1>
+          <form className="form--tag">
+            <h1>Create New Tag</h1>
             <fieldset>
               <label htmlFor="inputEmail">Label</label>
               <input value={label} onChange={this.changeLabelEvent} type="text" id="tagLabel" className="form-control" placeholder="Travel" required autoFocus />
@@ -43,7 +44,7 @@ class NewTag extends React.Component {
             <fieldset style={{
               textAlign:"center"
             }}>
-              <button className="btn btn-1" type="submit" onClick={this.saveTag}>Add</button>
+              <button className="btn btn-1" type="submit" onClick={this.saveTag}>Create</button>
             </fieldset>
           </form>
         </section>
