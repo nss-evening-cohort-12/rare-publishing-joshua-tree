@@ -1,8 +1,9 @@
 const getPosts = () => new Promise((resolve, reject) => {
-  fetch(`http://localhost:8088/posts`, {
+  fetch(`http://localhost:8000/posts`, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": `Token ${localStorage.getItem("rare_token")}`
     }
   })
   .then((response) => resolve(response.json()))
@@ -13,7 +14,8 @@ const getPostsById = (id) => new Promise((resolve, reject) => {
   fetch(`http://localhost:8088/posts/${id}`, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": `Token ${localStorage.getItem("rare_token")}`
     }
   })
   .then((response) => resolve(response.json()))
@@ -32,17 +34,17 @@ const getMyPostsById = (id) => new Promise((resolve, reject) => {
   .catch((err) => reject(err));
 });
 
-const createPost = (newPost) => new Promise((resolve, reject) => {
-  fetch('http://localhost:8088/posts', {
+const createPost = (newPost) => {
+  fetch('http://localhost:8000/posts', {
     method: "POST",
-    header: {
+    headers: {
+      "Authorization": `Token ${localStorage.getItem("rare_token")}`,
       "Content-Type": "application/json"
     },
     body: JSON.stringify(newPost)
   })
-  .then((response) => resolve(response.json()))
-  .catch((err) => reject(err));
-});
+  .then((response) => response.json())
+};
 
 const deletePostTags = (postId) => new Promise((resolve, reject) => {
   fetch(`http://localhost:8088/post-tags/${postId}`, {
@@ -60,23 +62,12 @@ const deletePost = (postId) => new Promise((resolve, reject) => {
   .catch((err) => reject(err))
 });
 
-// const updatePost = (postId, newPost) => new Promise((resolve, reject) => {
-//   fetch(`http://localhost:8088/posts/${postId}`, {
-//     method: "PUT",
-//     headers: {
-//         "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify(newPost)
-//   })
-//   .then(() => resolve())
-//   .catch((err) => reject(err));
-// });
-
 const updatePost = post => {
   return fetch(`http://localhost:8088/post/${post.id}`, {
       method: "PUT",
       headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": `Token ${localStorage.getItem("rare_token")}`
       },
       body: JSON.stringify(post)
   })
