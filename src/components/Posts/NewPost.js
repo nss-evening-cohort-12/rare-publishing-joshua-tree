@@ -15,10 +15,11 @@ class NewPost extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8088/categories", {
+    fetch("http://localhost:8000/categories", {
       method: "GET",
       headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": `Token ${localStorage.getItem("rare_token")}`
       }
     })
     .then((response) => response.json())
@@ -62,21 +63,22 @@ class NewPost extends React.Component {
     }
   }
 
-  savePost = async (e) => {
+  savePost = (e) => {
     e.preventDefault();
     const { title, content, image_url, selectedCategory } = this.state;
     const category = parseInt(selectedCategory);
-    const user = localStorage.getItem("rare_user_id");
+    const user = parseInt(localStorage.getItem("rare_user_id"));
 
     const newPost = {
-      user_id: user,
       title,
       content,
-      category_id: category,
-      image_url
+      image_url,
+      approved: true,
+      rare_user: user,
+      category: category
     };
 
-    await PostProvider.createPost(newPost)
+    PostProvider.createPost(newPost)
     PostProvider.getPosts()
       .then((response) => {
         this.props.history.push(`/posts/${response[0].id}`)
@@ -92,7 +94,7 @@ class NewPost extends React.Component {
         id={category.id}
         key={category.id}
         onClick={this.onValueChange}
-      >{category.category_name}
+      >{category.label}
       </div>
     );
 
