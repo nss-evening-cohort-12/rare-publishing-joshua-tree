@@ -1,5 +1,5 @@
 const getPosts = () => new Promise((resolve, reject) => {
-  fetch(`http://localhost:8088/posts`, {
+  fetch(`http://localhost:8000/posts`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json"
@@ -10,7 +10,7 @@ const getPosts = () => new Promise((resolve, reject) => {
 });
 
 const getPostsById = (id) => new Promise((resolve, reject) => {
-  fetch(`http://localhost:8088/posts/${id}`, {
+  fetch(`http://localhost:8000/posts/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json"
@@ -33,7 +33,7 @@ const getMyPostsById = (id) => new Promise((resolve, reject) => {
 });
 
 const createPost = (newPost) => new Promise((resolve, reject) => {
-  fetch('http://localhost:8088/posts', {
+  fetch('http://localhost:8000/posts', {
     method: "POST",
     header: {
       "Content-Type": "application/json"
@@ -45,7 +45,7 @@ const createPost = (newPost) => new Promise((resolve, reject) => {
 });
 
 const deletePostTags = (postId) => new Promise((resolve, reject) => {
-  fetch(`http://localhost:8088/post-tags/${postId}`, {
+  fetch(`http://localhost:8000/post-tags/${postId}`, {
     method: "DELETE",
   })
   .then(() => resolve())
@@ -53,7 +53,7 @@ const deletePostTags = (postId) => new Promise((resolve, reject) => {
 });
 
 const deletePost = (postId) => new Promise((resolve, reject) => {
-  fetch(`http://localhost:8088/posts/${postId}`, {
+  fetch(`http://localhost:8000/posts/${postId}`, {
     method: "DELETE"
   })
   .then(() => resolve())
@@ -73,7 +73,7 @@ const deletePost = (postId) => new Promise((resolve, reject) => {
 // });
 
 const updatePost = post => {
-  return fetch(`http://localhost:8088/post/${post.id}`, {
+  return fetch(`http://localhost:8000/post/${post.id}`, {
       method: "PUT",
       headers: {
           "Content-Type": "application/json"
