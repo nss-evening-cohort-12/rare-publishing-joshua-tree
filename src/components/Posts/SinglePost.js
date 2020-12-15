@@ -129,7 +129,7 @@ class SinglePost extends React.Component {
           : ''
         }
         <div className="title_container">
-          <div className="category_name">{post.category && post.category.label}{}</div>
+          <div className="category_name">{post.category && post.category.label}</div>
           <h1>| {post.title} |</h1>
           <h4>{post.publication_date}</h4>
         </div>
