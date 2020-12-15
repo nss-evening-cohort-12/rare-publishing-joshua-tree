@@ -12,7 +12,7 @@ class Comment extends React.Component {
 
     if (confirmation) {
       deleteCurrentComment(e.target.id);
-      console.warn(e.target.id)
+      // console.warn(e.target.id)
     } else {
       return;
     }    

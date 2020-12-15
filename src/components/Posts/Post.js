@@ -12,13 +12,23 @@ class Post extends React.Component {
   }
 
   getCategoryById = (categoryId) => {
-    return fetch(`http://localhost:8000/categories/${categoryId}`)
+    return fetch(`http://localhost:8000/categories/${categoryId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Token ${localStorage.getItem("rare_token")}`
+      }
+    })
       .then(res => res.json())
       .then((response) => this.setState({ category: response }))
   }
 
   getUserById = (userId) => {
-    return fetch(`http://localhost:8000/users/${userId}`)
+    return fetch(`http://localhost:8000/users/${userId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Token ${localStorage.getItem("rare_token")}`
+      }
+    })
       .then(res => res.json())
       .then((response) => this.setState({ user: response.display_name }))
   }
