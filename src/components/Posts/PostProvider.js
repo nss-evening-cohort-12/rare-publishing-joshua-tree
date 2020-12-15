@@ -55,7 +55,7 @@ const deletePostTags = (postId) => new Promise((resolve, reject) => {
 });
 
 const deletePost = (postId) => new Promise((resolve, reject) => {
-  fetch(`http://localhost:8088/posts/${postId}`, {
+  fetch(`http://localhost:8000/posts/${postId}`, {
     method: "DELETE"
   })
   .then(() => resolve())
