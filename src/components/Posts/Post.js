@@ -13,6 +13,7 @@ class Post extends React.Component {
 
   getCategoryById = (categoryId) => {
     return fetch(`http://localhost:8000/categories/${categoryId}`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Token ${localStorage.getItem("rare_token")}`
@@ -24,6 +25,7 @@ class Post extends React.Component {
 
   getUserById = (userId) => {
     return fetch(`http://localhost:8000/users/${userId}`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Token ${localStorage.getItem("rare_token")}`
@@ -35,8 +37,8 @@ class Post extends React.Component {
 
   componentDidMount() {
     const { post } = this.props;
-    this.getCategoryById(post.category)
-    this.getUserById(post.rare_user)
+    this.getCategoryById(post.category.id)
+    this.getUserById(post.rare_user.id)
   }
 
   render() {
