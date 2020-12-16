@@ -65,7 +65,6 @@ class NewPost extends React.Component {
 
   imageInputWatcher = (e) => {
     this.setState({ image_url: e.target.files[0] });
-    console.warn(this.state.image_url)
   }
 
   savePost = async (e) => {
