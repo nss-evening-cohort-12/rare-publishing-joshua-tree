@@ -21,6 +21,7 @@ import { UserProvider } from "./Users/UserProvider"
 
 import './Rare.css'
 
+
 export const Rare = () => (
     <>
         <Route render={() => {
