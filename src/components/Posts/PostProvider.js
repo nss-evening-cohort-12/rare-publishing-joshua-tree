@@ -44,7 +44,7 @@ const createPost = (newPost) => new Promise((resolve, reject) => {
     },
     body: JSON.stringify(newPost)
   })
-  .then((response) => response.json())
+  .then((response) => resolve(response.json()))
   .catch((err) => reject(err))
 });
 

@@ -63,26 +63,43 @@ class NewPost extends React.Component {
     }
   }
 
-  savePost = (e) => {
+  imageInputWatcher = (e) => {
+    this.setState({ image_url: e.target.files[0] });
+    console.warn(this.state.image_url)
+  }
+
+  savePost = async (e) => {
     e.preventDefault();
     const { title, content, image_url, selectedCategory } = this.state;
     const category = parseInt(selectedCategory);
     const user = parseInt(localStorage.getItem("rare_user_id"));
 
-    const newPost = {
-      title,
-      content,
-      image_url,
-      approved: true,
-      rare_user: user,
-      category: category
-    };
+    // let form = document.getElementById('newPost')
 
-    PostProvider.createPost(newPost)
+    var formData = new FormData();
+    formData.append('title', title);
+    formData.append('content', content)
+    formData.append('image_url', image_url, image_url.name)
+    formData.append('approved', true)
+    formData.append('rare_user', user)
+    formData.append('category', category)
+
+
+    // const newPost = {
+    //   title,
+    //   content,
+    //   image_url,
+    //   approved: true,
+    //   rare_user: user,
+    //   category: category
+    // };
+
+    await PostProvider.createPost(formData)
+
     PostProvider.getPosts()
       .then((response) => {
-        this.props.history.push(`/posts/${response[0].id}`)
-      })
+          this.props.history.push(`/posts/${response[0].id}`)
+    })
   }
 
   render() {
@@ -101,7 +118,7 @@ class NewPost extends React.Component {
     return (
       <div className="container--login">
         <section>
-          <form className="form--login">
+          <form onSubmit={this.savePost} className="form--login" id="newPost" name="newPost" method="post" encType="multipart/form-data">
             <h1>Create a New Post</h1>
             <fieldset>
               <label htmlFor="postTitle">Name</label>
@@ -113,12 +130,14 @@ class NewPost extends React.Component {
             </fieldset>
               <label>Choose a category</label>
               {categoryCards}
-            <fieldset>
-              <label htmlFor="postImage">Image URL (Optional)</label>
-              <input value={image_url} onChange={this.changeImageEvent} type="text" id="postImage" className="form-control" placeholder="Paste image URL here" autoFocus />
+            <fieldset className="custom-file">
+              <input onChange={this.imageInputWatcher} type="file" className="custom-file-input" id="postImage" />
+              <label className="custom-file-label" htmlFor="postImage" id="postImage">Choose Image</label>
             </fieldset>
+              { /* <label htmlFor="postImage">Image URL (Optional)</label>
+              <input value={image_url} onChange={this.changeImageEvent} type="text" id="postImage" className="form-control" placeholder="Paste image URL here" autoFocus /> */ }
             <fieldset style={{ textAlign:"center" }}>
-              <button className="btn btn-1" type="submit" onClick={this.savePost}>Post</button>
+              <button className="btn btn-1" type="submit">Post</button>
             </fieldset>
           </form>
         </section>
