@@ -62,7 +62,8 @@ const updateTag = (tagId, newTag) => new Promise((resolve, reject) => {
   fetch(`http://localhost:8000/tags/${tagId}`, {
     method: "PUT",
     headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Token ${localStorage.getItem("rare_token")}`
     },
     body: JSON.stringify(newTag)
   })
