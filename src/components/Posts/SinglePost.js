@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 import PostProvider from './PostProvider';
 import TagProvider from '../Tags/TagProvider';
@@ -131,7 +132,7 @@ class SinglePost extends React.Component {
         <div className="title_container">
           <div className="category_name">{post.category && post.category.label}</div>
           <h1>| {post.title} |</h1>
-          <h4>{post.publication_date}</h4>
+          <h4>{moment(post.publication_date).format('MMMM Do YYYY')}</h4>
         </div>
         <p className="post_content">{post.content}</p>
         <div className="user_icon">Written by <span style={{fontWeight: 'bold'}}>{post.author}</span></div>
