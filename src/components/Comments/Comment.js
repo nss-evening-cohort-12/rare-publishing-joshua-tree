@@ -21,13 +21,15 @@ class Comment extends React.Component {
   render() {
     const { comment } = this.props;
     const filterDate = moment(comment.created_on).format('MM/DD/YYYY');
-    // const filterDate = moment(comment.creation_date).fromNow();
-    const userId = localStorage.getItem("rare_token")
+    const userId = localStorage.getItem("rare_user_id")
+    // console.warn(userId)
     const editComment = `/edit-comment/${comment.id}`;
     return (
       <div className="Comment card">
         <div className="card-body">
           <h2 className="card-title comment_sub">{comment.subject} <span className="text-muted auther_date">
+          {console.warn(comment.author.id)}
+          {console.warn(userId)}
           {comment.user_id === parseInt(userId)
           ? <>
               <button className="btn btn delete-comment" onClick={this.deleteComment} id={comment.id}>Delete</button>
@@ -38,8 +40,6 @@ class Comment extends React.Component {
           <p className="card-text">{comment.content}</p>
           <p className="card-text"></p>
           <h4 className="card-title">{comment.author && comment.author.display_name} <span className="text-muted auther_date">{filterDate}</span></h4>
-          {/* <p className="card-text">{comment.subject} .. {filterDate}</p>
-          <Link className="btn btn-primary" to="new-post">Comment</Link> */}
           <hr />
         </div>
       </div>

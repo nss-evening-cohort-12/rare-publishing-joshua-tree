@@ -5,6 +5,7 @@
 
 .Comment {
   margin: 5px;
+  /* width: 40%; */
 }
 
 .comments_container {
@@ -17,6 +18,8 @@
 
 .set_link_to_none {
   text-decoration: none;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .delete-comment {
@@ -28,3 +31,4 @@
   background-color: rgb(221, 207, 82) !important;
   color: white !important;
 }
+

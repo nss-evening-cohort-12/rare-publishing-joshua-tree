@@ -30,7 +30,7 @@ class NewComment extends React.Component {
   saveNewComment = async (e) => {
     e.preventDefault();
     const { subject, content } = this.state;
-    const user = localStorage.getItem("rare_token");
+    const user = localStorage.getItem("rare_user_id");
     const { postId } = this.props.match.params;
 
     const newComment = {

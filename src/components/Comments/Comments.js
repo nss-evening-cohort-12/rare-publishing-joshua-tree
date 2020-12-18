@@ -64,10 +64,15 @@ class Comments extends React.Component {
         </div>
         {/* <div className="user_icon">Written by <span style={{fontWeight: 'bold'}}>{post.author}</span></div> */}
         <div className="comments_container">
+        <Link className="btn btn-info set_link_to_none" to={newComment}>Add Comment</Link>
           <h4>Comments:</h4>
+          <div className="row">
+          <div className="column">
             {/* <button className="btn btn-1" type="submit" onClick={this.saveNewComment}>Add</button> */}
           {mapComment}
-          <Link className="btn btn-info set_link_to_none" to={newComment}>Add Comment</Link>
+          </div>
+          </div>
+ 
         </div>
       </div>
     )
