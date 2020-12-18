@@ -1,8 +1,9 @@
 const addCommentToPost = (newComment) => {
-  fetch("http://localhost:8088/comments", {
+  fetch("http://localhost:8000/comments", {
     method: "POST",
     headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Token ${localStorage.getItem("rare_token")}`
     },
     body: JSON.stringify(newComment)
   })
@@ -10,10 +11,11 @@ const addCommentToPost = (newComment) => {
 };
 
 const getCommentsByPostId = (id) => new Promise((resolve, reject) => {
-  fetch(`http://localhost:8088/comments/${id}`, {
+  fetch(`http://localhost:8000/comments/${id}`, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": `Token ${localStorage.getItem("rare_token")}`
     }
   })
   .then((response) => resolve(response.json()))
@@ -21,7 +23,7 @@ const getCommentsByPostId = (id) => new Promise((resolve, reject) => {
 });
 
 const deleteComment = (commentId) => new Promise((resolve, reject) => {
-  fetch(`http://localhost:8088/comments/${commentId}`, {
+  fetch(`http://localhost:8000/comments/${commentId}`, {
     method: "DELETE"
   })
   .then(() => resolve())
@@ -29,10 +31,11 @@ const deleteComment = (commentId) => new Promise((resolve, reject) => {
 });
 
 const getCommentById = (commentId) => new Promise((resolve, reject) => {
-  fetch(`http://localhost:8088/comments_e/${commentId}`, {
+  fetch(`http://localhost:8000/comments_e/${commentId}`, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": `Token ${localStorage.getItem("rare_token")}`
     }
   })
   .then((response) => resolve(response.json()))
@@ -40,10 +43,11 @@ const getCommentById = (commentId) => new Promise((resolve, reject) => {
 });
 
 const updateComment = (commentId, updateComment) => new Promise((resolve, reject) => {
-  fetch(`http://localhost:8088/comments/${commentId}`, {
+  fetch(`http://localhost:8000/comments/${commentId}`, {
     method: "PUT",
     headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Token ${localStorage.getItem("rare_token")}`
     },
     body: JSON.stringify(updateComment)
   })
