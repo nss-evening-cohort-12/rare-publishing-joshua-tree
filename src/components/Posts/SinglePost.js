@@ -18,7 +18,7 @@ class SinglePost extends React.Component {
 
   componentDidMount() {
     const { postId } = this.props.match.params;
-    this.setState({ current_user: localStorage.getItem("rare_token") })
+    this.setState({ current_user: localStorage.getItem("rare_user_id") })
     
     PostProvider.getPostsById(postId)
       .then((response) => this.setState({ post: response, current_tags: response.tags, total_comments: response.total_comments }))
@@ -26,12 +26,17 @@ class SinglePost extends React.Component {
         this.setState(prevState => ({
           post: {
             ...prevState.post,
-            publication_date: this.state.post.publication_date.split(' ')[0]
+            publication_date: this.state.post.publication_date.split(' ')[0],
+            image_url: this.state.post.image_url.replace('http://localhost:8000/https%3A', 'https://'),
+            user_id: this.state.post.rare_user['id']
           }
         }))
       })
-    //TagProvider.getTags()
-      //.then((response) => this.setState({ all_tags: response }))
+      // image_url: this.state.post.image_url.slice(22)
+      // http://localhost:8000/https%3A
+      // image_url: this.state.post.image_url.slice('http://localhost:8000/')[0]
+    TagProvider.getTags()
+      .then((response) => this.setState({ all_tags: response }))
   }
 
   deletePost = (postId) => {
@@ -101,24 +106,27 @@ class SinglePost extends React.Component {
   render() {
     const { post, current_user, current_tags, all_tags, manage_tags, total_comments } = this.state;
     const { postId } = this.props.match.params;
+    console.warn(postId)
+    console.warn(post.image_url)
+    console.warn(post.user_id)
     const viewComments = `/comments/${postId}`;
-    // const currentTags = current_tags.map((tag) => 
-      //<div
-        //className="tags"
-        //key={tag.id}
-      //>{tag.name}
-      //</div>
-    //);
+    const currentTags = current_tags.map((tag) => 
+      <div
+        className="tags"
+        key={tag.id}
+      >{tag.label}
+      </div>
+    );
 
-    //const allManageTags = all_tags.map((tag) =>
-      //<div
-        //className={current_tags.some(curr => curr.id === tag.id) ? 'current_manage_tags' : 'all_manage_tags'}
-        //key={tag.id}
-        //id={tag.id}
-        //onClick={this.selectNewTag}
-      //>{tag.name}
-      //</div>
-    //);
+    const allManageTags = all_tags.map((tag) =>
+      <div
+        className={current_tags.some(curr => curr.id === tag.id) ? 'current_manage_tags' : 'all_manage_tags'}
+        key={tag.id}
+        id={tag.id}
+        onClick={this.selectNewTag}
+      >{tag.label}
+      </div>
+    );
 
     return (
       <div className="SinglePost">
@@ -134,11 +142,11 @@ class SinglePost extends React.Component {
           <h4>{post.publication_date}</h4>
         </div>
         <p className="post_content">{post.content}</p>
-        <div className="user_icon">Written by <span style={{fontWeight: 'bold'}}>{post.author}</span></div>
+        <div className="user_icon">Written by <span style={{fontWeight: 'bold'}}>{post.rare_user && post.rare_user.first_name}</span></div>
         <div><Link className="tag_container post_comment" to={viewComments}>{total_comments} Comments</Link></div>
-        {/*<div className="tag_container">
+        <div className="tag_container">
           {currentTags}
-        </div>*/}
+        </div>
         <div className="footer-container">
           <div>
             {post.user_id === parseInt(current_user) && manage_tags === false
@@ -148,9 +156,9 @@ class SinglePost extends React.Component {
             {manage_tags === true
               ? <>
                   <p className="exit_tags" onClick={this.manageTags}>Exit</p>
-                  {/*<div className="manage_container">
+                  <div className="manage_container">
                       {allManageTags}
-                  </div>*/}
+                  </div>
                   <button className="save_tags btn btn-1" onClick={this.saveNewTags}>Save</button>
                 </>
               : ''
