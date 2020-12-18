@@ -63,8 +63,16 @@ class NewPost extends React.Component {
     }
   }
 
-  imageInputWatcher = (e) => {
-    this.setState({ image_url: e.target.files[0] });
+  getBase64 = (file, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(file);
+  }
+
+  createImageString = (e) => {
+    this.getBase64(e.target.files[0], (base64ImageString) => {
+      this.setState({ image_url: base64ImageString })
+    });
   }
 
   savePost = async (e) => {
@@ -73,27 +81,16 @@ class NewPost extends React.Component {
     const category = parseInt(selectedCategory);
     const user = parseInt(localStorage.getItem("rare_user_id"));
 
-    // let form = document.getElementById('newPost')
+    const newPost = {
+      title,
+      content,
+      image_url,
+      approved: true,
+      rare_user: user,
+      category: category
+    };
 
-    var formData = new FormData();
-    formData.append('title', title);
-    formData.append('content', content)
-    formData.append('image_url', image_url, image_url.name)
-    formData.append('approved', true)
-    formData.append('rare_user', user)
-    formData.append('category', category)
-
-
-    // const newPost = {
-    //   title,
-    //   content,
-    //   image_url,
-    //   approved: true,
-    //   rare_user: user,
-    //   category: category
-    // };
-
-    await PostProvider.createPost(formData)
+    await PostProvider.createPost(newPost)
 
     PostProvider.getPosts()
       .then((response) => {
@@ -102,7 +99,7 @@ class NewPost extends React.Component {
   }
 
   render() {
-    const { title, content, image_url, categories } = this.state;
+    const { title, content, categories } = this.state;
 
     const categoryCards = categories.map((category) => 
       <div
@@ -130,11 +127,9 @@ class NewPost extends React.Component {
               <label>Choose a category</label>
               {categoryCards}
             <fieldset className="custom-file">
-              <input onChange={this.imageInputWatcher} type="file" className="custom-file-input" id="postImage" />
+              <input onChange={this.createImageString} type="file" className="custom-file-input" id="postImage" />
               <label className="custom-file-label" htmlFor="postImage" id="postImage">Choose Image</label>
             </fieldset>
-              { /* <label htmlFor="postImage">Image URL (Optional)</label>
-              <input value={image_url} onChange={this.changeImageEvent} type="text" id="postImage" className="form-control" placeholder="Paste image URL here" autoFocus /> */ }
             <fieldset style={{ textAlign:"center" }}>
               <button className="btn btn-1" type="submit">Post</button>
             </fieldset>

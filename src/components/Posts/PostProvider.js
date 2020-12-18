@@ -35,7 +35,6 @@ const getMyPostsById = (id) => new Promise((resolve, reject) => {
 });
 
 const createPost = (newPost) => new Promise((resolve, reject) => {
-
   fetch('http://localhost:8000/posts', {
     method: "POST",
     headers: {
