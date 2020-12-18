@@ -35,7 +35,7 @@ class Comment extends React.Component {
             </>
           : ''
           }</span></h2>
-          <p className="card-text">{comment.content} ..</p>
+          <p className="card-text">{comment.content}</p>
           <p className="card-text"></p>
           <h4 className="card-title">{comment.author && comment.author.display_name} <span className="text-muted auther_date">{filterDate}</span></h4>
           {/* <p className="card-text">{comment.subject} .. {filterDate}</p>
