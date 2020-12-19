@@ -31,6 +31,7 @@ class UpdateCategory extends React.Component {
     return fetch(`http://localhost:8000/categories/${category.id}`, {
       method: "PUT",
       headers: {
+          "Authorization": `Token ${localStorage.getItem("rare_token")}`,
           "Content-Type": "application/json"
       },
       body: JSON.stringify(newCategory)
