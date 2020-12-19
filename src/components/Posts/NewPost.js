@@ -63,7 +63,19 @@ class NewPost extends React.Component {
     }
   }
 
-  savePost = (e) => {
+  getBase64 = (file, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(file);
+  }
+
+  createImageString = (e) => {
+    this.getBase64(e.target.files[0], (base64ImageString) => {
+      this.setState({ image_url: base64ImageString })
+    });
+  }
+
+  savePost = async (e) => {
     e.preventDefault();
     const { title, content, image_url, selectedCategory } = this.state;
     const category = parseInt(selectedCategory);
@@ -79,15 +91,16 @@ class NewPost extends React.Component {
       category: category
     };
 
-    PostProvider.createPost(newPost)
+    await PostProvider.createPost(newPost)
+
     PostProvider.getPosts()
       .then((response) => {
-        this.props.history.push(`/posts/${response[0].id}`)
-      })
+          this.props.history.push(`/posts/${response[0].id}`)
+    })
   }
 
   render() {
-    const { title, content, image_url, categories } = this.state;
+    const { title, content, categories } = this.state;
 
     const categoryCards = categories.map((category) => 
       <div
@@ -102,7 +115,7 @@ class NewPost extends React.Component {
     return (
       <div className="container--login">
         <section>
-          <form className="form--login">
+          <form onSubmit={this.savePost} className="form--login" id="newPost" name="newPost" method="post" encType="multipart/form-data">
             <h1>Create a New Post</h1>
             <fieldset>
               <label htmlFor="postTitle">Name</label>
@@ -114,12 +127,12 @@ class NewPost extends React.Component {
             </fieldset>
               <label>Choose a category</label>
               {categoryCards}
-            <fieldset>
-              <label htmlFor="postImage">Image URL (Optional)</label>
-              <input value={image_url} onChange={this.changeImageEvent} type="text" id="postImage" className="form-control" placeholder="Paste image URL here" autoFocus />
+            <fieldset className="custom-file">
+              <input onChange={this.createImageString} type="file" className="custom-file-input" id="postImage" />
+              <label className="custom-file-label" htmlFor="postImage" id="postImage">Choose Image</label>
             </fieldset>
             <fieldset style={{ textAlign:"center" }}>
-              <button className="btn btn-1" type="submit" onClick={this.savePost}>Post</button>
+              <button className="btn btn-1" type="submit">Post</button>
             </fieldset>
           </form>
         </section>

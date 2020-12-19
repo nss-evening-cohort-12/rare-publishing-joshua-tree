@@ -1,5 +1,4 @@
 import React from 'react';
-// import { CategoryProvider } from './CategoryProvider';
 
 class UpdateCategory extends React.Component {
   state = {
@@ -9,7 +8,13 @@ class UpdateCategory extends React.Component {
   }
 
   componentDidMount() {
-    return fetch(`http://localhost:8000/categories/${this.props.match.params.categoryId}`)
+    return fetch(`http://localhost:8000/categories/${this.props.match.params.categoryId}`, {
+      method: "GET",
+      headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Token ${localStorage.getItem("rare_token")}`
+      }      
+    })
         .then((res) => res.json())
             .then((category) => this.setState({ category }))          
   }
@@ -31,7 +36,8 @@ class UpdateCategory extends React.Component {
     return fetch(`http://localhost:8000/categories/${category.id}`, {
       method: "PUT",
       headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": `Token ${localStorage.getItem("rare_token")}`
       },
       body: JSON.stringify(newCategory)
   })

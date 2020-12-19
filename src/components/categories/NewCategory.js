@@ -11,6 +11,10 @@ class NewCategory extends React.Component {
     this.setState({ label: e.target.value });
   }
 
+  componentDidMount = () => {
+    console.log('I am here')
+  };
+
 
   saveCategories = (e) => {
     e.preventDefault();
@@ -22,7 +26,8 @@ class NewCategory extends React.Component {
       return fetch("http://localhost:8000/categories", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Token ${localStorage.getItem("rare_token")}`
         },
         body: JSON.stringify(category)
     })
