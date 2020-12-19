@@ -2,6 +2,7 @@ import React from "react"
 import { Route, Redirect } from "react-router-dom"
 import { ApplicationViews } from "./ApplicationViews"
 import { CategoryProvider } from "./categories/CategoryProvider"
+import NewCategory from "./categories/NewCategory"
 import { ProfileProvider } from "./auth/AuthProvider"
 import { NavBar } from "./nav/NavBar"
 import { Login } from "./auth/Login"
@@ -20,6 +21,7 @@ import EditComment from "./Comments/EditComment"
 import { UserProvider } from "./Users/UserProvider"
 
 import './Rare.css'
+
 
 
 export const Rare = () => (
@@ -160,6 +162,14 @@ export const Rare = () => (
                 return <Redirect to="/" />
             }
         }} />    
+
+        <Route exact path="/createCategory" render={(props) => {
+            if (localStorage.getItem("rare_token")) {
+                return <NewCategory {...props} />
+            } else {
+                return <Redirect to="/" />
+            }
+        }} />  
 
     </>
 )

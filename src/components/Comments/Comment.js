@@ -12,7 +12,6 @@ class Comment extends React.Component {
 
     if (confirmation) {
       deleteCurrentComment(e.target.id);
-      // console.warn(e.target.id)
     } else {
       return;
     }    
@@ -22,18 +21,20 @@ class Comment extends React.Component {
     const { comment } = this.props;
     const filterDate = moment(comment.created_on).format('MM/DD/YYYY');
     const userId = localStorage.getItem("rare_user_id")
-    // console.warn(userId)
+
     const editComment = `/edit-comment/${comment.id}`;
     return (
       <div className="Comment card">
         <div className="card-body">
           <h2 className="card-title comment_sub">{comment.subject} <span className="text-muted auther_date">
-          {console.warn(comment.author.id)}
-          {console.warn(userId)}
-          {comment.user_id === parseInt(userId)
+          {parseInt(comment.author.user) === parseInt(userId)
           ? <>
-              <button className="btn btn delete-comment" onClick={this.deleteComment} id={comment.id}>Delete</button>
-              <Link className="btn btn-info set_link_to_none edit-comment" to={editComment}>Edit</Link>
+              {/* <button className="btn btn delete-comment" onClick={this.deleteComment} id={comment.id}>Delete</button>
+              <Link className="btn btn-info set_link_to_none edit-comment" to={editComment}>Edit</Link> */}
+              <div className="icon-buttons">
+              <div onClick={this.deleteComment} ><i className="fas fa-trash-alt fa-2x" id={comment.id}></i></div>
+              <Link to={editComment}><i className="fas fa-cog fa-2x"></i></Link>
+              </div>
             </>
           : ''
           }</span></h2>
