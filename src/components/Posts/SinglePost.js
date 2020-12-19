@@ -135,7 +135,7 @@ class SinglePost extends React.Component {
           <h4>{moment(post.publication_date).format('MMMM Do YYYY')}</h4>
         </div>
         <p className="post_content">{post.content}</p>
-        <div className="user_icon">Written by <span style={{fontWeight: 'bold'}}>{post.author}</span></div>
+        <div className="user_icon">Written by <span style={{fontWeight: 'bold'}}>{post.rare_user && post.rare_user.first_name} {post.rare_user && post.rare_user.last_name}</span></div>
         <div><Link className="tag_container post_comment" to={viewComments}>{total_comments} Comments</Link></div>
         {/*<div className="tag_container">
           {currentTags}
