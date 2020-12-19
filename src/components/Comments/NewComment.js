@@ -6,7 +6,7 @@ import CommentsProvider from "./CommentsProvider";
 class NewComment extends React.Component {
   state = {
     user_id: 0,
-    title: '',
+    subject: '',
     content: '',
     post_id: 0,
   }
@@ -17,9 +17,9 @@ class NewComment extends React.Component {
   componentDidUpdate() {
   }
 
-  changeTitleEvent = (e) => {
+  changeSubjectEvent = (e) => {
     e.preventDefault();
-    this.setState({ title: e.target.value });
+    this.setState({ subject: e.target.value });
   }
 
   changeContentEvent = (e) => {
@@ -29,15 +29,15 @@ class NewComment extends React.Component {
 
   saveNewComment = async (e) => {
     e.preventDefault();
-    const { title, content } = this.state;
+    const { subject, content } = this.state;
     const user = localStorage.getItem("rare_user_id");
     const { postId } = this.props.match.params;
 
     const newComment = {
       user_id: user,
-      subject: title,
+      subject: subject,
       content,
-      post_id: postId,
+      post: postId,
     };
 
     await CommentsProvider.addCommentToPost(newComment)    
@@ -46,7 +46,7 @@ class NewComment extends React.Component {
   }
 
   render() {
-    const { title, content } = this.state;
+    const { subject, content } = this.state;
 
     return (
       <div className="container--login">
@@ -54,8 +54,8 @@ class NewComment extends React.Component {
           <form className="form--login">
             <h1>Add a New Comment</h1>
             <fieldset>
-              <label htmlFor="postTitle">Subject</label>
-              <input value={title} onChange={this.changeTitleEvent} type="text" id="postTitle" className="form-control" placeholder="Comment Title" required autoFocus />
+              <label htmlFor="commentSubject">Subject</label>
+              <input value={subject} onChange={this.changeSubjectEvent} type="text" id="commentSubject" className="form-control" placeholder="Comment Title" required autoFocus />
             </fieldset>
             <fieldset>
               <label htmlFor="postContent">Content</label>

@@ -79,8 +79,9 @@ class NewPost extends React.Component {
     e.preventDefault();
     const { title, content, image_url, selectedCategory } = this.state;
     const category = parseInt(selectedCategory);
+    
     const user = parseInt(localStorage.getItem("rare_user_id"));
-
+    console.warn(user)
     const newPost = {
       title,
       content,

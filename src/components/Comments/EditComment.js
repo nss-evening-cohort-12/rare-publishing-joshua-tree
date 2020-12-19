@@ -15,7 +15,6 @@ class EditComment extends React.Component {
     CommentsProvider.getCommentById(commentId)
       .then((response) => {
         this.setState({ comment: response })
-        // console.warn(response)
         this.setState ({ title: response.subject, content: response.content })
       })
   }

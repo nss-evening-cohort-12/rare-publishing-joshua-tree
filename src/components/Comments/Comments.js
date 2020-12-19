@@ -24,7 +24,6 @@ class Comments extends React.Component {
     CommentsProvider.getCommentsByPostId(postId)
       .then((res) => {
         this.setState({ comments: res })
-        console.warn(res)
       })
 
     PostProvider.getPostsById(postId)
@@ -36,7 +35,6 @@ class Comments extends React.Component {
     const { postId } = this.props.match.params;
     CommentsProvider.getCommentsByPostId(postId)
       .then((response) => this.setState({ comments: response }))
-      console.warn(this.response)
   }
 
   deleteComment = (commentId) => {
@@ -46,10 +44,6 @@ class Comments extends React.Component {
 
   render() {
     const { post, comments } = this.state;
-
-    console.warn(comments)
-    // const comment = Object.keys(comments).map(key => 
-    //   <Comment key={comments[key].id} comment={comment} deleteComment={this.deleteComment} /> )
 
     const mapComment = comments.map((comment) => <Comment key={comments.id} comment={comment} deleteComment={this.deleteComment} />)
     const { postId } = this.props.match.params;    
@@ -64,10 +58,15 @@ class Comments extends React.Component {
         </div>
         {/* <div className="user_icon">Written by <span style={{fontWeight: 'bold'}}>{post.author}</span></div> */}
         <div className="comments_container">
+        <Link className="btn btn-info set_link_to_none" to={newComment}>Add Comment</Link>
           <h4>Comments:</h4>
+          <div className="row">
+          <div className="column">
             {/* <button className="btn btn-1" type="submit" onClick={this.saveNewComment}>Add</button> */}
           {mapComment}
-          <Link className="btn btn-info set_link_to_none" to={newComment}>Add Comment</Link>
+          </div>
+          </div>
+ 
         </div>
       </div>
     )

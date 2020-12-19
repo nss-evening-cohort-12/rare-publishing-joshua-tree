@@ -23,6 +23,7 @@ import NewCategory from "./categories/NewCategory"
 import './Rare.css'
 
 
+
 export const Rare = () => (
     <>
         <Route render={() => {
@@ -161,6 +162,14 @@ export const Rare = () => (
                 return <Redirect to="/" />
             }
         }} />
+
+        <Route exact path="/createCategory" render={(props) => {
+            if (localStorage.getItem("rare_token")) {
+                return <NewCategory {...props} />
+            } else {
+                return <Redirect to="/" />
+            }
+        }} />  
 
         <Route exact path="/createCategory" render={(props) => {
             if (localStorage.getItem("rare_token")) {
