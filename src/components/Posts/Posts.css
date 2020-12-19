@@ -178,3 +178,23 @@
   display: flex;
   justify-content: space-between;
 }
+
+.file-upload-update {
+  margin: 5px 0px 45px 0px;
+}
+
+.file-label-update {
+  margin: 45px 0px 0px 0px;
+}
+
+.EditTitle {
+  margin: 45px;
+}
+
+.EditTitle .form-control {
+  margin: 0px 0px 25px 0px;
+}
+
+.upload-container {
+  display: inline-block;
+}
