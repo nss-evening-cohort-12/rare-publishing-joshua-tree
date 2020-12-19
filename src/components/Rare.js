@@ -18,8 +18,10 @@ import Comments from "./Comments/Comments"
 import NewComment from "./Comments/NewComment"
 import EditComment from "./Comments/EditComment"
 import { UserProvider } from "./Users/UserProvider"
+import NewCategory from "./categories/NewCategory"
 
 import './Rare.css'
+
 
 export const Rare = () => (
     <>
@@ -158,7 +160,15 @@ export const Rare = () => (
             } else {
                 return <Redirect to="/" />
             }
-        }} />    
+        }} />
+
+        <Route exact path="/createCategory" render={(props) => {
+            if (localStorage.getItem("rare_token")) {
+                return <NewCategory {...props} />
+            } else {
+                return <Redirect to="/" />
+            }
+        }} />  
 
     </>
 )

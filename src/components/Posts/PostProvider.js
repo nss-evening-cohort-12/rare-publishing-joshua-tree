@@ -35,7 +35,6 @@ const getMyPostsById = (id) => new Promise((resolve, reject) => {
 });
 
 const createPost = (newPost) => new Promise((resolve, reject) => {
-
   fetch('http://localhost:8000/posts', {
     method: "POST",
     headers: {
@@ -44,7 +43,7 @@ const createPost = (newPost) => new Promise((resolve, reject) => {
     },
     body: JSON.stringify(newPost)
   })
-  .then((response) => response.json())
+  .then((response) => resolve(response.json()))
   .catch((err) => reject(err))
 });
 
