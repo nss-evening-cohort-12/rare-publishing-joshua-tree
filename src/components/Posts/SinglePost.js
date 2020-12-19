@@ -13,16 +13,20 @@ class SinglePost extends React.Component {
     all_tags: [],
     manage_tags: false,
     current_tags: [],
-    current_user: '',
     total_comments: 0,
+    rare_user: {}
   }
 
   componentDidMount() {
     const { postId } = this.props.match.params;
-    this.setState({ current_user: localStorage.getItem("rare_token") })
     
     PostProvider.getPostsById(postId)
-      .then((response) => this.setState({ post: response, current_tags: response.tags, total_comments: response.total_comments }))
+      .then((response) => this.setState({
+        post: response,
+        current_tags: response.tags,
+        total_comments: response.total_comments,
+        rare_user: response.rare_user
+      }))
       .then(() => {
         this.setState(prevState => ({
           post: {
@@ -100,7 +104,7 @@ class SinglePost extends React.Component {
   }
 
   render() {
-    const { post, current_user, current_tags, all_tags, manage_tags, total_comments } = this.state;
+    const { post, current_tags, all_tags, manage_tags, total_comments, rare_user } = this.state;
     const { postId } = this.props.match.params;
     const viewComments = `/comments/${postId}`;
     // const currentTags = current_tags.map((tag) => 
@@ -135,14 +139,14 @@ class SinglePost extends React.Component {
           <h4>{moment(post.publication_date).format('MMMM Do YYYY')}</h4>
         </div>
         <p className="post_content">{post.content}</p>
-        <div className="user_icon">Written by <span style={{fontWeight: 'bold'}}>{post.author}</span></div>
+        <div className="user_icon">Written by <span style={{fontWeight: 'bold'}}>{rare_user.display_name}</span></div>
         <div><Link className="tag_container post_comment" to={viewComments}>{total_comments} Comments</Link></div>
         {/*<div className="tag_container">
           {currentTags}
         </div>*/}
         <div className="footer-container">
           <div>
-            {post.user_id === parseInt(current_user) && manage_tags === false
+            {post.user_id === parseInt(localStorage.getItem("rare_user_id")) && manage_tags === false
               ? <p className="manage_tags" onClick={this.manageTags}>Manage Tags</p> 
               : ''
             }
@@ -158,7 +162,7 @@ class SinglePost extends React.Component {
             }
           </div>
           <div>
-            {post.user_id === parseInt(current_user)
+            {parseInt(rare_user.id) === parseInt(localStorage.getItem("rare_user_id"))
               ? <><div className="delete-container"><button onClick={() => window.confirm('Are you sure?') &&
               this.deletePost(post.id)} className="btn btn-1 delete-post">Delete Post</button></div>
               <div className="edit-container"><Link to={`/edit-post/${post.id}`}>
