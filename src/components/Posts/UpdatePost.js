@@ -1,13 +1,14 @@
 import React from 'react';
+import './Posts.css'
 
 class UpdatePost extends React.Component {
   state = {
     post: {
       title: '',
       content: '',
-      category_id: 0,
-      // category_name: '',
-      image_url: ''
+      category: 0,
+      image_url: '',
+      approved: true
     },
     categories: [],
     selectedCategory: ''
@@ -16,17 +17,30 @@ class UpdatePost extends React.Component {
 
   componentDidMount() {
     Promise.all([
-      fetch(`http://localhost:8088/posts/${this.props.match.params.postId}`),
-      fetch(`http://localhost:8088/categories`)
+      fetch(`http://localhost:8000/posts/${this.props.match.params.postId}`, {
+        headers: { "Authorization": `Token ${localStorage.getItem('rare_token')}` }
+      }),
+      fetch(`http://localhost:8000/categories`, {
+        headers: { "Authorization": `Token ${localStorage.getItem('rare_token')}` }
+      })
     ]).then(function (responses) {
-      return Promise.all(responses.map((response) => {
-        return response.json();
-      }));
-    }).then((data) => {
-      this.setState({ post: data[0], categories: data[1] });
-    }).catch((error) => {
-      console.error(error)
-    })
+        return Promise.all(responses.map((response) => {
+          return response.json();
+        }));
+      }).then((data) => {
+        this.setState({
+          post: {
+            title: data[0].title,
+            content: data[0].content,
+            category: data[0].category['id'],
+            approved: true,
+            publication_date: data[0].publication_date
+          },
+          categories: data[1]
+        });
+      }).catch((error) => {
+        console.error(error)
+      })
   }
 
 
@@ -45,26 +59,32 @@ class UpdatePost extends React.Component {
   }
 
   categoryChangeEvent = (e) => {
-    const value = e.target.value
-    console.warn(value)
     const newPostCategory = Object.assign({}, this.state.post)        
-    newPostCategory["category_id"] = e.target.value
+    newPostCategory["category"] = parseInt(e.target.value)
     this.setState({ post: newPostCategory });
   }
 
-  changeImgUrlEvent = (e) => {
-    e.preventDefault();
-    const newPostImg = Object.assign({}, this.state.post)        
-    newPostImg["image_url"] = e.target.value 
-    this.setState({ post: newPostImg });
+  getBase64 = (file, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(file);
+  }
+
+  createImageString = (e) => {
+    this.getBase64(e.target.files[0], (base64ImageString) => {
+      const newPostImg = Object.assign({}, this.state.post)
+      newPostImg["image_url"] = base64ImageString
+      this.setState({ post: newPostImg })
+    });
   }
 
   updatePost = (e) => {
     e.preventDefault();
 
-        return fetch(`http://localhost:8088/posts/${this.props.match.params.postId}`, {
+        return fetch(`http://localhost:8000/posts/${this.props.match.params.postId}`, {
             method: "PUT",
             headers: {
+                "Authorization": `Token ${localStorage.getItem('rare_token')}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(this.state.post)
@@ -76,15 +96,14 @@ class UpdatePost extends React.Component {
     const {
       title,
       content,
-      category_id,
-      image_url
+      category
     } = this.state.post;
     const {
       categories
     } = this.state
     
 
-    const dropdown = categories.map((category) => <option value={category.id} text={category.category_name} key={category.id}>{category.category_name}</option>);
+    const dropdown = categories.map((category) => <option value={category.id} text={category.category_name} key={category.id}>{category.label}</option>);
 
     return (
       <div className="EditTitle">
@@ -108,22 +127,16 @@ class UpdatePost extends React.Component {
                 onChange={this.changeContentEvent}
                 />
             <label htmlFor="">Category</label><br></br>
-              <select className="selector" value={category_id} onChange={this.categoryChangeEvent}>
+              <select className="selector" value={category} onChange={this.categoryChangeEvent}>
                 {dropdown}
               </select><br></br>
-              <label htmlFor="">Image URL</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="postImg"
-                  defaultValue={image_url}
-                  onChange={this.changeImgUrlEvent}
-                  />
+                <p className="file-label-update" htmlFor="postImage" id="postImage">Update Post Image</p>
+                <input onChange={this.createImageString} type="file" className="file-upload-update" id="postImage" />
             </div>
-          <button onClick={this.updatePost}>Save Changes</button>
+          <button onClick={this.updatePost} style={{ marginRight: "10px", padding: "5px" }}>Save Changes</button>
           <button onClick={() => {
                 this.props.history.push(`/posts`)
-            }}>Cancel</button>
+            }} style={{ padding: "5px" }}>Cancel</button>
         </form>
       </div>
     );
