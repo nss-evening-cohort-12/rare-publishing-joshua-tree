@@ -24,6 +24,7 @@ fieldset {
     display: inline-block;
     margin: 0 auto;
     text-align: left;
+    margin-top: 50px;
 }
 
 .field-container {
@@ -63,7 +64,7 @@ fieldset {
     text-align: center;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 .form--login {
@@ -114,4 +115,19 @@ fieldset {
 
 .link--register {
     color: #404ab4;
+}
+
+.verify-password {
+    margin: 0;
+    padding: 0;
+}
+
+.logo-register {
+    max-width: 40%;
+}
+
+.logo-container-register {
+    display: flex;
+    justify-content: center;
+    background-color: #232323;
 }
