@@ -6,7 +6,7 @@ import CommentsProvider from "./CommentsProvider";
 class EditComment extends React.Component {
   state = {
     comment: {},
-    title: '',
+    subject: '',
     content: '',    
   }
 
@@ -14,17 +14,18 @@ class EditComment extends React.Component {
     const { commentId } = this.props.match.params;
     CommentsProvider.getCommentById(commentId)
       .then((response) => {
+        console.warn(response)
         this.setState({ comment: response })
-        this.setState ({ title: response.subject, content: response.content })
+        this.setState ({ subject: response.subject, content: response.content })
       })
   }
 
   componentDidUpdate() {
   }
 
-  changeTitleEvent = (e) => {
+  changeSubjectEvent = (e) => {
     e.preventDefault();
-    this.setState({ title: e.target.value });
+    this.setState({ subject: e.target.value });
   }
 
   changeContentEvent = (e) => {
@@ -34,7 +35,7 @@ class EditComment extends React.Component {
 
   saveEditComment = async (e) => {
     e.preventDefault();
-    const { title, content } = this.state;
+    const { subject, content } = this.state;
     // const user = localStorage.getItem("rare_user_id");
     // const { postId } = this.props.match.params;
     const { comment } = this.state;
@@ -42,19 +43,19 @@ class EditComment extends React.Component {
 
     const editComment = {
       user_id: comment.user_id,
-      subject: title,
+      subject: subject,
       content,
-      post_id: comment.post_id,
+      post_id: comment.post.id,
       creation_date: comment.creation_date,
     };
 
     await CommentsProvider.updateComment(commentId, editComment)    
-      CommentsProvider.getCommentsByPostId(comment.post_id)
-        .then(() => this.props.history.push(`/Comments/${comment.post_id}`))
+      CommentsProvider.getCommentsByPostId(comment.post.id)
+        .then(() => this.props.history.push(`/Comments/${comment.post.id}`))
   }
 
   render() {
-    const { title, content } = this.state;
+    const { subject, content } = this.state;
 
     return (
       <div className="container--login">
@@ -62,8 +63,8 @@ class EditComment extends React.Component {
           <form className="form--login">
             <h1>Update Your Comment</h1>
             <fieldset>
-              <label htmlFor="postTitle">Subject</label>
-              <input value={title} onChange={this.changeTitleEvent} type="text" id="postTitle" className="form-control" placeholder="Comment Title" required autoFocus />
+              <label htmlFor="postSubject">Subject</label>
+              <input value={subject} onChange={this.changeSubjectEvent} type="text" id="postSubject" className="form-control" placeholder="Comment Title" required autoFocus />
             </fieldset>
             <fieldset>
               <label htmlFor="postContent">Content</label>

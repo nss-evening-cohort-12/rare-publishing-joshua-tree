@@ -45,7 +45,7 @@ class Comments extends React.Component {
   render() {
     const { post, comments } = this.state;
 
-    const mapComment = comments.map((comment) => <Comment key={comments.id} comment={comment} deleteComment={this.deleteComment} />)
+    const mapComment = comments.map((comment) => <Comment key={comment.id} comment={comment} deleteComment={this.deleteComment} />)
     const { postId } = this.props.match.params;    
     const newComment = `/new-comment/${postId}`;
 
