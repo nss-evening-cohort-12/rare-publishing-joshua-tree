@@ -59,7 +59,7 @@ class NewComment extends React.Component {
             </fieldset>
             <fieldset>
               <label htmlFor="postContent">Content</label>
-              <textarea style={{height: '200px'}} name="message" rows="200" cols="20" value={content} onChange={this.changeContentEvent} type="text" id="postContent" className="form-control" placeholder="I have one comment I like to talk about..." required autoFocus />
+              <textarea style={{height: '200px'}} name="message" rows="200" cols="20" value={content} onChange={this.changeContentEvent} type="text" id="postContent" className="form-control" placeholder="What's on your mind?" required autoFocus />
             </fieldset>
             <fieldset style={{ textAlign:"center" }}>
               <button className="btn btn-1" type="submit" onClick={this.saveNewComment}>Add Comment</button>

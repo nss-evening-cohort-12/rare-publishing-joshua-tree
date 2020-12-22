@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import '../Posts/Posts.css';
 
 import CommentsProvider from "./CommentsProvider";
@@ -51,11 +52,11 @@ class EditComment extends React.Component {
 
     await CommentsProvider.updateComment(commentId, editComment)    
       CommentsProvider.getCommentsByPostId(comment.post.id)
-        .then(() => this.props.history.push(`/Comments/${comment.post.id}`))
+        .then(() => this.props.history.push(`/comments/${comment.post.id}`))
   }
 
   render() {
-    const { subject, content } = this.state;
+    const { subject, content, comment } = this.state;
 
     return (
       <div className="container--login">
@@ -71,6 +72,7 @@ class EditComment extends React.Component {
               <textarea style={{height: '200px'}} name="message" rows="200" cols="20" value={content} onChange={this.changeContentEvent} type="text" id="postContent" className="form-control" placeholder="I have one comment I like to talk about..." required autoFocus />
             </fieldset>
             <fieldset style={{ textAlign:"center" }}>
+               <Link to={`/comments/${comment.post && comment.post.id}`}><button className="btn btn-1 cancel-edit" type="submit">Cancel</button></Link> 
               <button className="btn btn-1" type="submit" onClick={this.saveEditComment}>Save Changes</button>
             </fieldset>
           </form>
