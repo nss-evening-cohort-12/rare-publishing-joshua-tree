@@ -20,9 +20,24 @@ fieldset {
     width: 25em;
 }
 
+.form--register {
+    display: inline-block;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.field-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
 .label--login {
     width: 8rem;
     display: inline-block;
+}
+
+.form--register h1 {
+    text-align: center;
 }
 
 .form-control {
