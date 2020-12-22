@@ -27,7 +27,7 @@ fieldset {
 
 .form-control {
     display: block;
-    width: 94%;
+    width: 100%;
     height: calc(1.5em + .75rem + 2px);
     padding: .375rem .75rem;
     font-size: 1rem;
@@ -43,7 +43,12 @@ fieldset {
 }
 
 .container--login {
+    display: grid;
+    justify-content: center;
     text-align: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    margin-top: 100px;
 }
 
 .form--login {
@@ -56,6 +61,15 @@ fieldset {
     background-repeat: no-repeat;
 }
 
+.form--login fieldset {
+    display: flex;
+    justify-content: center;
+}
+
+.form--login h1 {
+    text-align: center;
+}
+
 .button--close {
     position: relative;
     bottom: -2rem;
@@ -64,4 +78,25 @@ fieldset {
 .dialog {
     min-width: 15rem;
     min-height: 5rem;
+}
+
+.login-button {
+    background: transparent;
+    border: #a1a5d8 solid 2px;
+    border-radius: .2em;
+    color: #404ab4;
+    width: 58.5%;
+    padding: 5px 0px;
+}
+
+.login-button:hover {
+    cursor: pointer;
+}
+
+.link--register, .link--register:visited .link--register:active, .link--register:focus {
+    color: #404ab4;
+}
+
+.link--register {
+    color: #404ab4;
 }
