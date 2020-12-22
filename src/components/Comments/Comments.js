@@ -56,13 +56,11 @@ class Comments extends React.Component {
           <h1>| {post.title} |</h1>
           <h4>{post.publication_date}</h4>
         </div>
-        {/* <div className="user_icon">Written by <span style={{fontWeight: 'bold'}}>{post.author}</span></div> */}
         <div className="comments_container">
         <Link className="btn btn-info set_link_to_none" to={newComment}>Add Comment</Link>
           <h4>Comments:</h4>
           <div className="row">
           <div className="column">
-            {/* <button className="btn btn-1" type="submit" onClick={this.saveNewComment}>Add</button> */}
           {mapComment}
           </div>
           </div>

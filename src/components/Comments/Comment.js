@@ -29,8 +29,6 @@ class Comment extends React.Component {
           <h2 className="card-title comment_sub">{comment.subject} <span className="text-muted auther_date">
           {parseInt(comment.author.user) === parseInt(userId)
           ? <>
-              {/* <button className="btn btn delete-comment" onClick={this.deleteComment} id={comment.id}>Delete</button>
-              <Link className="btn btn-info set_link_to_none edit-comment" to={editComment}>Edit</Link> */}
               <div className="icon-buttons">
               <div onClick={this.deleteComment} ><i className="fas fa-trash-alt fa-2x" id={comment.id}></i></div>
               <Link to={editComment}><i className="fas fa-cog fa-2x"></i></Link>
