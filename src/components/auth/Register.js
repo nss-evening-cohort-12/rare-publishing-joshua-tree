@@ -53,55 +53,52 @@ export const Register = () => {
 
     return (
         <main style={{ textAlign: "center" }}>
-
-            <form className="form--login" onSubmit={handleRegister}>
+            <form className="form--register" onSubmit={handleRegister}>
                 <h1 className="h3 mb-3 font-weight-normal">Register an account</h1>
-                <fieldset>
-                    <label htmlFor="firstName"> First Name </label>
-                    <input ref={firstName} type="text" name="firstName" className="form-control" placeholder="First name" required autoFocus />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="lastName"> Last Name </label>
-                    <input ref={lastName} type="text" name="lastName" className="form-control" placeholder="Last name" required />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="inputEmail"> Email address </label>
-                    <input ref={email} type="email" name="email" className="form-control" placeholder="Email address" required />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="inputPassword"> Password </label>
-                    <p style={{ fontSize: '.8em', fontWeight: 'bold', padding: '0' }}><em> Minimum eight characters, at least one uppercase letter, one lowercase letter and one number </em></p>
-                    <input ref={password} type="password" name="password" className="form-control" placeholder="Password" required />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="verifyPassword"> Verify Password </label>
-                    <input ref={verifyPassword} type="password" name="verifyPassword" className="form-control" placeholder="Verify password" required />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="displayName"> Display Name </label>
-                    <input type="text" ref={displayName} name="displayName" className="form-control" placeholder="Choose a good display name" required />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="bio"> Bio </label>
-                    <textarea ref={bio} name="bio" className="form-control" placeholder="Let other gamers know a little bit about you..." />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="profileImageUrl"> Profile URL (Optional) </label>
-                    <textarea ref={profileImageUrl} name="profileImageUrl" className="form-control" />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="isStaff"> Admin? </label>
-                    <input type="checkbox" ref={isStaff} name="isStaff" defaultChecked />
-                </fieldset>
-                <fieldset style={{
-                    textAlign: "center"
-                }}>
-                    <button className="btn btn-1 btn-sep icon-send" type="submit">Register</button>
-                </fieldset>
+                <div className="field-container">
+                    <div style={{ padding: "50px" }}>
+                        <div className="logo-container-register">
+                            <img src="https://i.ibb.co/k0ff5JZ/rare-logo.jpg" alt="Rare Logo" className="logo-register" />
+                        </div>
+                        <fieldset>
+                            <input ref={firstName} type="text" name="firstName" className="form-control" placeholder="First name" required autoFocus />
+                        </fieldset>
+                        <fieldset>
+                            <input ref={lastName} type="text" name="lastName" className="form-control" placeholder="Last name" required />
+                        </fieldset>
+                        <fieldset>
+                            <input ref={email} type="email" name="email" className="form-control" placeholder="Email address" required />
+                        </fieldset>
+                    </div>
+                    <div style={{ padding: "50px" }}>
+                        <fieldset>
+                            <input ref={password} type="password" name="password" className="form-control" placeholder="Password" required />
+                            <p style={{ fontSize: '.8em', fontWeight: 'bold', padding: '0' }}><em> Minimum eight characters, at least one uppercase letter, one lowercase letter and one number </em></p>
+                        </fieldset>
+                        <fieldset className="verify-password">
+                            <input ref={verifyPassword} type="password" name="verifyPassword" className="form-control" placeholder="Verify password" required />
+                        </fieldset>
+                        <fieldset>
+                            <input type="text" ref={displayName} name="displayName" className="form-control" placeholder="Display name" required />
+                        </fieldset>
+                        <fieldset>
+                            <textarea ref={profileImageUrl} name="profileImageUrl" className="form-control" placeholder="Profile Image URL" />
+                        </fieldset>
+                        <fieldset>
+                            <textarea ref={bio} name="bio" className="form-control" placeholder="Let other rare users know a little bit about you..." />
+                        </fieldset>
+                        <fieldset>
+                            <label htmlFor="isStaff"> Admin? </label>
+                            <input type="checkbox" ref={isStaff} name="isStaff" defaultChecked />
+                        </fieldset>
+                        <fieldset style={{
+                            textAlign: "center"
+                        }}>
+                            <button className="login-button" type="submit">Register</button>
+                        </fieldset>
+                    </div>
+                </div>
             </form>
-            <section className="link--register">
-                Already registered? <Link to="/login">Login</Link>
-            </section>
         </main>
     )
 }
