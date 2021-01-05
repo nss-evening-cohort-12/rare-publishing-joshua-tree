@@ -12,29 +12,29 @@ export const NavBar = () => {
                 <img alt="Rare Logo" className="navbar__logo" src={Logo} />
             </li>
             <li className="navbar__item">
-                <Link className="navbar__link" to="/posts">Posts</Link>
+                <Link className="navbar__link" to="/posts">All Posts</Link>
             </li>
             <li className="navbar__item">
                 <Link className="navbar__link" to="/my_posts">My Posts</Link>
             </li>
             <li className="navbar__item">
-                <Link className="navbar__link" to="/categories">Categories</Link>
+                <Link className="navbar__link" to="/categories">Category Manager</Link>
             </li>
             <li className="navbar__item">
-                <Link className="navbar__link" to="/tags">Tag Management</Link>
+                <Link className="navbar__link" to="/tags">Tag Manager</Link>
             </li>
             <li className="navbar__item">
-                <Link className="navbar__link" to="/users">User Profiles</Link>
+                <Link className="navbar__link" to="/users">User Manager</Link>
             </li>
             {
                 (localStorage.getItem("rare_token") !== null) ?
                     <li className="navbar__item">
-                        <button className="nav-link fakeLink"
+                        <Link className="navbar__link"
                             onClick={() => {
                                 localStorage.removeItem("rare_token")
                                 history.push({ pathname: "/" })
                             }}
-                        >Logout</button>
+                        >Logout</Link>
                     </li> :
                     <>
                         <li className="navbar__item">

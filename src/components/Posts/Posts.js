@@ -33,8 +33,7 @@ class Posts extends React.Component {
     return (
       <div className="postContainer">
         <div className="header-post">
-          <h1>Posts</h1>
-          <Link to="new-post" className="new-post btn btn-1">New Post</Link>
+          <Link to="new-post" className="new-post">Add Post <span style={{ fontSize: "50px" }}>+</span></Link>
         </div>
         <div className="boxes">
           {post}
