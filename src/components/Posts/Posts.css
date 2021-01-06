@@ -248,3 +248,7 @@
   background-color: #404ab4;
   transition: 200ms ease-in;
 }
+
+.approved-checkbox:hover {
+  cursor: pointer;
+}

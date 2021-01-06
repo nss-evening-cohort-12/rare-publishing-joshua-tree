@@ -10,10 +10,27 @@ import './Posts.css'
 class Posts extends React.Component {
   state = {
     posts: [],
+    isAdmin: false
   }
 
   today = moment(new Date()).valueOf();
   newArr = [];
+
+  getUserById = (userId) => {
+    return fetch(`http://localhost:8000/users/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Token ${localStorage.getItem("rare_token")}`
+      }
+    })
+      .then(res => res.json())
+      .then((response) => {
+        if (response.user["is_staff"] === true) {
+          this.setState({ isAdmin: true })
+        }
+      })
+  }
 
   componentDidMount() {
     PostProvider.getPosts()
@@ -25,11 +42,13 @@ class Posts extends React.Component {
         });
       })
       .then(() => this.setState({ posts: this.newArr }))
+      .then(() => this.getUserById(localStorage.getItem("rare_user_id")))
   }
 
   render() {
-    const { posts } = this.state;
-    const post = posts.map((post) => <Post key={post.id} post={post} />)    
+    const { posts, isAdmin } = this.state;
+    const post = posts.map((post) => <Post key={post.id} post={post} isAdmin={isAdmin} />)
+
     return (
       <div className="postContainer">
         <div className="header-post">
@@ -45,7 +64,10 @@ class Posts extends React.Component {
           <h4 className="item-title">Date</h4>
           <h4 className="item-title">Category</h4>
           <h4 className="item-title">Tags</h4>
-          <h4 className="item-title">Approved</h4>
+          {isAdmin
+            ? <h4 className="item-title">Approved</h4>
+            : ''
+          }
         </div>
           {post}
       </div>

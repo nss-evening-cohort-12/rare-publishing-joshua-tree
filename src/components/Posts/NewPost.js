@@ -11,7 +11,8 @@ class NewPost extends React.Component {
     category_id: 0,
     image_url: '',
     categories: [],
-    selectedCategory: ''
+    selectedCategory: '',
+    approved: false
   }
 
   componentDidMount() {
@@ -24,6 +25,7 @@ class NewPost extends React.Component {
     })
     .then((response) => response.json())
     .then((res) => this.setState({ categories: res }))
+    this.currentUser(localStorage.getItem("rare_user_id"))
   }
 
   componentDidUpdate() {
@@ -75,20 +77,30 @@ class NewPost extends React.Component {
     });
   }
 
+  currentUser = (userId) => {
+    PostProvider.getUserById(userId)
+      .then((response) => {
+        if (response.user["is_staff"] === true) {
+          this.setState({ approved: true })
+        }
+      })
+  }
+
   savePost = async (e) => {
     e.preventDefault();
-    const { title, content, image_url, selectedCategory } = this.state;
+    const { title, content, image_url, selectedCategory, approved } = this.state;
     const category = parseInt(selectedCategory);
     
     const user = parseInt(localStorage.getItem("rare_user_id"));
+
     console.warn(user)
     const newPost = {
       title,
       content,
       image_url,
-      approved: true,
+      approved,
       rare_user: user,
-      category: category
+      category
     };
 
     await PostProvider.createPost(newPost)
