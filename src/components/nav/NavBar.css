@@ -10,7 +10,7 @@
 }
 
 .navbar__logo {
-    max-height: 6rem;
+    max-height: 7rem;
 }
 
 .navbar__link {
@@ -24,4 +24,13 @@
 
 .navbar__link:hover {
     cursor: pointer;
+    color: #fff !important;
+    border-color: #404ab4 !important;
+    background-color: #404ab4;
+    transition: 200ms ease-in;
+}
+
+.logout {
+    margin-top: -20px;
+    padding: 7px 30px !important;
 }
