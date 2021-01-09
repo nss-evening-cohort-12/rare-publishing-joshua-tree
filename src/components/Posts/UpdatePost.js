@@ -8,7 +8,8 @@ class UpdatePost extends React.Component {
       content: '',
       category: 0,
       image_url: '',
-      approved: true
+      approved: true,
+      publication_date: ''
     },
     categories: [],
     selectedCategory: ''
@@ -33,6 +34,7 @@ class UpdatePost extends React.Component {
             title: data[0].title,
             content: data[0].content,
             category: data[0].category['id'],
+            image_url: data[0].image_url,
             approved: true,
             publication_date: data[0].publication_date
           },

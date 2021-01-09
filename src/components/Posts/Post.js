@@ -3,12 +3,19 @@ import { Link } from 'react-router-dom';
 import moment from 'moment'
 
 import './Posts.css';
+import PostProvider from './PostProvider';
 
 class Post extends React.Component {
 
   state = {
     category: '',
     user: ''
+  }
+
+  componentDidMount() {
+    const { post } = this.props;
+    this.getCategoryById(post.category.id)
+    this.getUserById(post.rare_user.id)
   }
 
   getCategoryById = (categoryId) => {
@@ -37,10 +44,22 @@ class Post extends React.Component {
       })
   }
 
-  componentDidMount() {
+  updateApproval = () => {
     const { post } = this.props;
-    this.getCategoryById(post.category.id)
-    this.getUserById(post.rare_user.id)
+    const isChecked = document.getElementById(`checkbox--${post.id}`).checked;
+
+    const updatedPost = {
+      rare_user: post.rare_user['id'],
+      title: post.title,
+      content: post.content,
+      category: post.category['id'],
+      image_url: post.image_url,
+      approved: isChecked,
+      publication_date: post.publication_date
+    }
+
+    PostProvider.updatePost(post.id, updatedPost)
+      .catch((err) => console.error('There was an error approving this post -> ', err))
   }
 
   render() {
@@ -59,7 +78,13 @@ class Post extends React.Component {
           <div className="post-item"><h4>{category.label}</h4></div>
           <div className="post-item"><h4>{post.tags}</h4></div>
           {isAdmin
-            ? <div className="post-item"><input type="checkbox" className="approved-checkbox" /></div>
+            ? <div className="post-item"><input 
+                onChange={this.updateApproval}
+                id={`checkbox--${post.id}`}
+                type="checkbox"
+                className="approved-checkbox"
+                defaultChecked={post.approved} />
+              </div>
             : ''
           }
       </div>
