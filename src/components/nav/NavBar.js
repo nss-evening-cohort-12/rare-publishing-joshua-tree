@@ -5,6 +5,7 @@ import Logo from "./r-logo.jpg"
 
 export const NavBar = () => {
     const history = useHistory()
+    
 
     return (
         <ul className="navbar">
@@ -25,7 +26,7 @@ export const NavBar = () => {
                 <Link className="navbar__link" to="/tags">Tag Manager</Link>
             </li>
             <li className="navbar__item">
-                <Link className="navbar__link" to="/users">User Manager</Link>
+                <Link className="navbar__link" to="/users">User Profiles</Link>
             </li>
             {
                 (localStorage.getItem("rare_token") !== null) ?

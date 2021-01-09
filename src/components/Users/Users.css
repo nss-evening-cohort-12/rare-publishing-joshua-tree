@@ -1,5 +1,36 @@
-.userBox {
+/* .userBox {
   border: 1px solid black;
   width: 50%;
   padding: 1em
+} */
+
+#profiles {
+  text-align: center;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th{
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.full-name, .display-name {
+  width: 350px;
+}
+
+/* .active-status {
+  width: 150px;
+}
+
+.user-status {
+  width: 200px;
+} */
+
+.input {
+  margin-left: 10px;
 }
