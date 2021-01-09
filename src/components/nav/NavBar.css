@@ -1,14 +1,36 @@
 .navbar {
     display: flex;
-    flex-wrap: nowrap;
-    justify-content: left;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 50px;
 }
 
 .navbar__item {
-    flex-basis: 15%;
     list-style-type: none;
 }
 
 .navbar__logo {
-    max-height: 6rem;
+    max-height: 7rem;
+}
+
+.navbar__link {
+    background: transparent;
+    border: #a1a5d8 solid 2px;
+    border-radius: .2em;
+    color: #404ab4 !important;
+    padding: 10px 30px;
+    text-decoration: none;
+}
+
+.navbar__link:hover {
+    cursor: pointer;
+    color: #fff !important;
+    border-color: #404ab4 !important;
+    background-color: #404ab4;
+    transition: 200ms ease-in;
+}
+
+.logout {
+    margin-top: -20px;
+    padding: 7px 30px !important;
 }

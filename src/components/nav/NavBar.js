@@ -1,7 +1,7 @@
 import React from "react"
 import { Link, useHistory } from "react-router-dom"
 import "./NavBar.css"
-import Logo from "./rare.jpeg"
+import Logo from "./r-logo.jpg"
 
 export const NavBar = () => {
     const history = useHistory()
@@ -10,26 +10,27 @@ export const NavBar = () => {
         <ul className="navbar">
             <li className="navbar__item">
                 <img alt="Rare Logo" className="navbar__logo" src={Logo} />
+                <h1 style={{ textAlign: "center", fontSize: "2em", marginTop: "0" }}>Rare</h1>
             </li>
             <li className="navbar__item">
-                <Link className="navbar__link" to="/posts">Posts</Link>
+                <Link className="navbar__link" to="/posts">All Posts</Link>
             </li>
             <li className="navbar__item">
                 <Link className="navbar__link" to="/my_posts">My Posts</Link>
             </li>
             <li className="navbar__item">
-                <Link className="navbar__link" to="/categories">Categories</Link>
+                <Link className="navbar__link" to="/categories">Category Manager</Link>
             </li>
             <li className="navbar__item">
-                <Link className="navbar__link" to="/tags">Tag Management</Link>
+                <Link className="navbar__link" to="/tags">Tag Manager</Link>
             </li>
             <li className="navbar__item">
-                <Link className="navbar__link" to="/users">User Profiles</Link>
+                <Link className="navbar__link" to="/users">User Manager</Link>
             </li>
             {
                 (localStorage.getItem("rare_token") !== null) ?
                     <li className="navbar__item">
-                        <button className="nav-link fakeLink"
+                        <button className="navbar__link logout"
                             onClick={() => {
                                 localStorage.removeItem("rare_token")
                                 history.push({ pathname: "/" })
