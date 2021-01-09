@@ -33,16 +33,26 @@ class Posts extends React.Component {
   }
 
   componentDidMount() {
-    PostProvider.getPosts()
+    this.getUserById(localStorage.getItem("rare_user_id"))
+    .then(() => {
+      PostProvider.getPosts()
       .then((response) => {
-        response.forEach(element => {
-          if (element.approved === true && moment(element.publication_date).valueOf() <= this.today) {
-            this.newArr.push(element)
-          }
-        });
+        if (this.state.isAdmin === true) {
+          response.forEach(element => {
+            if (moment(element.publication_date).valueOf() <= this.today) {
+              this.newArr.push(element)
+            }
+          });
+        } else if (this.state.isAdmin === false) {
+          response.forEach(element => {
+            if (element.approved === true && moment(element.publication_date).valueOf() <= this.today) {
+              this.newArr.push(element)
+            }
+          });
+        }
       })
       .then(() => this.setState({ posts: this.newArr }))
-      .then(() => this.getUserById(localStorage.getItem("rare_user_id")))
+    })
   }
 
   render() {

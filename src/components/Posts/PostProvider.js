@@ -57,14 +57,17 @@ const deletePostTags = (postId) => new Promise((resolve, reject) => {
 
 const deletePost = (postId) => new Promise((resolve, reject) => {
   fetch(`http://localhost:8000/posts/${postId}`, {
-    method: "DELETE"
+    method: "DELETE",
+    headers: {
+      "Authorization": `Token ${localStorage.getItem("rare_token")}`
+    }
   })
   .then(() => resolve())
   .catch((err) => reject(err))
 });
 
-const updatePost = post => {
-  return fetch(`http://localhost:8000/post/${post.id}`, {
+const updatePost = (postId, post) => {
+  return fetch(`http://localhost:8000/posts/${postId}`, {
       method: "PUT",
       headers: {
           "Content-Type": "application/json",

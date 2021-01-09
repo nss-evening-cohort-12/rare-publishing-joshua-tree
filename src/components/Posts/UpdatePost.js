@@ -8,7 +8,8 @@ class UpdatePost extends React.Component {
       content: '',
       category: 0,
       image_url: '',
-      approved: true
+      approved: true,
+      publication_date: ''
     },
     categories: [],
     selectedCategory: ''
@@ -30,9 +31,11 @@ class UpdatePost extends React.Component {
       }).then((data) => {
         this.setState({
           post: {
+            rare_user: data[0].rare_user['id'],
             title: data[0].title,
             content: data[0].content,
             category: data[0].category['id'],
+            image_url: data[0].image_url,
             approved: true,
             publication_date: data[0].publication_date
           },
