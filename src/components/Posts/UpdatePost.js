@@ -31,6 +31,7 @@ class UpdatePost extends React.Component {
       }).then((data) => {
         this.setState({
           post: {
+            rare_user: data[0].rare_user['id'],
             title: data[0].title,
             content: data[0].content,
             category: data[0].category['id'],
