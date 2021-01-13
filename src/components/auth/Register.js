@@ -1,5 +1,5 @@
 import React, { useRef } from "react"
-import { Link, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 
 import "./Auth.css"
 

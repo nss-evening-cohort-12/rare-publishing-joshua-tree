@@ -23,14 +23,19 @@ td, th{
   width: 350px;
 }
 
-/* .active-status {
+.active-status, .inactive-status {
   width: 150px;
 }
 
 .user-status {
   width: 200px;
-} */
+} 
 
 .input {
   margin-left: 10px;
+}
+
+.view-inactive, .view-users {
+  text-align: center;
+  margin-bottom: 30px;
 }
