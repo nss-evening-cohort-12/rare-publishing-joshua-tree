@@ -10,7 +10,10 @@ class UpdatePost extends React.Component {
       category: 0,
       image_url: '',
       approved: true,
-      publication_date: '',
+      tags: [],
+      publication_date: ''
+    },
+    tempPost: {
       tags: []
     },
     categories: [],
@@ -39,11 +42,16 @@ class UpdatePost extends React.Component {
       }).then((data) => {
         this.setState({
           post: {
+            // tags: data[0].tags,
+            rare_user: data[0].rare_user['id'],
             title: data[0].title,
             content: data[0].content,
             category: data[0].category['id'],
+            image_url: data[0].image_url,
             approved: true,
-            publication_date: data[0].publication_date,
+            publication_date: data[0].publication_date
+          },
+          tempPost: {
             tags: data[0].tags
           },
           categories: data[1],
@@ -120,11 +128,11 @@ class UpdatePost extends React.Component {
   };  
   
   updateTag = () => {
-    const {all_tags, post} = this.state
+    const {all_tags, tempPost} = this.state
     const tagBox = [];
     let checked = this.state.updateTags;
     all_tags.forEach(mainTag => {
-      if (post.tags.find(tag => tag.id === mainTag.id)) {
+      if (tempPost.tags.find(tag => tag.id === mainTag.id)) {
         checked.push(Number(mainTag.id))
         this.setState({updateTags: checked})        
         tagBox.push({
@@ -133,7 +141,7 @@ class UpdatePost extends React.Component {
         })
       }
       else {
-        console.log(post.tags)
+        console.log(tempPost.tags)
         tagBox.push({
           checked: false,
           tag: mainTag
@@ -141,7 +149,7 @@ class UpdatePost extends React.Component {
       }
     })
     this.setState({ checkboxTags: tagBox })
-    this.setState({ post: checked})
+    this.setState({ tempPost: checked})
   };
   
 

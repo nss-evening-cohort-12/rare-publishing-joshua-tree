@@ -67,8 +67,8 @@ const deletePost = (postId) => new Promise((resolve, reject) => {
   .catch((err) => reject(err))
 });
 
-const updatePost = post => {
-  return fetch(`http://localhost:8000/post/${post.id}`, {
+const updatePost = (postId, post) => {
+  return fetch(`http://localhost:8000/posts/${postId}`, {
       method: "PUT",
       headers: {
           "Content-Type": "application/json",
@@ -79,4 +79,17 @@ const updatePost = post => {
       .then(getPosts)     
 }
 
-export default { getPostsById, getPosts, getMyPostsById, createPost, deletePostTags, deletePost, updatePost }
+const getUserById = (userId) => new Promise((resolve, reject) => {
+  fetch(`http://localhost:8000/users/${userId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Token ${localStorage.getItem("rare_token")}`
+    }
+  })
+    .then((response) => resolve(response.json()))
+    .catch((err) => reject(err));
+})
+
+
+export default { getPostsById, getPosts, getMyPostsById, createPost, deletePostTags, deletePost, updatePost, getUserById }

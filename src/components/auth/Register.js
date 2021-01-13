@@ -11,7 +11,6 @@ export const Register = () => {
     const password = useRef()
     const verifyPassword = useRef()
     const displayName =  useRef()
-    const isStaff = useRef()
     const profileImageUrl = useRef('')
 
     const history = useHistory()
@@ -27,7 +26,7 @@ export const Register = () => {
                 "email": email.current.value,
                 "password": password.current.value,
                 "username": email.current.value,
-                "is_staff": isStaff.current.checked,
+                "is_staff": true,
                 "display_name": displayName.current.value,
                 "profile_image_url": profileImageUrl.current.value
             }
@@ -86,10 +85,6 @@ export const Register = () => {
                         </fieldset>
                         <fieldset>
                             <textarea ref={bio} name="bio" className="form-control" placeholder="Let other rare users know a little bit about you..." />
-                        </fieldset>
-                        <fieldset>
-                            <label htmlFor="isStaff"> Admin? </label>
-                            <input type="checkbox" ref={isStaff} name="isStaff" defaultChecked />
                         </fieldset>
                         <fieldset style={{
                             textAlign: "center"
