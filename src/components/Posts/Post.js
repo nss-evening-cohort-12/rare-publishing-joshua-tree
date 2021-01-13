@@ -7,7 +7,8 @@ class Post extends React.Component {
 
   state = {
     category: '',
-    user: ''
+    user: '',
+    tags: []
   }
 
   getCategoryById = (categoryId) => {

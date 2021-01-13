@@ -107,13 +107,13 @@ class SinglePost extends React.Component {
     const { post, current_tags, all_tags, manage_tags, total_comments, rare_user } = this.state;
     const { postId } = this.props.match.params;
     const viewComments = `/comments/${postId}`;
-    // const currentTags = current_tags.map((tag) => 
-      //<div
-        //className="tags"
-        //key={tag.id}
-      //>{tag.name}
-      //</div>
-    //);
+    const currentTags = current_tags.map((tag) => 
+      <div
+        className="tags"
+        key={tag.id}
+      >{tag.label}
+      </div>
+    );
 
     //const allManageTags = all_tags.map((tag) =>
       //<div
@@ -141,9 +141,12 @@ class SinglePost extends React.Component {
         <p className="post_content">{post.content}</p>
         <div className="user_icon">Written by <span style={{fontWeight: 'bold'}}>{rare_user.display_name}</span></div>
         <div><Link className="tag_container post_comment" to={viewComments}>{total_comments} Comments</Link></div>
-        {/*<div className="tag_container">
+        <div className="footer-container">
+
+        </div>
+        <div className="tag_container">
           {currentTags}
-        </div>*/}
+        </div>
         <div className="footer-container">
           <div>
             {post.user_id === parseInt(localStorage.getItem("rare_user_id")) && manage_tags === false

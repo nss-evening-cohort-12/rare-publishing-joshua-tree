@@ -1,5 +1,6 @@
 import React from 'react';
 import './Posts.css'
+import PostTag from './PostTag';
 
 class UpdatePost extends React.Component {
   state = {
@@ -8,10 +9,15 @@ class UpdatePost extends React.Component {
       content: '',
       category: 0,
       image_url: '',
-      approved: true
+      approved: true,
+      publication_date: '',
+      tags: []
     },
     categories: [],
-    selectedCategory: ''
+    selectedCategory: '',
+    all_tags: [],
+    checkboxTags: [],
+    updateTags: []
   }
 
 
@@ -22,7 +28,10 @@ class UpdatePost extends React.Component {
       }),
       fetch(`http://localhost:8000/categories`, {
         headers: { "Authorization": `Token ${localStorage.getItem('rare_token')}` }
-      })
+      }),
+      fetch(`http://localhost:8000/tags`, {
+        headers: { "Authorization": `Token ${localStorage.getItem('rare_token')}` }
+      }),
     ]).then(function (responses) {
         return Promise.all(responses.map((response) => {
           return response.json();
@@ -34,10 +43,13 @@ class UpdatePost extends React.Component {
             content: data[0].content,
             category: data[0].category['id'],
             approved: true,
-            publication_date: data[0].publication_date
+            publication_date: data[0].publication_date,
+            tags: data[0].tags
           },
-          categories: data[1]
+          categories: data[1],
+          all_tags: data[2]
         });
+        this.updateTag();
       }).catch((error) => {
         console.error(error)
       })
@@ -80,17 +92,58 @@ class UpdatePost extends React.Component {
 
   updatePost = (e) => {
     e.preventDefault();
+    const uPost = this.state.post;
+    uPost.tags = this.state.updateTags;
 
         return fetch(`http://localhost:8000/posts/${this.props.match.params.postId}`, {
             method: "PUT",
             headers: {
                 "Authorization": `Token ${localStorage.getItem('rare_token')}`,
                 "Content-Type": "application/json"
-            },
-            body: JSON.stringify(this.state.post)
+            }, 
+            body: JSON.stringify(uPost)
         })
             .then(() => this.props.history.push("/posts")) 
   }
+
+  handleCheck = (e) => {
+    const value = e.target.id;
+    let checked = this.state.updateTags;
+    if (!checked.includes(Number(value))) {
+      checked.push(Number(value))
+      this.setState({updateTags: checked})
+    }
+    else {
+      checked.splice(checked.indexOf(value), 1)
+      this.setState({updateTags: checked})
+    }
+  };  
+  
+  updateTag = () => {
+    const {all_tags, post} = this.state
+    const tagBox = [];
+    let checked = this.state.updateTags;
+    all_tags.forEach(mainTag => {
+      if (post.tags.find(tag => tag.id === mainTag.id)) {
+        checked.push(Number(mainTag.id))
+        this.setState({updateTags: checked})        
+        tagBox.push({
+          checked:true,
+          tag: mainTag
+        })
+      }
+      else {
+        console.log(post.tags)
+        tagBox.push({
+          checked: false,
+          tag: mainTag
+        })
+      }
+    })
+    this.setState({ checkboxTags: tagBox })
+    this.setState({ post: checked})
+  };
+  
 
   render() {
     const {
@@ -100,10 +153,16 @@ class UpdatePost extends React.Component {
     } = this.state.post;
     const {
       categories
-    } = this.state
+    } = this.state;
+    const { all_tags } = this.state;
+    const { checkboxTags } = this.state;
     
 
     const dropdown = categories.map((category) => <option value={category.id} text={category.category_name} key={category.id}>{category.label}</option>);
+
+    const tag = checkboxTags.map((tagBox) => <PostTag key={tagBox.tag.id} id={tagBox.tag.id} tag={tagBox.tag} handleCheck={this.handleCheck} Checked={tagBox.checked}/>);
+
+    // tag = allTags.map((tag) => <PostTag key={tag.id} id={tag.id} tag={tag} handleCheck={this.handleCheck}/>);
 
     return (
       <div className="EditTitle">
@@ -132,6 +191,8 @@ class UpdatePost extends React.Component {
               </select><br></br>
                 <p className="file-label-update" htmlFor="postImage" id="postImage">Update Post Image</p>
                 <input onChange={this.createImageString} type="file" className="file-upload-update" id="postImage" />
+                <label>Please select the tag</label>
+                {tag}
             </div>
           <button onClick={this.updatePost} style={{ marginRight: "10px", padding: "5px" }}>Save Changes</button>
           <button onClick={() => {
