@@ -1,5 +1,6 @@
 import React, { useContext, useEffect} from "react"
 import { UserContext } from "./UserProvider"
+import { Link } from 'react-router-dom';
 import './Users.css'
 
 
@@ -38,7 +39,7 @@ export const UserList = props => {
                             <tbody>
                                 <tr>
                                     <td className="full-name">Full Name: {user.user.first_name} {user.user.last_name}</td>
-                                    <td className="display-name">Display Name: {user.display_name}</td>
+                                    <td className="display-name user-link"><Link className="user-link" to={(`/users/${user.id}`)}>Display Name: {user.display_name} </Link></td>
                                     {user.user.is_active === true ? 
                                         <td className="active-status"><p>Active</p></td> :
                                         <td className="inactive-status"><p>Inactive</p></td>
