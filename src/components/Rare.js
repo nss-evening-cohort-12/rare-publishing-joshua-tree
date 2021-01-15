@@ -20,8 +20,10 @@ import EditComment from "./Comments/EditComment"
 import { UserProvider } from "./Users/UserProvider"
 import NewCategory from "./categories/NewCategory"
 import { InactiveUserList } from "./Users/InactiveUsers"
+import { SubscriptionProvider } from "./Subscriptions/SubscriptionProvider"
 
 import './Rare.css'
+
 
 
 
@@ -40,7 +42,7 @@ export const Rare = () => (
         }} />
         <Route path="/login" render={() => {
             if (localStorage.getItem("rare_token")) {
-                return <Redirect to="/" />
+                return <Redirect to="/home" />
             } else {
                 return <Login />
             }
@@ -130,6 +132,16 @@ export const Rare = () => (
             }
         }} />
         </CategoryProvider>
+
+        <SubscriptionProvider>
+            <Route path="/home" render={() => {
+                if (localStorage.getItem("rare_token")) {
+                    return <ApplicationViews />
+                } else {
+                    return <Redirect to="/" />
+                }
+            }} />
+        </SubscriptionProvider>
 
     <UserProvider>
             <Route path="/users" render={() => {

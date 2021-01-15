@@ -7,6 +7,9 @@ import NewCategory from "./categories/NewCategory"
 import UpdateCategory from "./categories/UpdateCategory"
 import { UserList } from "./Users/UserList"
 import { UserProvider } from "./Users/UserProvider"
+import { SubscriptionList } from "./Subscriptions/SubscriptionList"
+import { SubscriptionProvider } from "./Subscriptions/SubscriptionProvider"
+
 
 
 export const ApplicationViews = () => {
@@ -16,6 +19,18 @@ export const ApplicationViews = () => {
             lineHeight: "1.75rem"
         }}>
         </main>
+
+        <SubscriptionProvider>
+            <Route path="/home" render={(props) => {
+                return <>
+                    <main className="subscriptionContainer">
+                        <SubscriptionList history={props.history} />
+                    </main>
+
+                </>
+            }} />
+        </SubscriptionProvider>
+
 
         <CategoryProvider>
             <Route exact path="/categories" render={(props) => {
@@ -51,6 +66,7 @@ export const ApplicationViews = () => {
 
                     </>
                 }} />
+
             </UserProvider>
     </>
     
