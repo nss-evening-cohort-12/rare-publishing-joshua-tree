@@ -2,6 +2,7 @@ import React from "react";
 import './Posts.css';
 
 import PostProvider from "./PostProvider";
+import PostTag from "./PostTag";
 
 class NewPost extends React.Component {
   state = {
@@ -12,6 +13,8 @@ class NewPost extends React.Component {
     image_url: '',
     categories: [],
     selectedCategory: '',
+    allTags: [],
+    tags: [],
     approved: false
   }
 
@@ -25,6 +28,17 @@ class NewPost extends React.Component {
     })
     .then((response) => response.json())
     .then((res) => this.setState({ categories: res }))
+
+    fetch("http://localhost:8000/tags", {
+      method: "GET",
+      headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Token ${localStorage.getItem("rare_token")}`
+      }
+    })
+    .then((response) => response.json())
+    .then((res) => this.setState({ allTags: res }))
+    // this.getAllTags();
     this.currentUser(localStorage.getItem("rare_user_id"))
   }
 
@@ -88,7 +102,8 @@ class NewPost extends React.Component {
 
   savePost = async (e) => {
     e.preventDefault();
-    const { title, content, image_url, selectedCategory, approved } = this.state;
+    // const { title, content, image_url, selectedCategory, tags } = this.state;
+    const { title, content, image_url, selectedCategory, approved, tags } = this.state;
     const category = parseInt(selectedCategory);
     
     const user = parseInt(localStorage.getItem("rare_user_id"));
@@ -100,6 +115,8 @@ class NewPost extends React.Component {
       image_url,
       approved,
       rare_user: user,
+      //category: category,
+      tags,
       category
     };
 
@@ -111,8 +128,28 @@ class NewPost extends React.Component {
     })
   }
 
+  handleCheck = (e) => {
+    const value = e.target.id;
+    let checked = this.state.tags;
+    if (!checked.includes(Number(value))) {
+      checked.push(Number(value))
+      this.setState({tags: checked})
+    }
+    else {
+      checked.splice(checked.indexOf(value), 1)
+      this.setState({tags: checked})
+    }
+  };
+  
+
   render() {
-    const { title, content, categories } = this.state;
+    const { title, content, categories, allTags } = this.state;
+
+    let tag = ""
+
+    if (allTags) {
+      tag = allTags.map((tag) => <PostTag key={tag.id} id={tag.id} tag={tag} handleCheck={this.handleCheck}/>);
+    }
 
     const categoryCards = categories.map((category) => 
       <div
@@ -143,6 +180,10 @@ class NewPost extends React.Component {
               <input onChange={this.createImageString} type="file" className="custom-file-input" id="postImage" />
               <label className="custom-file-label" htmlFor="postImage" id="postImage">Choose Image</label>
             </fieldset>
+            <fieldset>
+              <label>Add Tag to your post</label>
+              {tag}
+            </fieldset>            
             <fieldset style={{ textAlign:"center" }}>
               <button className="btn btn-1" type="submit">Post</button>
             </fieldset>

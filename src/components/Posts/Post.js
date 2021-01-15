@@ -9,7 +9,8 @@ class Post extends React.Component {
 
   state = {
     category: '',
-    user: ''
+    user: '',
+    tags: []
   }
 
   componentDidMount() {
@@ -66,6 +67,21 @@ class Post extends React.Component {
     const { post, isAdmin } = this.props;
     const { category, user } = this.state;
 
+    let tag = ""
+
+    const allTags = post.tags;
+
+    if (allTags) {
+      tag = allTags.map((tag) => 
+      <div
+        className=""
+        id={tag.id}
+        key={tag.id}
+      >{tag.label}
+      </div>);
+    }
+    
+
     const filterDate = moment(post.publication_date).format('MMMM Do YYYY');
     const view_post = `posts/${post.id}`
     // const view_comments = `comments/${post.id}`
@@ -76,7 +92,7 @@ class Post extends React.Component {
           <div className="post-item"><h4>@{user}</h4></div>
           <div className="post-item"><h4>{filterDate}</h4></div>
           <div className="post-item"><h4>{category.label}</h4></div>
-          <div className="post-item"><h4>{post.tags}</h4></div>
+          <div className="post-item"><h4>{tag}</h4></div>
           {isAdmin
             ? <div className="post-item"><input 
                 onChange={this.updateApproval}
