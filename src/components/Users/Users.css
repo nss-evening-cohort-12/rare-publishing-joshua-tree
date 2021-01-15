@@ -39,3 +39,41 @@ td, th{
   text-align: center;
   margin-bottom: 30px;
 }
+
+.container {
+  margin: 100px;
+  display: flex;
+}
+
+.content {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column !important;
+}
+
+.user_image {
+  width: 200px;
+  margin-right: 20px;
+
+}
+
+.user-link {
+  color: #111 !important;
+  text-decoration: none !important;
+}
+
+.user-link:hover {
+  color: #fff !important;
+  border-color: #404ab4 !important;
+  background-color: #6167a8;
+  transition: 200ms ease-in;
+}
+
+.user-item {
+  border: 1px gray solid;
+  padding: 25px;
+  text-align: center;
+  font-weight: bold;
+  color: #fff !important;
+  font-size: 1.2em !important;
+}
