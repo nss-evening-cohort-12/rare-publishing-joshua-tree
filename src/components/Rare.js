@@ -19,8 +19,10 @@ import NewComment from "./Comments/NewComment"
 import EditComment from "./Comments/EditComment"
 import { UserProvider } from "./Users/UserProvider"
 import NewCategory from "./categories/NewCategory"
+import { InactiveUserList } from "./Users/InactiveUsers"
 
 import './Rare.css'
+
 
 
 
@@ -129,7 +131,7 @@ export const Rare = () => (
         }} />
         </CategoryProvider>
 
-        <UserProvider>
+    <UserProvider>
             <Route path="/users" render={() => {
                 if (localStorage.getItem("rare_token")) {
                     return <ApplicationViews />
@@ -137,7 +139,14 @@ export const Rare = () => (
                     return <Redirect to="/" />
                 }
             }} />
-        </UserProvider>
+            <Route path="/users/inactive" render={(props) => {
+                if (localStorage.getItem("rare_token")) {
+                    return <InactiveUserList {...props} />
+                } else {
+                    return <Redirect to="/" />
+                }
+            }} />
+            </UserProvider>
 
         <Route exact path="/comments/:postId" render={(props) => {
             if (localStorage.getItem("rare_token")) {

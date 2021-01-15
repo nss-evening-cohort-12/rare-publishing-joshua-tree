@@ -3,31 +3,19 @@ import { UserContext } from "./UserProvider"
 import './Users.css'
 
 
-export const UserList = props => {
-  const { users, getUsers, deactivateUser, reactivateUser } = useContext(UserContext)
+export const InactiveUserList = props => {
+  const { users, getInactiveUsers, reactivateUser } = useContext(UserContext)
 
   useEffect(() => {
-      getUsers()
+      getInactiveUsers()
   }, [])
-
-
-
-  const checkUser = (id) => {
-      const userId = parseInt(localStorage.getItem("rare_user_id"))
-      if(userId === id) {
-        alert('You cannot deactivate yourself.')
-        return false
-      } else {
-          return true
-      }
-  }
 
 
   return (
       <div style={{ margin: "0rem 3rem"}}>
           <h1 id="profiles">User Profiles</h1>
 
-        <div className="view-inactive"><button onClick={() => props.history.push("/users/inactive")}>View Deactivated</button></div>
+        <div className="view-users"><button onClick={() => props.history.push("/users")}>Return to User List</button></div>
 
           <article className="users">
               { 
@@ -58,13 +46,8 @@ export const UserList = props => {
                                         </div></td>
                                     }
                                     <td className="activate-button">
-                                        {user.user.is_active === true ?
-                                            <button onClick={() => checkUser(user.user.id) && window.confirm('Are you sure?') && 
-                                                deactivateUser(user.user) && window.location.reload()
-                                                }>Deactivate</button> :
-                                            <button onClick={() => reactivateUser(user.user) && window.location.reload()
+                                            <button onClick={() => reactivateUser(user.user) && props.history.push("/users")
                                                 }>Reactivate</button>
-                                        }
                                     </td>
                                 </tr>
                             </tbody>
