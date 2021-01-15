@@ -11,7 +11,7 @@ class Posts extends React.Component {
   state = {
     posts: [],
     isAdmin: false,
-    inputValue: ''
+    inputValue: ""
   }
 
   today = moment(new Date()).valueOf();
@@ -56,12 +56,17 @@ class Posts extends React.Component {
     })
   }
 
-  titleSearch = (e) => {
-    console.log(e.target.value)
-    this.setState({
-      inputValue: e.target.value
-    })
+  
+
+  handleChange = (e) => {
+    this.setState({ inputValue: e.target.value })
   }
+
+  handleKeyDown(e){
+    if(e.keyCode === 13){
+      PostProvider.getFilteredPosts(this.state.inputValue)
+    }}
+
 
   render() {
     const { posts, isAdmin } = this.state;
@@ -70,7 +75,7 @@ class Posts extends React.Component {
     return (
       <div className="postContainer">
         <div className="header-post">
-          <input type="text" placeholder="Search By Title" value={this.props.inputValue} onChange={this.props.titleSearch}></input>
+          <input type="text" placeholder="Search By Title" onChange={this.handleChange} onKeyDown={this.handleKeyDown}></input>
           <div style={{ display: "flex", alignContent: "center", paddingRight: "30px" }}>
             <Link to="new-post" className="new-post">Add Post</Link>
             <Link to="new-post" className="new-post-plus">+</Link>

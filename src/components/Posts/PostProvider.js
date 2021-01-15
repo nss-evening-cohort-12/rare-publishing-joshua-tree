@@ -91,5 +91,17 @@ const getUserById = (userId) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 })
 
+const getFilteredPosts = (searchText) => new Promise((resolve, reject) => {
+  fetch(`http://localhost:8000/posts?q=${searchText}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Token ${localStorage.getItem("rare_token")}`
+    }
+  })
+  .then((response) => resolve(response.json()))
+  .catch((err) => reject(err));
+});
 
-export default { getPostsById, getPosts, getMyPostsById, createPost, deletePostTags, deletePost, updatePost, getUserById }
+
+export default { getPostsById, getPosts, getMyPostsById, createPost, deletePostTags, deletePost, updatePost, getUserById, getFilteredPosts }
