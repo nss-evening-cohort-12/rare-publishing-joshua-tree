@@ -56,7 +56,8 @@ class Post extends React.Component {
       category: post.category['id'],
       image_url: post.image_url,
       approved: isChecked,
-      publication_date: post.publication_date
+      publication_date: post.publication_date,
+      tags: post.tags
     }
 
     PostProvider.updatePost(post.id, updatedPost)

@@ -5,6 +5,7 @@ import { CategoryList } from "./categories/CategoryList"
 import { CategoryProvider } from "./categories/CategoryProvider"
 import NewCategory from "./categories/NewCategory"
 import UpdateCategory from "./categories/UpdateCategory"
+import SingleUser from "./Users/SingleUser"
 import { UserList } from "./Users/UserList"
 import { UserProvider } from "./Users/UserProvider"
 
@@ -39,19 +40,23 @@ export const ApplicationViews = () => {
             <Route path="/categories/edit/:categoryId" render={
                 props => <UpdateCategory {...props} />
             } /> 
-            </CategoryProvider>
+        </CategoryProvider>
 
-            <UserProvider>
-                <Route exact path="/users" render={(props) => {
-                    return <>
-                        <main className="userContainer">
+        <UserProvider>
+            <Route exact path="/users" render={(props) => {
+                return <>
+                    <main className="userContainer">
 
-                            <UserList history={props.history} />
-                        </main>
+                        <UserList history={props.history} />
+                    </main>
 
-                    </>
-                }} />
-            </UserProvider>
+                </>
+            }} />
+
+            <Route path="/users/:userId" render={
+                props =>  <SingleUser {...props} />
+            } />            
+        </UserProvider>
     </>
     
 }

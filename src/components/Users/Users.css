@@ -39,3 +39,43 @@ td, th{
   text-align: center;
   margin-bottom: 30px;
 }
+
+.container {
+  margin: 100px;
+  display: flex;
+}
+
+.content {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column !important;
+}
+
+.user_image {
+  width: 200px;
+  margin-right: 20px;
+
+}
+
+/*
+.container { 
+  display: flex;
+  }
+.red {
+  background: orangered;
+  display: flex;
+  flex-direction: column;
+}
+.green {
+  background: yellowgreen;
+}
+.blue {
+  background: steelblue;
+}
+.container div {
+  font-size: 5vw;
+  padding: .5em;
+  color: white;
+  flex: 1;
+}
+*/
