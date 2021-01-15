@@ -16,17 +16,17 @@ export const SubscriptionProvider = (props) => {
             .then(setSubscriptions)
     }
 
-    const getMySubscriptions = (id) => new Promise((resolve, reject) => {
-      fetch(`http://localhost:8000/subscriptions?follower_id=${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Token ${localStorage.getItem("rare_token")}`
-        }
+
+    const getMySubscriptions = (id) => {
+      return fetch(`http://localhost:8000/subscriptions?follower_id=${id}`, {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${localStorage.getItem("rare_token")}`
+          }
       })
-      .then((response) => resolve(response.json()))
-      .catch((err) => reject(err));
-    });
+          .then(res => res.json())
+          .then(setSubscriptions)
+  }
 
     return (
       <SubscriptionContext.Provider value={{
