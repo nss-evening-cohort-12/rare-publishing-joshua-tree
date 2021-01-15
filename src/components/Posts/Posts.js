@@ -10,7 +10,8 @@ import './Posts.css'
 class Posts extends React.Component {
   state = {
     posts: [],
-    isAdmin: false
+    isAdmin: false,
+    inputValue: ''
   }
 
   today = moment(new Date()).valueOf();
@@ -55,6 +56,13 @@ class Posts extends React.Component {
     })
   }
 
+  titleSearch = (e) => {
+    console.log(e.target.value)
+    this.setState({
+      inputValue: e.target.value
+    })
+  }
+
   render() {
     const { posts, isAdmin } = this.state;
     const post = posts.map((post) => <Post key={post.id} post={post} isAdmin={isAdmin} />)
@@ -62,7 +70,7 @@ class Posts extends React.Component {
     return (
       <div className="postContainer">
         <div className="header-post">
-          <div className="search-bar">Search here</div>
+          <input type="text" placeholder="Search By Title" value={this.props.inputValue} onChange={this.props.titleSearch}></input>
           <div style={{ display: "flex", alignContent: "center", paddingRight: "30px" }}>
             <Link to="new-post" className="new-post">Add Post</Link>
             <Link to="new-post" className="new-post-plus">+</Link>
