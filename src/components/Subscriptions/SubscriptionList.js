@@ -1,23 +1,29 @@
 import React, { useContext, useEffect } from "react"
+import { PostContext } from "../Posts/JBPostProvider"
 import { SubscriptionContext } from "./SubscriptionProvider"
+
+
 
 export const SubscriptionList = props => {
     const { subscriptions, getMySubscriptions } = useContext(SubscriptionContext)
+    const { posts, getAuthorPostsById } = useContext(PostContext)
 
     useEffect(() => {
         const userId = parseInt(localStorage.getItem("rare_user_id"))
         getMySubscriptions(userId)
+        const authorId = subscriptions.author_id
+        getAuthorPostsById(authorId)
     }, [])
 
     return (
         <div style={{ margin: "0rem 3rem"}}>
             <h1>My Subscriptions</h1>
 
-            <article className="subscriptions">
+            <article className="subscribedPosts">
                 {
-                    subscriptions.map(subscription => {
-                        return <section className="subscriptions" key={subscription.id}>
-                        <h3>Placeholder for post by {subscription.author_id.display_name}.</h3>
+                    posts.map(post => {
+                        return <section className="subscribedPosts" key={post.id}>
+                        <h3>{post.content}</h3>
                         </section>
                     })
                 }

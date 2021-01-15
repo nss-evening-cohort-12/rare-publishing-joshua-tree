@@ -10,6 +10,7 @@ import { UserList } from "./Users/UserList"
 import { UserProvider } from "./Users/UserProvider"
 import { SubscriptionList } from "./Subscriptions/SubscriptionList"
 import { SubscriptionProvider } from "./Subscriptions/SubscriptionProvider"
+import { JBPostProvider } from "./Posts/JBPostProvider"
 
 
 
@@ -22,14 +23,16 @@ export const ApplicationViews = () => {
         </main>
 
         <SubscriptionProvider>
-            <Route path="/home" render={(props) => {
-                return <>
-                    <main className="subscriptionContainer">
-                        <SubscriptionList history={props.history} />
-                    </main>
+            <JBPostProvider>
+                <Route path="/home" render={(props) => {
+                    return <>
+                        <main className="subscriptionContainer">
+                            <SubscriptionList history={props.history} />
+                        </main>
 
-                </>
-            }} />
+                    </>
+                }} />
+            </JBPostProvider>
         </SubscriptionProvider>
 
 

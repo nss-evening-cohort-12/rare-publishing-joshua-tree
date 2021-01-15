@@ -26,11 +26,12 @@ export const SubscriptionProvider = (props) => {
       })
           .then(res => res.json())
           .then(setSubscriptions)
+          
   }
 
     return (
       <SubscriptionContext.Provider value={{
-          subscriptions, getSubscriptions, getMySubscriptions 
+          subscriptions, getSubscriptions, getMySubscriptions
       }}>
           {props.children}
       </SubscriptionContext.Provider>
