@@ -57,25 +57,23 @@ td, th{
 
 }
 
-/*
-.container { 
-  display: flex;
-  }
-.red {
-  background: orangered;
-  display: flex;
-  flex-direction: column;
+.user-link {
+  color: #111 !important;
+  text-decoration: none !important;
 }
-.green {
-  background: yellowgreen;
+
+.user-link:hover {
+  color: #fff !important;
+  border-color: #404ab4 !important;
+  background-color: #6167a8;
+  transition: 200ms ease-in;
 }
-.blue {
-  background: steelblue;
+
+.user-item {
+  border: 1px gray solid;
+  padding: 25px;
+  text-align: center;
+  font-weight: bold;
+  color: #fff !important;
+  font-size: 1.2em !important;
 }
-.container div {
-  font-size: 5vw;
-  padding: .5em;
-  color: white;
-  flex: 1;
-}
-*/

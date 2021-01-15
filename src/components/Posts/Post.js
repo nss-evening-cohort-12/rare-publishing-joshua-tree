@@ -48,6 +48,11 @@ class Post extends React.Component {
   updateApproval = () => {
     const { post } = this.props;
     const isChecked = document.getElementById(`checkbox--${post.id}`).checked;
+    const postTags = [];
+
+    post.tags.forEach((tag) => {
+      postTags.push(tag.id)
+    })
 
     const updatedPost = {
       rare_user: post.rare_user['id'],
@@ -57,7 +62,7 @@ class Post extends React.Component {
       image_url: post.image_url,
       approved: isChecked,
       publication_date: post.publication_date,
-      tags: post.tags
+      tags: postTags
     }
 
     PostProvider.updatePost(post.id, updatedPost)
