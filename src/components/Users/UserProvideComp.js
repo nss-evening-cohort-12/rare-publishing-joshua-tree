@@ -60,8 +60,8 @@ const getSingleSub = (authorId, followerId) => new Promise((resolve, reject) => 
       "Authorization": `Token ${localStorage.getItem("rare_token")}`
     }
   })
-  .then((response) => resolve(response.json()))
-  .catch((err) => reject(err))
+    .then((response) => resolve(response.json()))
+    .catch((err) => reject(err))
 })
 
 const createSubscription = (subscriptionObj) => new Promise((resolve, reject) => {
@@ -73,8 +73,21 @@ const createSubscription = (subscriptionObj) => new Promise((resolve, reject) =>
     },
     body: JSON.stringify(subscriptionObj)
   })
-  .then((response) => resolve(response.json()))
-  .catch((err) => reject(err))
+    .then((response) => resolve(response.json()))
+    .catch((err) => reject(err))
 });
 
-export default { getTags, deactivateUser,reactivateUser, getUserById, getSingleSub, createSubscription }
+const updateSubStatus = (subscriptionObj) => new Promise ((resolve, reject) => {
+  fetch(`http://localhost:8000/subscriptions/${subscriptionObj['id']}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Token ${localStorage.getItem("rare_token")}`
+    },
+    body: JSON.stringify(subscriptionObj)
+  })
+    .then((response) => resolve(response))
+    .catch((err) => reject(err))
+})
+
+export default { getTags, deactivateUser,reactivateUser, getUserById, getSingleSub, createSubscription, updateSubStatus }

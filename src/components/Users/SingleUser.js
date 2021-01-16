@@ -13,8 +13,6 @@ class SingleUser extends React.Component {
 
   componentDidMount() {
     const { userId } = this.props.match.params;
-    const authorId = parseInt(userId);
-    const followerId = parseInt(localStorage.getItem("rare_user_id"));
     
     UserProvideComp.getUserById(userId)
       .then((response) => this.setState({
@@ -22,27 +20,62 @@ class SingleUser extends React.Component {
         rare_user: response.user,
       }))
     
+    this.getSubscription();
+  }
+
+  getSubscription = () => {
+    const authorId = parseInt(this.props.match.params.userId);
+    const followerId = parseInt(localStorage.getItem("rare_user_id"));
+
     UserProvideComp.getSingleSub(authorId, followerId)
-      .then((response) => {
-        this.setState({ subscription: response })
-      })
+    .then((response) => {
+      this.setState({ subscription: response })
+    })
   }
 
   subscribeEvent = () => {
     const { subscription } = this.state;
+    
+    const subscriptionObj = {
+      follower_id: parseInt(localStorage.getItem("rare_user_id")),
+      author_id: parseInt(this.props.match.params.userId)
+    }
 
-    console.log('Created On: ', moment(subscription.created_on))
-    console.log('Ended On: ', moment(subscription.ended_on).valueOf())
-
-    if (moment(subscription.created_on).valueOf() > moment(subscription.ended_on).valueOf()) {
-      console.log('Update subscription!')
-    } else if (subscription.length < 1) {
-      console.log('Create subscription!')
+    if (subscription.length < 1) {
+      subscriptionObj['ended_on'] = null;
+      UserProvideComp.createSubscription(subscriptionObj)
+        .then(() => this.getSubscription())
+    }
+    
+    else if (moment(subscription[0].created_on).valueOf() > moment(subscription[0].ended_on).valueOf() || subscription[0].ended_on === null) {
+      subscriptionObj['created_on'] = subscription[0].created_on;
+      subscriptionObj['ended_on'] = null;
+      subscriptionObj['id'] = subscription[0].id;
+      UserProvideComp.updateSubStatus(subscriptionObj)
+        .then(() => this.getSubscription())
+    }
+    
+    else if (moment(subscription[0].created_on).valueOf() < moment(subscription[0].ended_on).valueOf()) {
+      subscriptionObj['ended_on'] = subscription[0].ended_on;
+      subscriptionObj['created_on'] = null;
+      subscriptionObj['id'] = subscription[0].id;
+      UserProvideComp.updateSubStatus(subscriptionObj)
+        .then(() => this.getSubscription())
     }
   }
 
   render() {
     const { user, rare_user, subscription } = this.state;
+    const subscriptionStatus = () => {
+      if (subscription.length < 1) {
+        return 'Subscribe';
+      } else if (moment(subscription[0].created_on).valueOf() > moment(subscription[0].ended_on).valueOf() || subscription[0].ended_on === null) {
+          return 'Unsubscribe';
+      } else {
+          return 'Subscribe';
+      }
+    }
+
     return (
       <div className="container">
         <img alt="no-img" src="https://fishingbakersfield.com/icons/user.svg" className="user_image"/>
@@ -54,7 +87,7 @@ class SingleUser extends React.Component {
           <h2 className="content btn-info">Is staff {rare_user.is_staff}</h2>
         </div>
         <button className="subscribe-button" onClick={this.subscribeEvent}>
-          {subscription.created_on > subscription.ended_on || subscription.length >= 1 ? 'Unsubscribe' : 'Subscribe'}
+          {subscriptionStatus()}
         </button>
       </div>
     );
