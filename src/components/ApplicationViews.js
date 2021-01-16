@@ -10,7 +10,6 @@ import { UserList } from "./Users/UserList"
 import { UserProvider } from "./Users/UserProvider"
 import { SubscriptionList } from "./Subscriptions/SubscriptionList"
 import { SubscriptionProvider } from "./Subscriptions/SubscriptionProvider"
-import { JBPostProvider } from "./Posts/JBPostProvider"
 
 
 
@@ -23,7 +22,6 @@ export const ApplicationViews = () => {
         </main>
 
         <SubscriptionProvider>
-            <JBPostProvider>
                 <Route path="/home" render={(props) => {
                     return <>
                         <main className="subscriptionContainer">
@@ -32,7 +30,6 @@ export const ApplicationViews = () => {
 
                     </>
                 }} />
-            </JBPostProvider>
         </SubscriptionProvider>
 
 
