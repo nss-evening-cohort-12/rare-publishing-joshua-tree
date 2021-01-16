@@ -5,13 +5,11 @@ import './Users.css'
 
 
 export const UserList = props => {
-  const { users, getUsers, deactivateUser, reactivateUser } = useContext(UserContext)
+  const { users, getUsers, deactivateUser, reactivateUser, adminUser, autherUser } = useContext(UserContext)
 
   useEffect(() => {
       getUsers()
   }, [])
-
-
 
   const checkUser = (id) => {
       const userId = parseInt(localStorage.getItem("rare_user_id"))
@@ -22,7 +20,6 @@ export const UserList = props => {
           return true
       }
   }
-
 
   return (
       <div style={{ margin: "0rem 3rem"}}>
@@ -46,15 +43,15 @@ export const UserList = props => {
                                     }
                                     {user.user.is_staff === true ? 
                                         <td className="user-status"><div className="radio-buttons">
-                                            <input type="radio" className="input" id="author" name={user.id} value="author"/>
+                                            <input type="radio" className="input" id="author" name={user.id} value="author" onChange={() => autherUser(user.user) && window.location.reload()}/>
                                             <label htmlFor="author"> Author</label>
-                                            <input type="radio" className="input" id="admin" name={user.id} value="admin" defaultChecked/>
+                                            <input type="radio" className="input" id="admin" name={user.id} value="admin" checked />
                                             <label htmlFor="admin"> Admin</label>
                                         </div></td> :
                                         <td className="user-status"><div className="radio-buttons">
-                                            <input type="radio" className="input" id="author" name={user.id} value="author" defaultChecked/>
+                                            <input type="radio" className="input" id="author" name={user.id} value="author" checked />
                                             <label htmlFor="author"> Author</label>
-                                            <input type="radio" className="input" id="admin" name={user.id} value="admin"/>
+                                            <input type="radio" className="input" id="admin" name={user.id} value="admin" onChange={() => adminUser(user.user) && window.location.reload()}/>
                                             <label htmlFor="admin"> Admin</label>
                                         </div></td>
                                     }
