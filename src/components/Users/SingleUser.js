@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 import UserProvideComp from './UserProvideComp';
-import moment from 'moment';
 import './Users.css';
 
 class SingleUser extends React.Component {
