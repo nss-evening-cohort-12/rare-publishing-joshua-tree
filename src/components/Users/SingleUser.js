@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import UserProvideComp from './UserProvideComp';
 import './Users.css';
 
@@ -30,7 +31,10 @@ class SingleUser extends React.Component {
   subscribeEvent = () => {
     const { subscription } = this.state;
 
-    if (subscription.created_on > subscription.ended_on) {
+    console.log('Created On: ', moment(subscription.created_on))
+    console.log('Ended On: ', moment(subscription.ended_on).valueOf())
+
+    if (moment(subscription.created_on).valueOf() > moment(subscription.ended_on).valueOf()) {
       console.log('Update subscription!')
     } else if (subscription.length < 1) {
       console.log('Create subscription!')
