@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import UserProvideComp from './UserProvideComp';
+import moment from 'moment';
 import './Users.css';
 
 class SingleUser extends React.Component {
@@ -83,8 +84,8 @@ class SingleUser extends React.Component {
           <h2 className="content btn-info">{rare_user.first_name} {rare_user.last_name}</h2>
           <h2 className="content btn-info">{user.display_name}</h2>
           <h2 className="content btn-info">{rare_user.email}</h2>
-          <h2 className="content btn-info">{rare_user.date_joined}</h2>
-          <h2 className="content btn-info">Is staff {rare_user.is_staff}</h2>
+          <h2 className="content btn-info">{moment(rare_user.date_joined).format('MM/DD/YYYY')}</h2>
+          <h2 className="content btn-info">{rare_user.is_staff === true ? "Admin" : "Author"}</h2>
         </div>
         <button className="subscribe-button" onClick={this.subscribeEvent}>
           {subscriptionStatus()}
