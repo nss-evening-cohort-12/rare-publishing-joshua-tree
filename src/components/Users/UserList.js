@@ -45,11 +45,11 @@ export const UserList = props => {
                                         <td className="user-status"><div className="radio-buttons">
                                             <input type="radio" className="input" id="author" name={user.id} value="author" onChange={() => autherUser(user.user) && window.location.reload()}/>
                                             <label htmlFor="author"> Author</label>
-                                            <input type="radio" className="input" id="admin" name={user.id} value="admin" checked />
+                                            <input type="radio" className="input" id="admin" name={user.id} value="admin" defaultChecked/>
                                             <label htmlFor="admin"> Admin</label>
                                         </div></td> :
                                         <td className="user-status"><div className="radio-buttons">
-                                            <input type="radio" className="input" id="author" name={user.id} value="author" checked />
+                                            <input type="radio" className="input" id="author" name={user.id} value="author" defaultChecked/>
                                             <label htmlFor="author"> Author</label>
                                             <input type="radio" className="input" id="admin" name={user.id} value="admin" onChange={() => adminUser(user.user) && window.location.reload()}/>
                                             <label htmlFor="admin"> Admin</label>
