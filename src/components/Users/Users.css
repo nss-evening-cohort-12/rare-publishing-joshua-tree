@@ -62,6 +62,24 @@ td, th{
   text-decoration: none !important;
 }
 
+.subscribe-button {
+  background: transparent;
+  color: #404ab4;
+  border-color: #a1a5d8 !important;
+  border-style: solid;
+  border-radius: .2em;
+  align-self: flex-start;
+  padding: 8px 30px;
+}
+
+.subscribe-button:hover {
+  color: #fff !important;
+  border-color: #404ab4 !important;
+  background-color: #404ab4;
+  transition: 200ms ease-in;
+  cursor: pointer;
+}
+
 .user-link:hover {
   color: #fff !important;
   border-color: #404ab4 !important;

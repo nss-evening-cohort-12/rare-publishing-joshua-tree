@@ -56,6 +56,35 @@ export const UserProvider = (props) => {
         .catch((err) => reject(err));
       });
 
+
+      const autherUser = (authUserObj) => new Promise((resolve, reject) => {
+        authUserObj.is_staff = false
+        fetch(`http://localhost:8000/authusers/${authUserObj.id}`, {
+          method: "PUT",
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Token ${localStorage.getItem("rare_token")}`
+          },
+          body: JSON.stringify(authUserObj)
+        })
+        .then(() => resolve())
+        .catch((err) => reject(err));
+      });
+
+      const adminUser = (authUserObj) => new Promise((resolve, reject) => {
+        authUserObj.is_staff = true
+        fetch(`http://localhost:8000/authusers/${authUserObj.id}`, {
+          method: "PUT",
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Token ${localStorage.getItem("rare_token")}`
+          },
+          body: JSON.stringify(authUserObj)
+        })
+        .then(() => resolve())
+        .catch((err) => reject(err));
+      });      
+
       const getUserById = (userId) => {
         return fetch(`http://localhost:8000/users/${userId}`, {
           method: "GET",
@@ -69,7 +98,7 @@ export const UserProvider = (props) => {
 
     return (
       <UserContext.Provider value={{
-          users, getUsers, deactivateUser, reactivateUser, getUserById, getInactiveUsers
+          users, getUsers, deactivateUser, reactivateUser, getUserById, getInactiveUsers, autherUser, adminUser
       }}>
           {props.children}
       </UserContext.Provider>
